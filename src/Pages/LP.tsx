@@ -1,13 +1,15 @@
 import React from "react"
+import {Link} from "react-router-dom"
 import Box from "@material-ui/core/Box"
 import Typography from "@material-ui/core/Typography"
 import Container from "@material-ui/core/Container"
 import Button from "@material-ui/core/Button"
 import Grid from "@material-ui/core/Grid"
+import ForumIcon from "@material-ui/icons/Forum"
+import BarChartIcon from "@material-ui/icons/BarChart"
+import StorageIcon from "@material-ui/icons/Storage"
 import styled from "styled-components"
 import Color from "../Assets/Color"
-//partials
-import AuthBtns from "../Molecules/AuthBtns"
 
 export default function LP() {
   return (
@@ -27,25 +29,32 @@ export default function LP() {
             <br />
             グラフで確認することができます
           </BoldTypography>
-          <Grid container spacing={2}>
-            <Grid item xs={12} lg={6}>
-              <Button
-                variant="contained"
-                size="large"
-                color="primary"
-                fullWidth
-              >
-                <BoldTypography variant="h4" color="inherit">
-                  会員登録
-                </BoldTypography>
-              </Button>
+          <Box mt={5}>
+            <Grid container spacing={2}>
+              <Grid item xs={12} lg={6}>
+                <Button
+                  variant="contained"
+                  size="large"
+                  color="primary"
+                  fullWidth
+                >
+                  <BoldTypography variant="h4" color="inherit">
+                    会員登録
+                  </BoldTypography>
+                </Button>
+              </Grid>
+              <Grid item xs={12} lg={6}>
+                <Button
+                  variant="outlined"
+                  size="large"
+                  color="inherit"
+                  fullWidth
+                >
+                  <BoldTypography variant="h4">ログイン</BoldTypography>
+                </Button>
+              </Grid>
             </Grid>
-            <Grid item xs={12} lg={6}>
-              <Button variant="outlined" size="large" color="inherit" fullWidth>
-                <BoldTypography variant="h4">ログイン</BoldTypography>
-              </Button>
-            </Grid>
-          </Grid>
+          </Box>
         </Container>
       </FirstBox>
 
@@ -73,56 +82,125 @@ export default function LP() {
         </Container>
       </Box>
 
-      <Box style={{background: "#2b2b2b", color: "white"}}>
-        <BoldTypography variant="h3" color="inherit" align="center">
-          Reword
-        </BoldTypography>
-        <BoldTypography variant="body1" color="inherit" align="center">
-          Rewordではワーキングメモリーを鍛えるサービスを提供します。
-        </BoldTypography>
-        <div className="row">
-          <Card>
-            <i className="fas fa-comments" style={{fontSize: "50px"}} />
-            <h2>- 逆唱で鍛える -</h2>
-            <p>
-              逆唱とは、ある文字列を提示された際、その文字列を反対から読み返すことを指します。
-              <br />
-              この処理を少しづつ負荷をかけながら継続をすることで鍛えることができます。
-            </p>
-          </Card>
+      <Box
+        style={{background: "#2b2b2b", color: "white"}}
+        display="flex"
+        alignItems="center"
+        height="100vh"
+      >
+        <Container>
+          <Box mb={5}>
+            <BoldTypography variant="h3" color="inherit" align="center">
+              Reword
+            </BoldTypography>
+            <BoldTypography variant="body1" color="inherit" align="center">
+              Rewordではワーキングメモリーを鍛えるサービスを提供します。
+            </BoldTypography>
+          </Box>
+          <Grid container spacing={5}>
+            <Grid item xs={12} lg={4}>
+              <Box fontSize="60px" textAlign="center">
+                <ForumIcon fontSize="inherit" />
+              </Box>
+              <BoldTypography variant="h5" align="center" gutterBottom>
+                - 逆唱で鍛える -
+              </BoldTypography>
+              <Typography variant="body1" color="inherit">
+                逆唱とは、ある文字列を提示された際、その文字列を反対から読み返すことを指します。
+                <br />
+                この処理を少しづつ負荷をかけながら継続をすることで鍛えることができます。
+              </Typography>
+            </Grid>
 
-          <Card>
-            <i className="far fa-chart-bar" style={{fontSize: "50px"}} />
-            <h2>- 成績をグラフ化 -</h2>
-            <p>
-              会員登録を行うことで、成績をグラフ化し自分の成長を可視化することができます。
-            </p>
-          </Card>
+            <Grid item xs={12} lg={4}>
+              <Box fontSize="60px" textAlign="center">
+                <BarChartIcon fontSize="inherit" />
+              </Box>
+              <BoldTypography variant="h5" align="center" gutterBottom>
+                - 成績をグラフ化 -
+              </BoldTypography>
+              <Typography variant="body1" color="inherit">
+                会員登録を行うことで、成績をグラフ化し自分の成長を可視化することができます。
+              </Typography>
+            </Grid>
 
-          <Card>
-            <i className="fas fa-database" style={{fontSize: "50px"}} />
-            <h2>- データの蓄積 -</h2>
-            <p>
-              正答数や正答率、試行回数、の他に生年月日や性別を入力することで。良質なデータを蓄積し皆様にお届けすることができます。
-            </p>
-          </Card>
-        </div>
-        <AuthBtns />
+            <Grid item xs={12} lg={4}>
+              <Box fontSize="60px" textAlign="center">
+                <StorageIcon fontSize="inherit" />
+              </Box>
+              <BoldTypography variant="h5" align="center" gutterBottom>
+                - データの蓄積 -
+              </BoldTypography>
+              <Typography variant="body1" color="inherit">
+                正答数や正答率、試行回数、の他に生年月日や性別を入力することで。良質なデータを蓄積し皆様にお届けすることができます。
+              </Typography>
+            </Grid>
+          </Grid>
+          <Box mt={5}>
+            <Grid container spacing={2}>
+              <Grid item xs={12} lg={6}>
+                <Button
+                  variant="contained"
+                  size="large"
+                  color="primary"
+                  fullWidth
+                >
+                  <BoldTypography variant="h4" color="inherit">
+                    会員登録
+                  </BoldTypography>
+                </Button>
+              </Grid>
+              <Grid item xs={12} lg={6}>
+                <Button
+                  variant="outlined"
+                  size="large"
+                  color="inherit"
+                  fullWidth
+                >
+                  <BoldTypography variant="h4">ログイン</BoldTypography>
+                </Button>
+              </Grid>
+            </Grid>
+          </Box>
+        </Container>
       </Box>
     </>
   )
 }
+const AuthBtns = () => {
+  return (
+    <Box mt={5}>
+      <Grid container spacing={2}>
+        <Grid item xs={12} lg={6}>
+          <Button
+            variant="contained"
+            size="large"
+            color="primary"
+            fullWidth
+            component={Link}
+          >
+            <BoldTypography variant="h4" color="inherit">
+              会員登録
+            </BoldTypography>
+          </Button>
+        </Grid>
+        <Grid item xs={12} lg={6}>
+          <Button
+            variant="outlined"
+            size="large"
+            color="inherit"
+            fullWidth
+            component={Link}
+            to="/SignUp"
+          >
+            <BoldTypography variant="h4">ログイン</BoldTypography>
+          </Button>
+        </Grid>
+      </Grid>
+    </Box>
+  )
+}
 
-const Card = styled.div`
-  width: 250px;
-  padding: 30px;
-  border-radius: 10px;
-  h2,
-  p,
-  i {
-    color: white;
-  }
-`
 const FirstBox = styled(Box)`
   color: white;
   background: linear-gradient(90deg, ${Color.blue} 60%, ${Color.blue2});
