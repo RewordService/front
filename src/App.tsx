@@ -1,6 +1,6 @@
 import React from "react"
-import {BrowserRouter as Router, Route} from "react-router-dom"
-import {createMuiTheme} from "@material-ui/core/styles"
+import {BrowserRouter as Router, Switch, Route} from "react-router-dom"
+import {ThemeProvider} from "@material-ui/core/styles"
 import "fontsource-roboto"
 //scripts
 import {IsSignedIn} from "./Axios/UsersController"
@@ -22,36 +22,41 @@ import PrivacyPolicy from "./Pages/PrivacyPolicy"
 import Contact from "./Pages/Contact"
 import SearchResult from "./Pages/SearchResult"
 import routes from "./constants/routes.json"
+import theme from "./constants/theme"
 
 function App() {
   return (
-    <Router>
-      <Header />
-      <Route path={routes.HOME} exact component={Home} />
-      <Route path={routes.GAME} exact component={Game} />
-      <Route path="/Contact" exact component={Contact} />
-      <Route path="/PrivacyPolicy" exact component={PrivacyPolicy} />
-      <Route path="/SearchResult" exact component={SearchResult} />
-      <Route path={routes.LANDING} exact component={LP} />
-      {IsSignedIn() ? (
-        <>
-          <Route path="/" exact component={Home} />
-          <Route path="/Account/:id" exact component={Account} />
-          <Route path="/ProfileEdit" exact component={ProfileEdit} />
-          <Route path="/AccountEdit" exact component={AccountEdit} />
-          <Route path="/AccountStatus" exact component={AccountStatus} />
-        </>
-      ) : (
-        <>
-          <Route path="/Terms" exact component={Terms} />
-          <Route path="/Account/:id" exact component={Account} />
-          <Route path={routes.SIGNIN} exact component={SignIn} />
-          <Route path={routes.SIGNUP} exact component={SignUp} />
-        </>
-      )}
-      <Route path={routes.ROOT} exact component={Home} />
-      <Footer />
-    </Router>
+    <ThemeProvider theme={theme}>
+      <Router>
+        <Header />
+        <Switch>
+          <Route path={routes.HOME} exact component={Home} />
+          <Route path={routes.GAME} exact component={Game} />
+          <Route path="/Contact" exact component={Contact} />
+          <Route path="/PrivacyPolicy" exact component={PrivacyPolicy} />
+          <Route path="/SearchResult" exact component={SearchResult} />
+          <Route path={routes.LANDING} exact component={LP} />
+          {IsSignedIn() ? (
+            <>
+              <Route path="/" exact component={Home} />
+              <Route path="/Account/:id" exact component={Account} />
+              <Route path="/ProfileEdit" exact component={ProfileEdit} />
+              <Route path="/AccountEdit" exact component={AccountEdit} />
+              <Route path="/AccountStatus" exact component={AccountStatus} />
+            </>
+          ) : (
+            <>
+              <Route path="/Terms" exact component={Terms} />
+              <Route path="/Account/:id" exact component={Account} />
+              <Route path={routes.SIGNIN} exact component={SignIn} />
+              <Route path={routes.SIGNUP} exact component={SignUp} />
+            </>
+          )}
+          <Route path={routes.ROOT} exact component={Home} />
+        </Switch>
+        <Footer />
+      </Router>
+    </ThemeProvider>
   )
 }
 

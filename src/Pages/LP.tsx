@@ -53,16 +53,16 @@ export default function LP() {
             </Box>
             <BoldTypography variant="body1" align="center" gutterBottom>
               ワーキングメモリーとは
-              <span style={{color: "red"}}>
+              <Box display="inline" color="secondary.main">
                 「短期記憶に存在する情報に対して処理を行う能力」
-              </span>
+              </Box>
               を指します。
             </BoldTypography>
             <BoldTypography variant="body1" align="center" gutterBottom>
               <br /> Rewordでは、
-              <span style={{color: "blue"}}>
+              <Box display="inline" color="primary.main">
                 「短期記憶に保持した文字列を逆から読み返すという処理」
-              </span>
+              </Box>
               を行います。
             </BoldTypography>
           </Container>
