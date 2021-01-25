@@ -8,7 +8,7 @@
 - [styled-components](https://styled-components.com/)
 - [recharts](https://github.com/recharts/recharts)
 - [axios](https://github.com/axios/axios)
-- [reveal.js](https://github.com/hakimel/reveal.js)
+- [react-reveal](https://github.com/rnosov/react-reveal)
 - ~~[react-intersection-observer](https://github.com/researchgate/react-intersection-observer)~~
 - ~~[react-payjp-checkout](https://github.com/LancersDevTeam/react-payjp-checkout)~~
 

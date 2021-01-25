@@ -29,7 +29,7 @@ function Header() {
   const history = useHistory()
   const classes = useStyles()
   const SearchResult = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "enter")
+    if (e.key === "Enter")
       history.push({
         pathname: "SearchResult",
         state: {name_cont: search},
