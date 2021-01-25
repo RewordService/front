@@ -28,10 +28,11 @@ function App() {
     <Router>
       <Header />
       <Route path={routes.HOME} exact component={Home} />
-      <Route path="/Game" exact component={Game} />
+      <Route path={routes.GAME} exact component={Game} />
       <Route path="/Contact" exact component={Contact} />
       <Route path="/PrivacyPolicy" exact component={PrivacyPolicy} />
       <Route path="/SearchResult" exact component={SearchResult} />
+      <Route path={routes.LANDING} exact component={LP} />
       {IsSignedIn() ? (
         <>
           <Route path="/" exact component={Home} />
@@ -42,14 +43,13 @@ function App() {
         </>
       ) : (
         <>
-          <Route path="/" exact component={LP} />
-          <Route path="/Reword" exact component={LP} />
           <Route path="/Terms" exact component={Terms} />
           <Route path="/Account/:id" exact component={Account} />
-          <Route path="/SignIn" exact component={SignIn} />
-          <Route path="/SignUp" exact component={SignUp} />
+          <Route path={routes.SIGNIN} exact component={SignIn} />
+          <Route path={routes.SIGNUP} exact component={SignUp} />
         </>
       )}
+      <Route path={routes.ROOT} exact component={Home} />
       <Footer />
     </Router>
   )

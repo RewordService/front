@@ -130,6 +130,7 @@ const AuthBtns = () => {
             fullWidth
             component={Link}
             to={routes.SIGNUP}
+            disableElevation
           >
             <BoldTypography variant="h4" color="inherit">
               会員登録
@@ -144,6 +145,7 @@ const AuthBtns = () => {
             fullWidth
             component={Link}
             to={routes.SIGNIN}
+            disableElevation
           >
             <BoldTypography variant="h4">ログイン</BoldTypography>
           </Button>
