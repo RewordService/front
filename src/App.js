@@ -21,12 +21,13 @@ import Terms from "./Pages/Terms"
 import PrivacyPolicy from "./Pages/PrivacyPolicy"
 import Contact from "./Pages/Contact"
 import SearchResult from "./Pages/SearchResult"
+import routes from "./constants/routes.json"
 
 function App() {
   return (
     <Router>
       <Header />
-      <Route path="/Home" exact component={Home} />
+      <Route path={routes.HOME} exact component={Home} />
       <Route path="/Game" exact component={Game} />
       <Route path="/Contact" exact component={Contact} />
       <Route path="/PrivacyPolicy" exact component={PrivacyPolicy} />

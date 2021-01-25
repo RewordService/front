@@ -10,6 +10,7 @@ import BarChartIcon from "@material-ui/icons/BarChart"
 import StorageIcon from "@material-ui/icons/Storage"
 import styled from "styled-components"
 import Color from "../Assets/Color"
+import routes from "../constants/routes.json"
 
 export default function LP() {
   return (
@@ -29,32 +30,7 @@ export default function LP() {
             <br />
             グラフで確認することができます
           </BoldTypography>
-          <Box mt={5}>
-            <Grid container spacing={2}>
-              <Grid item xs={12} lg={6}>
-                <Button
-                  variant="contained"
-                  size="large"
-                  color="primary"
-                  fullWidth
-                >
-                  <BoldTypography variant="h4" color="inherit">
-                    会員登録
-                  </BoldTypography>
-                </Button>
-              </Grid>
-              <Grid item xs={12} lg={6}>
-                <Button
-                  variant="outlined"
-                  size="large"
-                  color="inherit"
-                  fullWidth
-                >
-                  <BoldTypography variant="h4">ログイン</BoldTypography>
-                </Button>
-              </Grid>
-            </Grid>
-          </Box>
+          <AuthBtns />
         </Container>
       </FirstBox>
 
@@ -136,32 +112,7 @@ export default function LP() {
               </Typography>
             </Grid>
           </Grid>
-          <Box mt={5}>
-            <Grid container spacing={2}>
-              <Grid item xs={12} lg={6}>
-                <Button
-                  variant="contained"
-                  size="large"
-                  color="primary"
-                  fullWidth
-                >
-                  <BoldTypography variant="h4" color="inherit">
-                    会員登録
-                  </BoldTypography>
-                </Button>
-              </Grid>
-              <Grid item xs={12} lg={6}>
-                <Button
-                  variant="outlined"
-                  size="large"
-                  color="inherit"
-                  fullWidth
-                >
-                  <BoldTypography variant="h4">ログイン</BoldTypography>
-                </Button>
-              </Grid>
-            </Grid>
-          </Box>
+          <AuthBtns />
         </Container>
       </Box>
     </>
@@ -178,6 +129,7 @@ const AuthBtns = () => {
             color="primary"
             fullWidth
             component={Link}
+            to={routes.SIGNUP}
           >
             <BoldTypography variant="h4" color="inherit">
               会員登録
@@ -191,7 +143,7 @@ const AuthBtns = () => {
             color="inherit"
             fullWidth
             component={Link}
-            to="/SignUp"
+            to={routes.SIGNIN}
           >
             <BoldTypography variant="h4">ログイン</BoldTypography>
           </Button>

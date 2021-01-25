@@ -1,3 +1,6 @@
 {
-  "HOME": "home"
+  "HOME": "/home",
+  "GAME": "/game",
+  "SIGNIN": "/signin",
+  "SIGNUP": "/signup"
 }
