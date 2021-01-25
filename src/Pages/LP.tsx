@@ -49,60 +49,66 @@ export default function LP() {
         </Container>
       </FirstBox>
 
-      <article className={"fade-"}>
-        <section>
-          <h1>ワーキングメモリーとは</h1>
-          <p>
+      <Box height="100vh" display="flex" alignItems="center">
+        <Container>
+          <Box mb={8}>
+            <BoldTypography variant="h3" align="center">
+              ワーキングメモリーとは?
+            </BoldTypography>
+          </Box>
+          <BoldTypography variant="body1" align="center" gutterBottom>
             ワーキングメモリーとは
-            <span className="red">
+            <span style={{color: "red"}}>
               「短期記憶に存在する情報に対して処理を行う能力」
             </span>
             を指します。
-          </p>
-          <p>
-            Rewordでは、
-            <span className="blue">
+          </BoldTypography>
+          <BoldTypography variant="body1" align="center" gutterBottom>
+            <br /> Rewordでは、
+            <span style={{color: "blue"}}>
               「短期記憶に保持した文字列を逆から読み返すという処理」
             </span>
             を行います。
-          </p>
-        </section>
-      </article>
+          </BoldTypography>
+        </Container>
+      </Box>
 
-      <article className={"fade-"}>
-        <section>
-          <h1>Reword</h1>
-          <p>Rewordではワーキングメモリーを鍛えるサービスを提供します。</p>
-          <div className="row">
-            <Card>
-              <i className="fas fa-comments" style={{fontSize: "50px"}} />
-              <h2>- 逆唱で鍛える -</h2>
-              <p>
-                逆唱とは、ある文字列を提示された際、その文字列を反対から読み返すことを指します。
-                <br />
-                この処理を少しづつ負荷をかけながら継続をすることで鍛えることができます。
-              </p>
-            </Card>
+      <Box style={{background: "#2b2b2b", color: "white"}}>
+        <BoldTypography variant="h3" color="inherit" align="center">
+          Reword
+        </BoldTypography>
+        <BoldTypography variant="body1" color="inherit" align="center">
+          Rewordではワーキングメモリーを鍛えるサービスを提供します。
+        </BoldTypography>
+        <div className="row">
+          <Card>
+            <i className="fas fa-comments" style={{fontSize: "50px"}} />
+            <h2>- 逆唱で鍛える -</h2>
+            <p>
+              逆唱とは、ある文字列を提示された際、その文字列を反対から読み返すことを指します。
+              <br />
+              この処理を少しづつ負荷をかけながら継続をすることで鍛えることができます。
+            </p>
+          </Card>
 
-            <Card>
-              <i className="far fa-chart-bar" style={{fontSize: "50px"}} />
-              <h2>- 成績をグラフ化 -</h2>
-              <p>
-                会員登録を行うことで、成績をグラフ化し自分の成長を可視化することができます。
-              </p>
-            </Card>
+          <Card>
+            <i className="far fa-chart-bar" style={{fontSize: "50px"}} />
+            <h2>- 成績をグラフ化 -</h2>
+            <p>
+              会員登録を行うことで、成績をグラフ化し自分の成長を可視化することができます。
+            </p>
+          </Card>
 
-            <Card>
-              <i className="fas fa-database" style={{fontSize: "50px"}} />
-              <h2>- データの蓄積 -</h2>
-              <p>
-                正答数や正答率、試行回数、の他に生年月日や性別を入力することで。良質なデータを蓄積し皆様にお届けすることができます。
-              </p>
-            </Card>
-          </div>
-        </section>
+          <Card>
+            <i className="fas fa-database" style={{fontSize: "50px"}} />
+            <h2>- データの蓄積 -</h2>
+            <p>
+              正答数や正答率、試行回数、の他に生年月日や性別を入力することで。良質なデータを蓄積し皆様にお届けすることができます。
+            </p>
+          </Card>
+        </div>
         <AuthBtns />
-      </article>
+      </Box>
     </>
   )
 }
