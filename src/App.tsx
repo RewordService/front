@@ -39,7 +39,7 @@ function App() {
           <Route path={routes.LANDING} exact component={LP} />
           {IsSignedIn() ? (
             <>
-              <Route path="/Account/:id" exact component={Account} />
+              <Route path={routes.USER} exact component={Account} />
               <Route path="/ProfileEdit" exact component={ProfileEdit} />
               <Route path="/AccountEdit" exact component={AccountEdit} />
               <Route path="/AccountStatus" exact component={AccountStatus} />
@@ -47,7 +47,7 @@ function App() {
           ) : (
             <>
               <Route path="/Terms" exact component={Terms} />
-              <Route path="/Account/:id" exact component={Account} />
+              <Route path={routes.USER} exact component={Account} />
               <Route path={routes.SIGNIN} exact component={SignIn} />
               <Route path={routes.SIGNUP} exact component={SignUp} />
             </>

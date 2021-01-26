@@ -51,7 +51,7 @@ const SignInForm = () => {
                   }}
                   render={({ref, value, onChange}, {invalid}) => (
                     <TextField
-                      variant="filled"
+                      variant="outlined"
                       label="Email"
                       error={invalid}
                       fullWidth
@@ -91,7 +91,7 @@ const SignInForm = () => {
                   }}
                   render={({ref, value, onChange}, {invalid}) => (
                     <TextField
-                      variant="filled"
+                      variant="outlined"
                       label="password"
                       error={invalid}
                       fullWidth
@@ -114,6 +114,7 @@ const SignInForm = () => {
                 variant="contained"
                 color="primary"
                 disableElevation
+                fullWidth
               >
                 SignIn
               </Button>

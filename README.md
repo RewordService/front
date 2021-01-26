@@ -10,6 +10,7 @@
 - [recharts](https://github.com/recharts/recharts)
 - [axios](https://github.com/axios/axios)
 - [react-reveal](https://github.com/rnosov/react-reveal)
+- ~~[use-timeout](https://github.com/siddharthkp/use-timeout)~~
 - ~~[react-intersection-observer](https://github.com/researchgate/react-intersection-observer)~~
 - ~~[react-payjp-checkout](https://github.com/LancersDevTeam/react-payjp-checkout)~~
 

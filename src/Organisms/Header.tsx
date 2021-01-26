@@ -40,7 +40,7 @@ function Header() {
   const [open, setOpen] = useState(false)
   const history = useHistory()
   const classes = useStyles()
-  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter")
       history.push({
         pathname: "SearchResult",
@@ -59,13 +59,13 @@ function Header() {
       onKeyDown={handleCloseDrawer}
     >
       <List>
-        <ListItem button>
+        <ListItem button component={RouterLink} to={routes.HOME}>
           <ListItemIcon>
             <HomeIcon />
           </ListItemIcon>
           <ListItemText primary="Home" />
         </ListItem>
-        <ListItem button>
+        <ListItem button component={RouterLink} to={routes.GAME}>
           <ListItemIcon>
             <SportsEsportsIcon />
           </ListItemIcon>
@@ -75,15 +75,15 @@ function Header() {
       <Divider />
       <List>
         {IsSignedIn() ? (
-          <ListItem button>
+          <ListItem button component={RouterLink} to={routes.SIGNOUT}>
             <ListItemText primary="SignOut" />
           </ListItem>
         ) : (
           <>
-            <ListItem button>
+            <ListItem button component={RouterLink} to={routes.SIGNIN}>
               <ListItemText primary="SignIn" />
             </ListItem>
-            <ListItem button>
+            <ListItem button component={RouterLink} to={routes.SIGNUP}>
               <ListItemText primary="SignUp" />
             </ListItem>
           </>
@@ -164,7 +164,7 @@ function Header() {
             <Grid item>
               <TextField
                 label="Search User"
-                onKeyDown={handleKeyDown}
+                onKeyPress={handleKeyPress}
                 onChange={handleChange}
               />
             </Grid>

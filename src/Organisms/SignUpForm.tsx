@@ -57,7 +57,7 @@ const SignUpForm = () => {
                   }}
                   render={({ref, value, onChange}, {invalid}) => (
                     <TextField
-                      variant="filled"
+                      variant="outlined"
                       label="Email"
                       error={invalid}
                       fullWidth
@@ -96,7 +96,7 @@ const SignUpForm = () => {
                   }}
                   render={({ref, value, onChange}, {invalid}) => (
                     <TextField
-                      variant="filled"
+                      variant="outlined"
                       label="Name"
                       error={invalid}
                       fullWidth
@@ -137,7 +137,7 @@ const SignUpForm = () => {
                   render={({ref, value, onChange}, {invalid}) => (
                     <TextField
                       type="password"
-                      variant="filled"
+                      variant="outlined"
                       label="password"
                       error={invalid}
                       fullWidth
@@ -176,7 +176,7 @@ const SignUpForm = () => {
                   render={({ref, value, onChange}, {invalid}) => (
                     <TextField
                       type="password"
-                      variant="filled"
+                      variant="outlined"
                       label="password_confirmation"
                       error={invalid}
                       fullWidth
@@ -199,6 +199,7 @@ const SignUpForm = () => {
                 variant="contained"
                 color="primary"
                 disableElevation
+                fullWidth
               >
                 SignUp
               </Button>
