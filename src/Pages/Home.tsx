@@ -1,20 +1,13 @@
 import React from "react"
-import {withRouter} from "react-router-dom"
 import styled from "styled-components"
 import Container from "@material-ui/core/Container"
-//img
+import ShareButtons from "../components/ShareButtons"
 import img from "../Assets/Img/home.jpg"
-//partials
-import {FlexJustify} from "../Atom/FlexJustify"
-import {Content} from "../Atom/Content"
-import {Section} from "../Atom/Section"
 import NewUsers from "../Organisms/NewUsers"
 import TotalUsers from "../Organisms/TotalUsers"
 import SlideBar from "../Organisms/SlideBar"
 import Posts from "../Organisms/Posts"
-import SNSIcon from "../Molecules/SNSIcon"
 import PostForm from "../Molecules/PostForm"
-import Banners from "../Atom/Banner"
 import LeftBar from "../Organisms/LeftBar"
 import News from "../Organisms/News"
 import RewordInfo from "../Organisms/RewordInfo"
@@ -28,13 +21,10 @@ const Home = () => (
     <Container maxWidth="md">
       <RewordInfo />
       <News />
-      <SNSIcon />
       <LeftBar />
       <NewUsers />
       <TotalUsers />
-      <Banners />
-      <PostForm />
-      <Posts />
+      <ShareButtons />
     </Container>
   </>
 )

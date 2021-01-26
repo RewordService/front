@@ -5,5 +5,7 @@
   "SIGNIN": "/signin",
   "SIGNUP": "/signup",
   "SIGNOUT": "/signout",
-  "LANDING": "/landing"
+  "LANDING": "/landing",
+  "TWITTER": "https://twitter.com/re_reword",
+  "FACEBOOK": "https://www.facebook.com/word.re.16"
 }

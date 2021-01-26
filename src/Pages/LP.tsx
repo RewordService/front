@@ -141,6 +141,7 @@ export default function LP() {
     </>
   )
 }
+
 const AuthBtns = () => {
   return (
     <Box mt={5}>
