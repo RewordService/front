@@ -3,6 +3,7 @@ import {Link} from "react-router-dom"
 /* @ts-ignore */
 import Fade from "react-reveal/Fade"
 import Box from "@material-ui/core/Box"
+import BoldTypography from "../components/BoldTypography"
 import Typography from "@material-ui/core/Typography"
 import Container from "@material-ui/core/Container"
 import Button from "@material-ui/core/Button"
@@ -76,7 +77,7 @@ export default function LP() {
           minHeight="100vh"
         >
           <Container>
-            <Box mb={10}>
+            <Box mb={10} letterSpacing={6}>
               <BoldTypography variant="h3" color="inherit" align="center">
                 <Fade left cascade>
                   Reword
@@ -180,8 +181,4 @@ const AuthBtns = () => {
 const FirstBox = styled(Box)`
   color: white;
   background: linear-gradient(90deg, ${Color.blue} 60%, ${Color.blue2});
-`
-const BoldTypography = styled(Typography)`
-  font-weight: bold !important;
-  letter-spacing: 5px !important;
 `
