@@ -75,6 +75,7 @@ export default function LP() {
           display="flex"
           alignItems="center"
           minHeight="100vh"
+          p={5}
         >
           <Container>
             <Box mb={10} letterSpacing={6}>

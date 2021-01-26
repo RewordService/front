@@ -16,7 +16,6 @@ import {IsSignedIn} from "../Axios/UsersController"
 //partials
 import {Content} from "../Atom/Content"
 import {FlexJustify} from "../Atom/FlexJustify"
-import {Section} from "../Atom/Section"
 import SlideBar from "../Organisms/SlideBar"
 
 const Game = () => {
@@ -51,6 +50,8 @@ const Game = () => {
             </Box>
           </Paper>
         </Box>
+      </Container>
+      <Container>
         <Box my={5}>
           <Paper>
             <Box p={2}>

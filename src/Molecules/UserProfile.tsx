@@ -1,28 +1,33 @@
 import React, {useState, useEffect} from "react"
-import styled from "styled-components"
+import {useParams} from "react-router-dom"
 import Paper from "@material-ui/core/Paper"
 import Box from "@material-ui/core/Box"
 import Grid from "@material-ui/core/Grid"
+import {Typography} from "@material-ui/core"
 import BoldTypography from "../components/BoldTypography"
 //scripts
 import {UserInfo} from "../Axios/UsersController"
-import {Typography} from "@material-ui/core"
 
-export default function UserProfile(props) {
-  const [name, setName] = useState("")
-  const [created_date, setCreatedDate] = useState("")
-  const [total, setTotal] = useState(0)
-  const [intro, setIntro] = useState("")
+interface IUser {
+  name: string
+  created_date: string
+  intro: string
+  rewords: [{total: number}]
+}
+export default function UserProfile() {
+  const params = useParams()
+  const [user, setUser] = useState<IUser>({
+    name: "",
+    created_date: "",
+    intro: "",
+    rewords: [{total: 0}],
+  })
   useEffect(() => {
-    UserInfo(props.id)
-      .then(res => {
-        setName(res.name)
-        setCreatedDate(res.created_date)
-        setIntro(res.intro)
-        setTotal(res.rewords[0].total)
-      })
+    UserInfo(params)
+      //@ts-ignore
+      .then(res => setUser(res as IUser))
       .catch(err => console.log(err))
-  }, [props.id])
+  }, [params])
   return (
     <Paper>
       <Box p={2}>
@@ -50,18 +55,18 @@ export default function UserProfile(props) {
           <Grid container>
             <Grid item xs={4}>
               <Typography variant="body1">ユーザー名</Typography>
-              <BoldTypography>{name}</BoldTypography>
+              <BoldTypography>{user.name}</BoldTypography>
             </Grid>
 
             <Grid item xs={4}>
               <Typography variant="body1">Reword開始日</Typography>
-              <BoldTypography>{created_date}</BoldTypography>
+              <BoldTypography>{user.created_date}</BoldTypography>
             </Grid>
             <Grid item xs={4}>
               <Typography variant="body1">トータルスコア</Typography>
-              <BoldTypography>{total}</BoldTypography>
+              <BoldTypography>{user.rewords[0].total}</BoldTypography>
             </Grid>
-            <Typography variant="body1">{intro}</Typography>
+            <Typography variant="body1">{user.intro}</Typography>
           </Grid>
         </Box>
       </Box>

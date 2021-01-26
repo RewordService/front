@@ -114,7 +114,7 @@ function Header() {
             REWORD
           </Link>
         </Typography>
-        <Hidden mdDown>
+        <Hidden smDown>
           <Box className={classes.root}>
             <Button component={RouterLink} to={routes.HOME}>
               Home
@@ -156,20 +156,22 @@ function Header() {
             )}
           </Box>
         </Hidden>
-        <Box ml="auto">
-          <Grid container alignItems="flex-end">
-            <Grid item>
-              <SearchIcon />
+        <Hidden xsDown>
+          <Box ml="auto">
+            <Grid container alignItems="flex-end">
+              <Grid item>
+                <SearchIcon />
+              </Grid>
+              <Grid item>
+                <TextField
+                  label="Search User"
+                  onKeyPress={handleKeyPress}
+                  onChange={handleChange}
+                />
+              </Grid>
             </Grid>
-            <Grid item>
-              <TextField
-                label="Search User"
-                onKeyPress={handleKeyPress}
-                onChange={handleChange}
-              />
-            </Grid>
-          </Grid>
-        </Box>
+          </Box>
+        </Hidden>
       </Toolbar>
     </AppBar>
   )
