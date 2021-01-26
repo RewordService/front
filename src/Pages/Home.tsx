@@ -1,13 +1,12 @@
 import React from "react"
 import styled from "styled-components"
 import Container from "@material-ui/core/Container"
+import Box from "@material-ui/core/Box"
 import ShareButtons from "../components/ShareButtons"
 import img from "../Assets/Img/home.jpg"
 import NewUsers from "../Organisms/NewUsers"
-import TotalUsers from "../Organisms/TotalUsers"
+import TotalUsers from "../Organisms/ScoreUsers"
 import SlideBar from "../Organisms/SlideBar"
-import Posts from "../Organisms/Posts"
-import PostForm from "../Molecules/PostForm"
 import LeftBar from "../Organisms/LeftBar"
 import News from "../Organisms/News"
 import RewordInfo from "../Organisms/RewordInfo"
@@ -19,12 +18,24 @@ const Home = () => (
     </Img>
     <SlideBar />
     <Container maxWidth="md">
-      <RewordInfo />
-      <News />
-      <LeftBar />
-      <NewUsers />
-      <TotalUsers />
-      <ShareButtons />
+      <Box mt={5}>
+        <RewordInfo />
+      </Box>
+      <Box mt={5}>
+        <ShareButtons />
+      </Box>
+      <Box mt={5}>
+        <News />
+      </Box>
+      <Box mt={5}>
+        <LeftBar />
+      </Box>
+      <Box mt={5}>
+        <NewUsers />
+      </Box>
+      <Box my={5}>
+        <TotalUsers />
+      </Box>
     </Container>
   </>
 )

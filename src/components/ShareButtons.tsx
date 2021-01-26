@@ -24,47 +24,45 @@ const useStyles = makeStyles(theme => ({
 const ShareButtons = () => {
   const classes = useStyles()
   return (
-    <Box>
-      <Grid container spacing={1}>
-        <Grid item xs={4}>
-          <Button
-            variant="contained"
-            color="primary"
-            disableElevation
-            fullWidth
-            component={RouterLink}
-            to={routes.GAME}
-            startIcon={<SportsEsportsIcon fontSize="large" />}
-          >
-            <BoldTypography variant="subtitle1">PlayGame</BoldTypography>
-          </Button>
-        </Grid>
-        <Grid item xs={4}>
-          <Button
-            className={classes.twitter}
-            variant="contained"
-            disableElevation
-            fullWidth
-            href={routes.TWITTER}
-            startIcon={<TwitterIcon fontSize="large" />}
-          >
-            <BoldTypography variant="subtitle1">Twitter</BoldTypography>
-          </Button>
-        </Grid>
-        <Grid item xs={4}>
-          <Button
-            className={classes.facebook}
-            variant="contained"
-            disableElevation
-            fullWidth
-            href={routes.FACEBOOK}
-            startIcon={<FacebookIcon fontSize="large" />}
-          >
-            <BoldTypography variant="subtitle1">Facebook</BoldTypography>
-          </Button>
-        </Grid>
+    <Grid container spacing={1}>
+      <Grid item xs={4}>
+        <Button
+          variant="contained"
+          color="primary"
+          disableElevation
+          fullWidth
+          component={RouterLink}
+          to={routes.GAME}
+          startIcon={<SportsEsportsIcon fontSize="large" />}
+        >
+          <BoldTypography variant="subtitle1">PlayGame</BoldTypography>
+        </Button>
       </Grid>
-    </Box>
+      <Grid item xs={4}>
+        <Button
+          className={classes.twitter}
+          variant="contained"
+          disableElevation
+          fullWidth
+          href={routes.TWITTER}
+          startIcon={<TwitterIcon fontSize="large" />}
+        >
+          <BoldTypography variant="subtitle1">Twitter</BoldTypography>
+        </Button>
+      </Grid>
+      <Grid item xs={4}>
+        <Button
+          className={classes.facebook}
+          variant="contained"
+          disableElevation
+          fullWidth
+          href={routes.FACEBOOK}
+          startIcon={<FacebookIcon fontSize="large" />}
+        >
+          <BoldTypography variant="subtitle1">Facebook</BoldTypography>
+        </Button>
+      </Grid>
+    </Grid>
   )
 }
 export default ShareButtons

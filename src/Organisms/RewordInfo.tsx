@@ -30,51 +30,49 @@ export default function RewordInfo() {
     })
   }, [])
   return (
-    <Box pb={5}>
-      <Paper>
-        <Box p={2}>
+    <Paper>
+      <Box p={2}>
+        <Box
+          border={5}
+          borderTop={0}
+          borderRight={0}
+          borderBottom={0}
+          borderColor="primary.main"
+        >
           <Box
-            border={5}
+            border={1}
             borderTop={0}
+            borderLeft={0}
             borderRight={0}
-            borderBottom={0}
-            borderColor="primary.main"
+            borderColor="text.disabled"
+            pl={4}
           >
+            <BoldTypography variant="h5">Reword</BoldTypography>
+          </Box>
+        </Box>
+        <Grid container>
+          <Grid item xs={6}>
             <Box
               border={1}
               borderTop={0}
               borderLeft={0}
-              borderRight={0}
+              borderBottom={0}
               borderColor="text.disabled"
-              pl={4}
+              textAlign="center"
+              py={5}
             >
-              <BoldTypography variant="h5">Reword</BoldTypography>
+              <Typography variant="body1">総合Reword数</Typography>
+              <BoldTypography variant="h4">{scoreTotal}</BoldTypography>
             </Box>
-          </Box>
-          <Grid container>
-            <Grid item xs={6}>
-              <Box
-                border={1}
-                borderTop={0}
-                borderLeft={0}
-                borderBottom={0}
-                borderColor="text.disabled"
-                textAlign="center"
-                py={5}
-              >
-                <Typography variant="body1">総合Reword数</Typography>
-                <BoldTypography variant="h4">{scoreTotal}</BoldTypography>
-              </Box>
-            </Grid>
-            <Grid item xs={6}>
-              <Box textAlign="center" py={5}>
-                <Typography variant="body1">総合正答率</Typography>
-                <BoldTypography variant="h4">{scoreRate}%</BoldTypography>
-              </Box>
-            </Grid>
           </Grid>
-        </Box>
-      </Paper>
-    </Box>
+          <Grid item xs={6}>
+            <Box textAlign="center" py={5}>
+              <Typography variant="body1">総合正答率</Typography>
+              <BoldTypography variant="h4">{scoreRate}%</BoldTypography>
+            </Box>
+          </Grid>
+        </Grid>
+      </Box>
+    </Paper>
   )
 }

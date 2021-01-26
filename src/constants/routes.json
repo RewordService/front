@@ -1,6 +1,8 @@
 {
   "ROOT": "/",
   "HOME": "/home",
+  "CONTACT": "/contact",
+  "POLICY": "/policy",
   "GAME": "/game",
   "SIGNIN": "/signin",
   "SIGNUP": "/signup",

@@ -30,15 +30,15 @@ function App() {
       <Router>
         <Header />
         <Switch>
+          <Route path={routes.ROOT} exact component={Home} />
           <Route path={routes.HOME} exact component={Home} />
           <Route path={routes.GAME} exact component={Game} />
-          <Route path="/Contact" exact component={Contact} />
-          <Route path="/PrivacyPolicy" exact component={PrivacyPolicy} />
+          <Route path={routes.CONTACT} exact component={Contact} />
+          <Route path={routes.POLICY} exact component={PrivacyPolicy} />
           <Route path="/SearchResult" exact component={SearchResult} />
           <Route path={routes.LANDING} exact component={LP} />
           {IsSignedIn() ? (
             <>
-              <Route path="/" exact component={Home} />
               <Route path="/Account/:id" exact component={Account} />
               <Route path="/ProfileEdit" exact component={ProfileEdit} />
               <Route path="/AccountEdit" exact component={AccountEdit} />
@@ -52,7 +52,6 @@ function App() {
               <Route path={routes.SIGNUP} exact component={SignUp} />
             </>
           )}
-          <Route path={routes.ROOT} exact component={Home} />
         </Switch>
         <Footer />
       </Router>

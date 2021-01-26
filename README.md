@@ -5,6 +5,7 @@
 - [react-lottie](https://github.com/chenqingspring/react-lottie)
 - [react-router-dom](https://github.com/ReactTraining/react-router)
 - [react-transition-group](https://github.com/reactjs/react-transition-group)
+- [react-hook-form](https://react-hook-form.com/api#useForm)
 - [styled-components](https://styled-components.com/)
 - [recharts](https://github.com/recharts/recharts)
 - [axios](https://github.com/axios/axios)
