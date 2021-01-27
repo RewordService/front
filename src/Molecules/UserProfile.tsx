@@ -3,15 +3,15 @@ import { useParams } from 'react-router-dom';
 import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
-import { Typography } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
+import Card from '@material-ui/core/Card';
 import BoldTypography from '../components/BoldTypography';
 // scripts
 import { UserInfo } from '../Axios/UsersController';
-import { IUser } from '../interfaces';
 
-export default function UserProfile() {
+const UserProfile: React.FC = () => {
   const params = useParams<{ id: string }>();
-  const [user, setUser] = useState<IUser>({
+  const [user, setUser] = useState({
     id: 0,
     name: '',
     image: { url: '' },
@@ -82,10 +82,25 @@ export default function UserProfile() {
                 {user.rewords && user.rewords[0].total}
               </BoldTypography>
             </Grid>
-            <Typography variant="body1">{user.intro}</Typography>
+            <Box mb={5}>
+              <Typography variant="body1">{user.intro}</Typography>
+            </Box>
           </Grid>
+        </Box>
+        <Box>
+          <Card>
+            <p>aaa</p>
+          </Card>
+          <Card>
+            <p>aaa</p>
+          </Card>
+          <Card>
+            <p>aaa</p>
+          </Card>
         </Box>
       </Box>
     </Paper>
   );
-}
+};
+
+export default UserProfile;

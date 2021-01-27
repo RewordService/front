@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React, { useEffect, useState, useMemo } from 'react';
 import {
@@ -21,7 +20,7 @@ import { UserInfo } from '../Axios/UsersController';
 import Section from '../Atom/Section';
 import UserProfile from '../Molecules/UserProfile';
 
-const calcPercent = (success, total) => {
+const calcPercent = (success: number, total: number) => {
   const result = Math.round((success / total) * 100);
   if (Number.isNaN(result)) return 0;
   if (result > 100) return 100;
@@ -43,7 +42,7 @@ const User: React.FC = () => {
     ],
     []
   );
-  const params = useParams();
+  const params = useParams<{ id: string }>();
   const [rewords, setRewords] = useState(
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     [...Array(8)].map((_, i) => ({
@@ -53,20 +52,23 @@ const User: React.FC = () => {
       percent: 0,
     }))
   );
-
   useEffect(() => {
     UserInfo(params.id)
       .then((res) => {
+        if (!res.rewords) return;
         setRewords(
-          ORDINAL.map((ordinal, i) => ({
-            name: i + 2,
-            total: res.rewords[0][`${ordinal}_total`],
-            correct: res.rewords[0][`${ordinal}_success`],
-            percent: calcPercent(
-              res.rewords[0][`${ordinal}_success`],
-              res.rewords[0][`${ordinal}_total`]
-            ),
-          }))
+          ORDINAL.map((ordinal, i) => {
+            const totalStr = `${ordinal}_total`;
+            const successStr = `${ordinal}_success`;
+            const total = res.rewords[0][totalStr];
+            const success = res.rewords[0][successStr];
+            return {
+              name: i + 2,
+              total,
+              correct: success,
+              percent: calcPercent(total, success),
+            };
+          })
         );
       })
       .catch((err) => console.log(err));
@@ -88,7 +90,6 @@ const User: React.FC = () => {
                   data={rewords}
                   width={730}
                   height={400}
-                  label={{ value: '正答数', position: 'top' }}
                   margin={{
                     top: 20,
                     right: 50,

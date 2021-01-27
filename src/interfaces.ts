@@ -1,8 +1,11 @@
+/* eslint-disable camelcase */
 export interface ISign {
   data: { data: IUser };
   headers: ITokenHeaders;
 }
-
+export interface IRewords {
+  [key: string]: number;
+}
 export interface ITokenHeaders {
   ['content-type']: string;
   accesstoken: string;
@@ -22,6 +25,7 @@ export interface IUser {
   nickname?: string;
   sex?: boolean;
   ['created_date']?: string;
+  rewords?: [IRewords];
 }
 
 export interface ISignInFormValues {

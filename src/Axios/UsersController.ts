@@ -25,7 +25,7 @@ export const totalUsers = (): Promise<IUser[]> =>
   axios.get('/users/total_users').then((res) => res.data);
 
 /* show */
-export const UserInfo = (id: number): Promise<IUser> => {
+export const UserInfo = (id: string): Promise<IUser> => {
   if (IsSignedIn()) {
     /* if loggedin , add header */
     return axios
