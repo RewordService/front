@@ -1,14 +1,14 @@
 import React from 'react';
-//partials
-import {Content} from '../Atom/Content';
-import {Section} from '../Atom/Section';
+// partials
+import Content from '../Atom/Content';
+import Section from '../Atom/Section';
 
-export default function Terms(){
-	return(
-		<Content>
-			<Section>
-				<h2>利用規約</h2>
-					<pre>{`
+const Terms: React.FC = () => (
+  <Content>
+    <Section>
+      <h2>利用規約</h2>
+      <pre>
+        {`
 この利用規約（以下，「本規約」といいます。）は，Reword（以下，「当サービス」といいます。）
 がこのウェブサイト上で提供するサービス（以下，「本サービス」といいます。）の利用条件を定めるものです。
 登録ユーザーの皆さま（以下，「ユーザー」といいます。）には，本規約に従って，本サービスをご利用いただきます。
@@ -102,8 +102,9 @@ export default function Terms(){
 本サービスに関して紛争が生じた場合には，当サービスの本店所在地を管轄する裁判所を専属的合意管轄とします。
 以上
 					`}
-					</pre>
-				</Section>
-		</Content>
-	);
-}
+      </pre>
+    </Section>
+  </Content>
+);
+
+export default Terms;

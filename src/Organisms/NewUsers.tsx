@@ -1,22 +1,35 @@
-import React, {useState, useEffect} from "react"
-import Box from "@material-ui/core/Box"
-import Paper from "@material-ui/core/Paper"
-import PersonAddIcon from "@material-ui/icons/PersonAdd"
-import BoldTypography from "../components/BoldTypography"
-import {newUsers} from "../Axios/UsersController"
-import MiniCard from "../Molecules/MiniCard"
-interface IUser {
-  id: number
-  name: string
-  image: {url: string}
-}
-export default function NewUsers() {
-  const [users, setUsers] = useState<IUser[]>([])
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-floating-promises */
+import React, { useState, useEffect } from 'react';
+import Box from '@material-ui/core/Box';
+import Paper from '@material-ui/core/Paper';
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import BoldTypography from '../components/BoldTypography';
+import { newUsers } from '../Axios/UsersController';
+import MiniCards from '../Molecules/MiniCard';
+import { IUser } from '../interfaces';
+
+const NewUsers: React.FC = () => {
+  const [users, setUsers] = useState<IUser[]>([]);
+
   useEffect(() => {
-    newUsers().then(res => {
-      setUsers(res.data)
-    })
-  }, [])
+    setUsers(
+      [...Array(10)].map(() => ({
+        id: 1,
+        name: 'test',
+        image: { url: '' },
+        created_date: 'created_date',
+        intro: 'aaaaaaaaa',
+        rewords: [{ total: 0 }],
+      }))
+    );
+
+    newUsers().then((res) => {
+      setUsers(res.data);
+    });
+  }, []);
+
   return (
     <Paper>
       <Box p={2}>
@@ -41,18 +54,10 @@ export default function NewUsers() {
             <BoldTypography variant="h5">新規ユーザー</BoldTypography>
           </Box>
         </Box>
-        {users.map(user => {
-          return (
-            <MiniCard
-              className="card"
-              key={user.id}
-              id={user.id}
-              name={user.name}
-              url={user.image.url}
-            />
-          )
-        })}
+        <MiniCards users={users} />
       </Box>
     </Paper>
-  )
-}
+  );
+};
+
+export default NewUsers;

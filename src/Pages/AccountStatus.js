@@ -1,35 +1,33 @@
-import React, {useState, useEffect} from "react"
-import axios from "axios"
-//function
-import CardDelete from "../Axios/CardDelete"
-import {UserInfo, CurrentUser} from "../Axios/UsersController"
-import TokenHeaders from "../Axios/TokenHeaders"
-//partials
-import LeftBar from "../Organisms/LeftBar"
-import {Btn} from "../Atom/Button"
-import {Content} from "../Atom/Content"
-import {Section} from "../Atom/Section"
-import {FlexJustify} from "../Atom/FlexJustify"
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable func-names */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-floating-promises */
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+// function
+import CardDelete from '../Axios/CardDelete';
+import { UserInfo, CurrentUser } from '../Axios/UsersController';
+import TokenHeaders from '../Axios/TokenHeaders';
+// partials
+import LeftBar from '../Organisms/LeftBar';
+import { Btn } from '../Atom/Button';
+import Content from '../Atom/Content';
+import Section from '../Atom/Section';
+import FlexJustify from '../Atom/FlexJustify';
 
-export default function AccountStatus() {
-  const [status, setStatus] = useState(false)
+const AccountStatus: React.FC = () => {
+  const [status, setStatus] = useState(false);
   useEffect(() => {
-    UserInfo(CurrentUser()).then(res => setStatus(res.status))
-  }, [])
-  let TokenPost = async function () {
-    let data = document.getElementsByName("payjp-token")[0].value
+    UserInfo(CurrentUser()).then((res) => setStatus(res.status));
+  }, []);
+  const TokenPost = async function () {
+    const data = document.getElementsByName('payjp-token')[0].value;
     await axios
-      .post("/cards", {"payjp-token": data}, {headers: TokenHeaders()})
-      .then(res => {
-        window.location.reload()
-      })
-  }
-  const payjpCheckoutProps = {
-    dataKey: "pk_test_5337457abf3686ad88ea9371",
-    dataText: "クレジットカードで支払う",
-    dataPartial: "true",
-    onCreatedHandler: TokenPost,
-  }
+      .post('/cards', { 'payjp-token': data }, { headers: TokenHeaders() })
+      .then((res) => {
+        window.location.reload();
+      });
+  };
   return (
     <FlexJustify>
       <LeftBar />
@@ -52,14 +50,13 @@ export default function AccountStatus() {
             ) : (
               <>
                 <h3>無料会員</h3>
-                <p style={{color: "red"}}>
+                <p style={{ color: 'red' }}>
                   ただいま、決済サービスへの申請を行っています。
                 </p>
-                {/*<div style={{textAlign: 'center'}}><PayjpCheckout {...payjpCheckoutProps} /></div>*/}
                 <div>
                   有料会員になることで、アプリケーションをインストールすることができます。
                 </div>
-                <p style={{color: "red"}}>
+                <p style={{ color: 'red' }}>
                   IOSアプリは未対応です。申し訳ございません
                 </p>
               </>
@@ -68,5 +65,7 @@ export default function AccountStatus() {
         </Content>
       </div>
     </FlexJustify>
-  )
-}
+  );
+};
+
+export default AccountStatus;

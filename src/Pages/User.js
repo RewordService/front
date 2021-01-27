@@ -1,4 +1,11 @@
-import React from "react"
+/* eslint-disable no-restricted-globals */
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable react/prop-types */
+/* eslint-disable react/no-unused-state */
+import React from 'react';
 import {
   ResponsiveContainer,
   BarChart,
@@ -8,89 +15,90 @@ import {
   Legend,
   CartesianGrid,
   Tooltip,
-} from "recharts"
-import Paper from "@material-ui/core/Paper"
-import Box from "@material-ui/core/Box"
-import Container from "@material-ui/core/Container"
-//scripts
-import {UserInfo} from "../Axios/UsersController"
-//partials
-import {Section} from "../Atom/Section"
-import UserProfile from "../Molecules/UserProfile"
+} from 'recharts';
+import Paper from '@material-ui/core/Paper';
+import Box from '@material-ui/core/Box';
+import Container from '@material-ui/core/Container';
+// scripts
+import { UserInfo } from '../Axios/UsersController';
+// partials
+import Section from '../Atom/Section';
+import UserProfile from '../Molecules/UserProfile';
 
 export default class Account extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
-      name: " ",
-      created_date: " ",
+      name: '',
+      created_date: '',
       total: 0,
       rewords: [
         {
-          name: "2",
+          name: '2',
           total: 0,
           correct: 0,
           percent: 0,
         },
         {
-          name: "3",
+          name: '3',
           total: 0,
           correct: 0,
           percent: 0,
         },
         {
-          name: "4",
+          name: '4',
           total: 0,
           correct: 0,
           percent: 0,
         },
         {
-          name: "5",
+          name: '5',
           total: 0,
           correct: 0,
           percent: 0,
         },
         {
-          name: "6",
+          name: '6',
           total: 0,
           correct: 0,
           percent: 0,
         },
         {
-          name: "7",
+          name: '7',
           total: 0,
           correct: 0,
           percent: 0,
         },
         {
-          name: "8",
+          name: '8',
           total: 0,
           correct: 0,
           percent: 0,
         },
         {
-          name: "9",
+          name: '9',
           total: 0,
           correct: 0,
           percent: 0,
         },
         {
-          name: "10",
+          name: '10',
           total: 0,
           correct: 0,
           percent: 0,
         },
       ],
-    }
+    };
   }
+
   componentDidMount() {
     UserInfo(this.props.match.params.id)
-      .then(res => {
-        let rewords = res.rewords[0]
+      .then((res) => {
+        const rewords = res.rewords[0];
         this.setState({
           rewords: [
             {
-              name: "2",
+              name: '2',
               total: rewords.second_total,
               correct: rewords.second_success,
               percent: this.calPercent(
@@ -99,7 +107,7 @@ export default class Account extends React.Component {
               ),
             },
             {
-              name: "3",
+              name: '3',
               total: rewords.third_total,
               correct: rewords.third_success,
               percent: this.calPercent(
@@ -108,7 +116,7 @@ export default class Account extends React.Component {
               ),
             },
             {
-              name: "4",
+              name: '4',
               total: rewords.fourth_total,
               correct: rewords.fourth_success,
               percent: this.calPercent(
@@ -117,7 +125,7 @@ export default class Account extends React.Component {
               ),
             },
             {
-              name: "5",
+              name: '5',
               total: rewords.fifth_total,
               correct: rewords.fifth_success,
               percent: this.calPercent(
@@ -126,7 +134,7 @@ export default class Account extends React.Component {
               ),
             },
             {
-              name: "6",
+              name: '6',
               total: rewords.sixth_total,
               correct: rewords.sixth_success,
               percent: this.calPercent(
@@ -135,7 +143,7 @@ export default class Account extends React.Component {
               ),
             },
             {
-              name: "7",
+              name: '7',
               total: rewords.seventh_total,
               correct: rewords.seventh_success,
               percent: this.calPercent(
@@ -144,7 +152,7 @@ export default class Account extends React.Component {
               ),
             },
             {
-              name: "8",
+              name: '8',
               total: rewords.eighth_total,
               correct: rewords.eighth_success,
               percent: this.calPercent(
@@ -153,7 +161,7 @@ export default class Account extends React.Component {
               ),
             },
             {
-              name: "9",
+              name: '9',
               total: rewords.ninth_total,
               correct: rewords.ninth_success,
               percent: this.calPercent(
@@ -162,7 +170,7 @@ export default class Account extends React.Component {
               ),
             },
             {
-              name: "10",
+              name: '10',
               total: rewords.tenth_total,
               correct: rewords.tenth_success,
               percent: this.calPercent(
@@ -171,19 +179,19 @@ export default class Account extends React.Component {
               ),
             },
           ],
-        })
+        });
       })
-      .catch(err => {
-        console.log("ゲームデータがないやん//", err)
-      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   calPercent = (success, total) => {
-    let result = Math.round((success / total) * 100)
-    if (isNaN(result)) return 0
-    if (result > 100) return 100
-    return result
-  }
+    const result = Math.round((success / total) * 100);
+    if (isNaN(result)) return 0;
+    if (result > 100) return 100;
+    return result;
+  };
 
   render() {
     return (
@@ -191,7 +199,7 @@ export default class Account extends React.Component {
         <Box mt={5}>
           <UserProfile id={this.props.match.params.id} />
         </Box>
-        <Box mt={5}>
+        <Box my={5}>
           <Paper>
             <Box p={2}>
               <Section>
@@ -202,19 +210,28 @@ export default class Account extends React.Component {
                     data={this.state.rewords}
                     width={730}
                     height={400}
-                    label={{value: "正答数", position: "top"}}
-                    margin={{top: 20, right: 50, left: 50, bottom: 20}}
+                    label={{ value: '正答数', position: 'top' }}
+                    margin={{
+                      top: 20,
+                      right: 50,
+                      left: 50,
+                      bottom: 20,
+                    }}
                   >
                     <Legend verticalAlign="top" height={36} />
                     <Tooltip />
                     <CartesianGrid stroke="#eee" strokeDasharray="5 5" />
                     <XAxis
                       dataKey="name"
-                      label={{value: "文字数", position: "bottom"}}
+                      label={{ value: '文字数', position: 'bottom' }}
                     />
                     <YAxis
-                      domain={["dataMin", "dataMax"]}
-                      label={{value: "試行回数", angle: -90, position: "left"}}
+                      domain={['dataMin', 'dataMax']}
+                      label={{
+                        value: '試行回数',
+                        angle: -90,
+                        position: 'left',
+                      }}
                     />
                     <Bar
                       type="monotone"
@@ -238,21 +255,26 @@ export default class Account extends React.Component {
                     data={this.state.rewords}
                     width={730}
                     height={400}
-                    margin={{top: 20, right: 50, left: 50, bottom: 20}}
+                    margin={{
+                      top: 20,
+                      right: 50,
+                      left: 50,
+                      bottom: 20,
+                    }}
                   >
                     <Tooltip />
                     <CartesianGrid stroke="#eee" strokeDasharray="5 5" />
                     <XAxis
                       dataKey="name"
-                      label={{value: "文字数", position: "bottom"}}
+                      label={{ value: '文字数', position: 'bottom' }}
                     />
                     <YAxis
                       ticks={[0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]}
                       unit=""
                       label={{
-                        value: "パーセント",
+                        value: 'パーセント',
                         angle: -90,
-                        position: "left",
+                        position: 'left',
                       }}
                     />
                     <Bar
@@ -268,6 +290,6 @@ export default class Account extends React.Component {
           </Paper>
         </Box>
       </Container>
-    )
+    );
   }
 }

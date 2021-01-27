@@ -1,11 +1,6 @@
 import React from 'react';
-//partials
+// partials
 import SignUpForm from '../Organisms/SignUpForm';
 
-export default class SignUp extends React.Component{
-	render(){
-		return(
-			<SignUpForm/>
-		);
-	}
-}
+const SignUp: React.FC = () => <SignUpForm />;
+export default SignUp;

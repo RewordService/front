@@ -1,25 +1,29 @@
-import React from "react"
-import {Controller, useForm} from "react-hook-form"
-import {ErrorMessage} from "@hookform/error-message"
-import Alert from "@material-ui/lab/Alert"
-import TextField from "@material-ui/core/TextField"
-import Paper from "@material-ui/core/Paper"
-import Container from "@material-ui/core/Container"
-import Box from "@material-ui/core/Box"
-import Button from "@material-ui/core/Button"
-import Typography from "@material-ui/core/Typography"
-import errorMessages from "../constants/errorMessages.json"
+import React from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import { ErrorMessage } from '@hookform/error-message';
+import Alert from '@material-ui/lab/Alert';
+import TextField from '@material-ui/core/TextField';
+import Paper from '@material-ui/core/Paper';
+import Container from '@material-ui/core/Container';
+import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import errorMessages from '../constants/errorMessages.json';
 
-const SignInForm = () => {
-  const {control, errors, handleSubmit} = useForm()
+interface FormValues {
+  email: string;
+  password: string;
+}
+const SignInForm: React.FC = () => {
+  const { control, errors, handleSubmit } = useForm<FormValues>();
   const onSubmit = () => {
-    const url = "/api/auth/sign_in"
-    //const data = {
-    //email: this.state.email,
-    //password: this.state.password,
-    //}
-    //AuthPost(data, url).then(res => this.setState({errors: res}))
-  }
+    const url = '/api/auth/sign_in';
+    // const data = {
+    // email: this.state.email,
+    // password: this.state.password,
+    // }
+    // AuthPost(data, url).then(res => this.setState({errors: res}))
+  };
 
   return (
     <Box my={5}>
@@ -49,22 +53,22 @@ const SignInForm = () => {
                         errorMessages.maxLength,
                     },
                   }}
-                  render={({ref, value, onChange}, {invalid}) => (
+                  render={({ ref, value, onChange }, { invalid }) => (
                     <TextField
                       variant="outlined"
                       label="Email"
                       error={invalid}
                       fullWidth
                       inputRef={ref}
-                      value={value}
-                      onChange={e => onChange(e.target.value)}
+                      value={value as string}
+                      onChange={(e) => onChange(e.target.value)}
                     />
                   )}
                 />
                 <ErrorMessage
                   errors={errors}
                   name="email"
-                  render={({message}) => (
+                  render={({ message }) => (
                     <Alert severity="error">{message}</Alert>
                   )}
                 />
@@ -85,26 +89,26 @@ const SignInForm = () => {
                       message:
                         errorMessages.password.text +
                         errorMessages.is +
-                        errorMessages.password.maxLength +
+                        String(errorMessages.password.maxLength) +
                         errorMessages.maxLength,
                     },
                   }}
-                  render={({ref, value, onChange}, {invalid}) => (
+                  render={({ ref, value, onChange }, { invalid }) => (
                     <TextField
                       variant="outlined"
                       label="password"
                       error={invalid}
                       fullWidth
                       inputRef={ref}
-                      value={value}
-                      onChange={e => onChange(e.target.value)}
+                      value={value as string}
+                      onChange={(e) => onChange(e.target.value)}
                     />
                   )}
                 />
                 <ErrorMessage
                   errors={errors}
                   name="password"
-                  render={({message}) => (
+                  render={({ message }) => (
                     <Alert severity="error">{message}</Alert>
                   )}
                 />
@@ -123,7 +127,7 @@ const SignInForm = () => {
         </Paper>
       </Container>
     </Box>
-  )
-}
+  );
+};
 
-export default SignInForm
+export default SignInForm;

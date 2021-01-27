@@ -1,103 +1,108 @@
-import axios from "axios"
-import TokenHeaders from "./TokenHeaders"
-import {AuthDelete} from "./AuthAction"
+/* eslint-disable no-param-reassign */
+/* eslint-disable no-shadow */
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable @typescript-eslint/no-floating-promises */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+import axios from 'axios';
+import TokenHeaders from './TokenHeaders';
+import { AuthDelete } from './AuthAction';
 
 /* helper */
 export function CurrentUser() {
   /* return only id */
-  let id
-  try {
-    id = JSON.parse(localStorage.Reword).data.data.id
-  } catch {}
-  return id
+  const { id } = JSON.parse(localStorage.Reword).data.data;
+  return id;
 }
 
 export function IsSignedIn() {
-  return !!localStorage.getItem("Reword")
+  return !!localStorage.getItem('Reword');
 }
 
 /* index */
-let data
+let data;
 export async function Users(search) {
-  await axios.get("/users", search).then(res => {
-    data = res
-  })
-  return data
+  await axios.get('/users', search).then((res) => {
+    data = res;
+  });
+  return data;
 }
 
 /* new users */
 export async function newUsers() {
-  await axios.get("/users/new_users").then(res => {
-    data = res
-  })
-  return data
+  await axios.get('/users/new_users').then((res) => {
+    data = res;
+  });
+  return data;
 }
 
 /* total users */
 export async function totalUsers() {
-  await axios.get("/users/total_users").then(res => {
-    data = res
-  })
-  return data
+  await axios.get('/users/total_users').then((res) => {
+    data = res;
+  });
+  return data;
 }
 
 /* show */
 export async function UserInfo(id) {
-  let data
+  let data;
   if (IsSignedIn()) {
-    /* if loggedin , add header*/
+    /* if loggedin , add header */
     await axios
-      .get("/users/" + id, TokenHeaders())
-      .then(res => {
-        data = res.data
+      .get(`/users/${id}`, TokenHeaders())
+      .then((res) => {
+        data = res.data;
       })
-      .catch(err => {
-        AuthDelete()
-        console.log(err.response)
-      })
+      .catch((err) => {
+        AuthDelete();
+        console.log(err.response);
+      });
   } else {
-    /* unless loggedin、header none*/
+    /* unless loggedin、header none */
     await axios
-      .get("/users/" + id)
-      .then(res => {
-        data = res.data
+      .get(`/users/${id}`)
+      .then((res) => {
+        data = res.data;
       })
-      .catch(err => {
-        console.log(err.response)
-      })
+      .catch((err) => {
+        console.log(err.response);
+      });
   }
-  return data
+  return data;
 }
 
 /* patch */
 export async function UserPatch(data) {
   await axios
-    .patch("api/auth", data, TokenHeaders())
-    .then(res => {
-      data = res.data
-      let flash = document.getElementById("flash")
-      flash.style.top = "-15px"
+    .patch('api/auth', data, TokenHeaders())
+    .then((res) => {
+      data = res.data;
+      const flash = document.getElementById('flash');
+      flash.style.top = '-15px';
       setTimeout(() => {
-        flash.style.top = "-60px"
-      }, 4000)
+        flash.style.top = '-60px';
+      }, 4000);
     })
-    .catch(err => {
-      AuthDelete()
-    })
-  return data
+    .catch((err) => {
+      AuthDelete();
+    });
+  return data;
 }
 
 /* password patch */
 export async function PasswordPatch(data) {
-  await axios.put("/api/auth/password", data, TokenHeaders()).catch(err => {
-    AuthDelete()
-  })
-  window.location.reload()
+  await axios.put('/api/auth/password', data, TokenHeaders()).catch((err) => {
+    AuthDelete();
+  });
+  window.location.reload();
 }
 
 /* delete */
 export async function UserDelete() {
-  await axios.delete("/cards", TokenHeaders())
-  await axios.delete("/api/auth", TokenHeaders())
-  AuthDelete()
+  await axios.delete('/cards', TokenHeaders());
+  await axios.delete('/api/auth', TokenHeaders());
+  AuthDelete();
 }

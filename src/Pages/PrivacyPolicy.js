@@ -1,14 +1,14 @@
 import React from 'react';
-//partials
-import {Content} from '../Atom/Content';
-import {Section} from '../Atom/Section';
+// partials
+import Content from '../Atom/Content';
+import Section from '../Atom/Section';
 
-export default function PrivacyPolicy (){
-	return(
-		<Content>
-			<Section>
-				<h2>プライバシーポリシー</h2>
-				<pre>{`
+const PrivacyPolicy: React.FC = () => (
+  <Content>
+    <Section>
+      <h2>プライバシーポリシー</h2>
+      <pre>
+        {`
 Reword（以下，「当サービス」といいます。）は，本ウェブサイト上で提供するサービス（以下,「本サービス」といいます。）における，ユーザーの個人情報の取扱いについて，以下のとおりプライバシーポリシー（以下，「本ポリシー」といいます。）を定めます。
 
 第1条（個人情報）
@@ -66,8 +66,10 @@ Reword（以下，「当サービス」といいます。）は，本ウェブ�
 当サービスが別途定める場合を除いて，変更後のプライバシーポリシーは，本ウェブサイトに掲載したときから効力を生じるものとします。
 第10条（お問い合わせ窓口）
 本ポリシーに関するお問い合わせは，下記の窓口までお願いいたします。
-				`}</pre>
-			</Section>
-		</Content>
-	);
-}
+				`}
+      </pre>
+    </Section>
+  </Content>
+);
+
+export default PrivacyPolicy;

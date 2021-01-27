@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import Color from '../Assets/Color';
 
-export const Input =  styled.input`
+export const Input = styled.input`
 	display: block;
 	padding: 12px 16px;
 	width: 90%;
@@ -12,7 +12,7 @@ export const Input =  styled.input`
 	&:focus{
 		border: 1px solid ${Color.blue2};
 	}
-`
+`;
 
 export const Search = styled.input`
 	width: 300px;
@@ -34,4 +34,4 @@ export const Search = styled.input`
 	@media screen and (max-width: 600px) {
 		display:none;
 	}
-`
+`;

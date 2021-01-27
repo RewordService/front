@@ -1,34 +1,39 @@
-import React, {useState, useEffect, useRef} from "react"
-import Box from "@material-ui/core/Box"
-import Grid from "@material-ui/core/Grid"
-import Typography from "@material-ui/core/Typography"
-import Paper from "@material-ui/core/Paper"
-import {GameIndex} from "../Axios/GamePost"
-import BoldTypography from "../components/BoldTypography"
+/* eslint-disable @typescript-eslint/await-thenable */
+/* eslint-disable @typescript-eslint/no-misused-promises */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-floating-promises */
+/* eslint-disable no-console */
+import React, { useState, useEffect, useRef } from 'react';
+import Box from '@material-ui/core/Box';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import Paper from '@material-ui/core/Paper';
+import { GameIndex } from '../Axios/GamePost';
+import BoldTypography from '../components/BoldTypography';
 
 export default function RewordInfo() {
-  const [scoreTotal, setScoreTotal] = useState(0)
-  const [scoreRate, setScoreRate] = useState(0)
-  const refScoreTotal = useRef(scoreTotal)
-  const refScoreRate = useRef(scoreRate)
+  const [scoreTotal, setScoreTotal] = useState(0);
+  const [scoreRate, setScoreRate] = useState(0);
+  const refScoreTotal = useRef(scoreTotal);
+  const refScoreRate = useRef(scoreRate);
 
   useEffect(() => {
-    GameIndex().then(res => {
-      console.log(res)
-      let timer = setInterval(async () => {
-        await setScoreTotal(score => score + 1)
-        if (res.score_total < refScoreTotal.current) clearInterval(timer)
-      }, 10)
+    GameIndex().then((res) => {
+      console.log(res);
+      const timer = setInterval(async () => {
+        await setScoreTotal((score) => score + 1);
+        if (res.score_total < refScoreTotal.current) clearInterval(timer);
+      }, 10);
 
-      let timer1 = setInterval(() => {
-        setScoreRate(score => score + 1)
+      const timer1 = setInterval(() => {
+        setScoreRate((score) => score + 1);
         if (res.score_rate < refScoreRate.current) {
-          clearInterval(timer1)
-          setScoreRate(res.score_rate)
+          clearInterval(timer1);
+          setScoreRate(res.score_rate);
         }
-      }, 10)
-    })
-  }, [])
+      }, 10);
+    });
+  }, []);
   return (
     <Paper>
       <Box p={2}>
@@ -74,5 +79,5 @@ export default function RewordInfo() {
         </Grid>
       </Box>
     </Paper>
-  )
+  );
 }

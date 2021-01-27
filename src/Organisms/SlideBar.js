@@ -1,23 +1,27 @@
-import React, {useState, useEffect} from "react"
-import styled from "styled-components"
-import Color from "../Assets/Color"
-import ads from "../Assets/ad.js"
+/* eslint-disable import/extensions */
+/* eslint-disable @typescript-eslint/no-empty-function */
+/* eslint-disable @typescript-eslint/no-use-before-define */
+/* eslint-disable no-shadow */
+import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
+import Color from '../Assets/Color';
+import ads from '../Assets/ad.js';
 
 export default function SlideBar() {
-  let max = ads.ads.length
-  let i = Math.floor(Math.random() * max)
-  const [title, setTitle] = useState(ads.ads[i].title)
-  const [url, setURL] = useState("")
+  const max = ads.ads.length;
+  const i = Math.floor(Math.random() * max);
+  const [title, setTitle] = useState(ads.ads[i].title);
+  const [url, setURL] = useState('');
   useEffect(() => {
     document.onanimationiteration = () => {
-      let max = ads.ads.length
-      let i = Math.floor(Math.random() * max)
-      setTitle(ads.ads[i].title)
-      setURL(ads.ads[i].url)
-    }
+      const max = ads.ads.length;
+      const i = Math.floor(Math.random() * max);
+      setTitle(ads.ads[i].title);
+      setURL(ads.ads[i].url);
+    };
 
-    return () => {}
-  }, [])
+    return () => {};
+  }, []);
 
   return (
     <Container>
@@ -27,7 +31,7 @@ export default function SlideBar() {
       </a>
       <div className="right" />
     </Container>
-  )
+  );
 }
 
 const Container = styled.div`
@@ -101,4 +105,4 @@ const Container = styled.div`
       right: 100%;
     }
   }
-`
+`;

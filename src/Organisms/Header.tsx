@@ -1,56 +1,58 @@
-import React, {useState, KeyboardEvent, ChangeEvent} from "react"
-import {Link as RouterLink, useHistory} from "react-router-dom"
-import {createStyles, makeStyles, Theme} from "@material-ui/core/styles"
-import AppBar from "@material-ui/core/AppBar"
-import Toolbar from "@material-ui/core/Toolbar"
-import Typography from "@material-ui/core/Typography"
-import Link from "@material-ui/core/Link"
-import Button from "@material-ui/core/Button"
-import TextField from "@material-ui/core/TextField"
-import Grid from "@material-ui/core/Grid"
-import Box from "@material-ui/core/Box"
-import Hidden from "@material-ui/core/Hidden"
-import IconButton from "@material-ui/core/IconButton"
-import Drawer from "@material-ui/core/Drawer"
-import List from "@material-ui/core/List"
-import Divider from "@material-ui/core/Divider"
-import ListItem from "@material-ui/core/ListItem"
-import ListItemIcon from "@material-ui/core/ListItemIcon"
-import ListItemText from "@material-ui/core/ListItemText"
-import LabelImportantIcon from "@material-ui/icons/LabelImportant"
-import SearchIcon from "@material-ui/icons/Search"
-import MenuIcon from "@material-ui/icons/Menu"
-import HomeIcon from "@material-ui/icons/Home"
-import SportsEsportsIcon from "@material-ui/icons/SportsEsports"
-//scripts
-import {IsSignedIn} from "../Axios/UsersController"
-//partials
-import routes from "../constants/routes.json"
+import React, { useState, KeyboardEvent, ChangeEvent } from 'react';
+import { Link as RouterLink, useHistory } from 'react-router-dom';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import Link from '@material-ui/core/Link';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
+import Hidden from '@material-ui/core/Hidden';
+import IconButton from '@material-ui/core/IconButton';
+import Drawer from '@material-ui/core/Drawer';
+import List from '@material-ui/core/List';
+import Divider from '@material-ui/core/Divider';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import LabelImportantIcon from '@material-ui/icons/LabelImportant';
+import SearchIcon from '@material-ui/icons/Search';
+import MenuIcon from '@material-ui/icons/Menu';
+import HomeIcon from '@material-ui/icons/Home';
+import SportsEsportsIcon from '@material-ui/icons/SportsEsports';
+// scripts
+import { IsSignedIn } from '../Axios/UsersController';
+// partials
+import routes from '../constants/routes.json';
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      "& > *": {
+      '& > *': {
         margin: theme.spacing(1),
       },
     },
   })
-)
-function Header() {
-  const [search, setSearch] = useState("")
-  const [open, setOpen] = useState(false)
-  const history = useHistory()
-  const classes = useStyles()
+);
+const Header: React.FC = () => {
+  const [search, setSearch] = useState('');
+  const [open, setOpen] = useState(false);
+  const history = useHistory();
+  const classes = useStyles();
   const handleKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter")
+    if (e.key === 'Enter') {
       history.push({
-        pathname: "SearchResult",
-        state: {name_cont: search},
-      })
-  }
-  const handleCloseDrawer = () => setOpen(false)
-  const handleOpenDrawer = () => setOpen(true)
+        pathname: 'SearchResult',
+        state: { name_cont: search },
+      });
+    }
+  };
+  const handleCloseDrawer = () => setOpen(false);
+  const handleOpenDrawer = () => setOpen(true);
   const handleChange = (e: ChangeEvent<HTMLInputElement>) =>
-    setSearch(e.target.value)
+    setSearch(e.target.value);
 
   const list = () => (
     <Box
@@ -90,7 +92,7 @@ function Header() {
         )}
       </List>
     </Box>
-  )
+  );
 
   return (
     <AppBar color="default" position="sticky">
@@ -174,7 +176,7 @@ function Header() {
         </Hidden>
       </Toolbar>
     </AppBar>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

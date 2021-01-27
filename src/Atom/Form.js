@@ -13,14 +13,14 @@ export const Form = styled.form`
 	@media screen and (max-width: 1000px){
 		width: 80%;
 	}
-`
+`;
 
 export const FormGroup = styled.div`
 	margin: 15px 0;
-`
+`;
 
 export const FormSection = styled.div`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-`
+`;

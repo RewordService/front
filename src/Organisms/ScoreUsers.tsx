@@ -1,23 +1,34 @@
-import React, {useState, useEffect} from "react"
-import Box from "@material-ui/core/Box"
-import Paper from "@material-ui/core/Paper"
-import EqualizerIcon from "@material-ui/icons/Equalizer"
-import BoldTypography from "../components/BoldTypography"
-import {totalUsers} from "../Axios/UsersController"
-import MiniCard from "../Molecules/MiniCard"
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-floating-promises */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+import React, { useState, useEffect } from 'react';
+import Box from '@material-ui/core/Box';
+import Paper from '@material-ui/core/Paper';
+import EqualizerIcon from '@material-ui/icons/Equalizer';
+import BoldTypography from '../components/BoldTypography';
+import { totalUsers } from '../Axios/UsersController';
+import MiniCards from '../Molecules/MiniCard';
 
 interface IUser {
-  id: number
-  name: string
-  image: {url: string}
+  id: number;
+  name: string;
+  image: { url: string };
 }
-export default function TotalUsers() {
-  const [users, setUsers] = useState<IUser[]>([])
+const ScoreUsers: React.FC = () => {
+  const [users, setUsers] = useState<IUser[]>([]);
   useEffect(() => {
-    totalUsers().then(res => {
-      setUsers(res.data)
-    })
-  }, [])
+    setUsers(
+      [...Array(10)].map(() => ({
+        id: 1,
+        name: 'test',
+        image: { url: '' },
+        created_date: 'created_date',
+        intro: 'aaaaaaaaa',
+        rewords: [{ total: 0 }],
+      }))
+    );
+    totalUsers().then((res) => setUsers(res.data));
+  }, []);
 
   return (
     <Paper>
@@ -43,20 +54,9 @@ export default function TotalUsers() {
             <BoldTypography variant="h5">スコアランキング</BoldTypography>
           </Box>
         </Box>
-        {users.map((user, i) => {
-          return (
-            <div key={user.id} style={{margin: "0", textAlign: "center"}}>
-              {i < 3 ? (
-                <i className="fas fa-crown" />
-              ) : (
-                <i className="fas fa-thumbs-up" />
-              )}
-              <h3 style={{margin: "0"}}>{i + 1}位</h3>
-              <MiniCard id={user.id} name={user.name} url={user.image.url} />
-            </div>
-          )
-        })}
+        <MiniCards users={users} />
       </Box>
     </Paper>
-  )
-}
+  );
+};
+export default ScoreUsers;

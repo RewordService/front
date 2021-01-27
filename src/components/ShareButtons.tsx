@@ -1,28 +1,28 @@
-import React from "react"
-import {Link as RouterLink} from "react-router-dom"
-import {makeStyles} from "@material-ui/core/styles"
-import Button from "@material-ui/core/Button"
-import Grid from "@material-ui/core/Grid"
-import Box from "@material-ui/core/Box"
-import TwitterIcon from "@material-ui/icons/Twitter"
-import FacebookIcon from "@material-ui/icons/Facebook"
-import SportsEsportsIcon from "@material-ui/icons/SportsEsports"
-import routes from "../constants/routes.json"
-import BoldTypography from "../components/BoldTypography"
-const useStyles = makeStyles(theme => ({
+import React from 'react';
+import { Link as RouterLink } from 'react-router-dom';
+import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+import TwitterIcon from '@material-ui/icons/Twitter';
+import FacebookIcon from '@material-ui/icons/Facebook';
+import SportsEsportsIcon from '@material-ui/icons/SportsEsports';
+import routes from '../constants/routes.json';
+import BoldTypography from './BoldTypography';
+
+const useStyles = makeStyles((theme) => ({
   twitter: {
-    color: "white",
+    color: 'white',
     background: theme.palette.twitter.main,
-    "&:hover": {background: theme.palette.twitter.dark},
+    '&:hover': { background: theme.palette.twitter.dark },
   },
   facebook: {
-    color: "white",
+    color: 'white',
     background: theme.palette.facebook.main,
-    "&:hover": {background: theme.palette.facebook.dark},
+    '&:hover': { background: theme.palette.facebook.dark },
   },
-}))
+}));
 const ShareButtons = () => {
-  const classes = useStyles()
+  const classes = useStyles();
   return (
     <Grid container spacing={1}>
       <Grid item xs={4}>
@@ -63,6 +63,6 @@ const ShareButtons = () => {
         </Button>
       </Grid>
     </Grid>
-  )
-}
-export default ShareButtons
+  );
+};
+export default ShareButtons;

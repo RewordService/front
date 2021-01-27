@@ -1,7 +1,7 @@
-import styled from 'styled-components'
-import Color  from '../Assets/Color';
+import styled from 'styled-components';
+import Color from '../Assets/Color';
 
-//normal
+// normal
 export const Btn = styled.input`
 	padding: 10px 15px;
 	border-radius: 5px;
@@ -14,13 +14,13 @@ export const Btn = styled.input`
 		transition: 0.3s ease;
 		background: #83438f;
 	}
-`
+`;
 export const AlertBtn = styled(Btn)`
 	background: ${Color.red};
 	&:hover{
 		background: red;
 	}	
-`
+`;
 // Large Btn
 export const BtnLG = styled.div`
 	display: inline;
@@ -32,7 +32,7 @@ export const BtnLG = styled.div`
 	font-weight: bold;
 	cursor: pointer;
 	transition: ease 0.4s;
-`
+`;
 
 export const SignUpBtn = styled(BtnLG)`
 	color: white;
@@ -40,7 +40,7 @@ export const SignUpBtn = styled(BtnLG)`
 	&:hover{
 		background: #4cd0f5;
 	}
-`
+`;
 
 export const SignInBtn = styled(BtnLG)`
 	color: #0fabff;
@@ -49,7 +49,7 @@ export const SignInBtn = styled(BtnLG)`
 	&:hover{
 		background:#e8e8e8;
 	}
-`
+`;
 
 // navigation btn
 export const NavBtn = styled.div`
@@ -59,7 +59,7 @@ export const NavBtn = styled.div`
 		padding: 8px;
 		color : white;
 	}
-`
+`;
 export const FillNavBtn = styled(NavBtn)`
 	a{
 		background: white;
@@ -74,7 +74,7 @@ export const FillNavBtn = styled(NavBtn)`
 			cursor:pointer;
 		}
 	}
-`
+`;
 export const PostBtn = styled.input`
 	width: 20%;
 	background: ${Color.blue};
@@ -87,5 +87,4 @@ export const PostBtn = styled.input`
 		background: ${Color.blue2};
 	}
 
-`
-
+`;

@@ -1,15 +1,15 @@
-import React from "react"
-import styled from "styled-components"
-import Container from "@material-ui/core/Container"
-import Box from "@material-ui/core/Box"
-import ShareButtons from "../components/ShareButtons"
-import img from "../Assets/Img/home.jpg"
-import NewUsers from "../Organisms/NewUsers"
-import TotalUsers from "../Organisms/ScoreUsers"
-import SlideBar from "../Organisms/SlideBar"
-import LeftBar from "../Organisms/LeftBar"
-import News from "../Organisms/News"
-import RewordInfo from "../Organisms/RewordInfo"
+import React from 'react';
+import styled from 'styled-components';
+import Container from '@material-ui/core/Container';
+import Box from '@material-ui/core/Box';
+import ShareButtons from '../components/ShareButtons';
+import img from '../Assets/Img/home.jpg';
+import NewUsers from '../Organisms/NewUsers';
+import TotalUsers from '../Organisms/ScoreUsers';
+import SlideBar from '../Organisms/SlideBar';
+import LeftBar from '../Organisms/LeftBar';
+import News from '../Organisms/News';
+import RewordInfo from '../Organisms/RewordInfo';
 
 const Home = () => (
   <>
@@ -38,7 +38,7 @@ const Home = () => (
       </Box>
     </Container>
   </>
-)
+);
 
 const Img = styled.div`
   position: relative;
@@ -95,5 +95,5 @@ const Img = styled.div`
       display: none;
     }
   }
-`
-export default Home
+`;
+export default Home;
