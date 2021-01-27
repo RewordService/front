@@ -10,30 +10,21 @@ import { UserInfo } from '../Axios/UsersController';
 import { IUser } from '../interfaces';
 
 export default function UserProfile() {
-  const params = useParams();
+  const params = useParams<{ id: string }>();
   const [user, setUser] = useState<IUser>({
     id: 0,
     name: '',
     image: { url: '' },
-    createdDate: '',
+    created_date: '',
     intro: '',
     rewords: [{ total: 0 }],
   });
 
   useEffect(() => {
-    // UserInfo(params)
-    /// /@ts-ignore
-    // .then(res => setUser(res as IUser))
-    // .catch(err => console.log(err))
-    setUser({
-      id: 1,
-      name: 'test',
-      image: { url: '' },
-      createdDate: 'created_date',
-      intro: 'aaaaaaaaa',
-      rewords: [{ total: 0 }],
-    });
-  }, [params]);
+    UserInfo(params.id)
+      .then((res) => setUser(res))
+      .catch((err) => console.log(err));
+  }, [params.id]);
 
   return (
     <Paper>
@@ -61,13 +52,29 @@ export default function UserProfile() {
         <Box textAlign="center">
           <Grid container>
             <Grid item xs={4}>
-              <Typography variant="body1">ユーザー名</Typography>
-              <BoldTypography>{user.name}</BoldTypography>
+              <Box
+                border={1}
+                borderTop={0}
+                borderBottom={0}
+                borderLeft={0}
+                borderColor="text.disabled"
+              >
+                <Typography variant="body1">ユーザー名</Typography>
+                <BoldTypography>{user.name}</BoldTypography>
+              </Box>
             </Grid>
 
             <Grid item xs={4}>
-              <Typography variant="body1">Reword開始日</Typography>
-              <BoldTypography>{user.createdDate}</BoldTypography>
+              <Box
+                border={1}
+                borderTop={0}
+                borderBottom={0}
+                borderLeft={0}
+                borderColor="text.disabled"
+              >
+                <Typography variant="body1">Reword開始日</Typography>
+                <BoldTypography>{user.created_date}</BoldTypography>
+              </Box>
             </Grid>
             <Grid item xs={4}>
               <Typography variant="body1">トータルスコア</Typography>

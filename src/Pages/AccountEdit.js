@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable @typescript-eslint/no-floating-promises */
 import React, { useState, useEffect } from 'react';
@@ -17,7 +19,6 @@ import FlexJustify from '../Atom/FlexJustify';
 import Content from '../Atom/Content';
 import Section from '../Atom/Section';
 import FlashCard from '../Atom/Flash';
-import LeftBar from '../Organisms/LeftBar';
 
 const AccountEdit: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -59,7 +60,6 @@ const AccountEdit: React.FC = () => {
   return (
     <FlexJustify>
       <FlashCard />
-      <LeftBar />
       <div>
         <Content>
           <Section>

@@ -1,41 +1,62 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import React from 'react';
-import { Controller, useForm, SubmitHandler } from 'react-hook-form';
-import { useHistory } from 'react-router-dom';
+import axios from 'axios';
+import { Controller, useForm } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
-import Alert from '@material-ui/lab/Alert';
-import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
+import TextField from '@material-ui/core/TextField';
+import Alert from '@material-ui/lab/Alert';
 import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import { Sign } from '../Axios/AuthController';
+import { Email } from '@material-ui/icons';
+import BoldTypography from '../components/BoldTypography';
 import errorMessages from '../constants/errorMessages.json';
-import routes from '../constants/routes.json';
-import { SignInFormValues } from '../interfaces';
 
-const SignInForm: React.FC = () => {
-  const history = useHistory();
-  const { control, errors, handleSubmit } = useForm<SignInFormValues>();
-  const onSubmit = (data: SubmitHandler<SignInFormValues>) => {
-    const url = '/api/auth/sign_in';
-    Sign(data, url)
-      .then(() => history.push(routes.HOME))
-      .catch((err) => console.log(err));
-  };
+const Contact: React.FC = () => {
+  const { control, errors, handleSubmit } = useForm();
+
+  async function onSubmit() {
+    // await axios
+    // .post('/contacts', data)
+    // .then((res) => {
+    // console.log(res);
+    // })
+    // .catch((err) => {
+    // });
+  }
 
   return (
-    <Box my={5}>
-      <Container maxWidth="xs">
+    <Container>
+      <Box my={5}>
         <Paper>
           <Box p={2}>
-            <Typography variant="h4" align="center" gutterBottom>
-              SignIn
-            </Typography>
+            <Box
+              border={5}
+              borderTop={0}
+              borderRight={0}
+              borderBottom={0}
+              borderColor="primary.main"
+            >
+              <Box
+                display="flex"
+                alignItems="center"
+                border={1}
+                borderTop={0}
+                borderLeft={0}
+                borderRight={0}
+                borderColor="text.disabled"
+                pl={4}
+              >
+                <Box display="flex" alignItems="center">
+                  <Email />
+                </Box>
+                <BoldTypography variant="h5">
+                  お問い合わせフォーム
+                </BoldTypography>
+              </Box>
+            </Box>
             <form onSubmit={handleSubmit(onSubmit)}>
-              <Box mb={2}>
+              <Box mt={2}>
                 <Controller
                   name="email"
                   control={control}
@@ -75,32 +96,33 @@ const SignInForm: React.FC = () => {
                   )}
                 />
               </Box>
-              <Box mb={2}>
+              <Box my={2}>
                 <Controller
-                  name="password"
+                  name="contact"
                   control={control}
                   defaultValue=""
                   rules={{
                     required: {
                       value: true,
                       message:
-                        errorMessages.password.text + errorMessages.required,
+                        errorMessages.contact.text + errorMessages.required,
                     },
                     maxLength: {
-                      value: errorMessages.password.maxLength,
+                      value: errorMessages.contact.maxLength,
                       message:
-                        errorMessages.password.text +
+                        errorMessages.contact.text +
                         errorMessages.is +
-                        String(errorMessages.password.maxLength) +
+                        String(errorMessages.contact.maxLength) +
                         errorMessages.maxLength,
                     },
                   }}
                   render={({ ref, value, onChange }, { invalid }) => (
                     <TextField
-                      type="password"
                       variant="outlined"
-                      label="password"
+                      label="Contact"
                       error={invalid}
+                      multiline
+                      rows={10}
                       fullWidth
                       inputRef={ref}
                       value={value as string}
@@ -110,7 +132,7 @@ const SignInForm: React.FC = () => {
                 />
                 <ErrorMessage
                   errors={errors}
-                  name="password"
+                  name="contact"
                   render={({ message }) => (
                     <Alert severity="error">{message}</Alert>
                   )}
@@ -123,14 +145,14 @@ const SignInForm: React.FC = () => {
                 disableElevation
                 fullWidth
               >
-                SignIn
+                Submit
               </Button>
             </form>
           </Box>
         </Paper>
-      </Container>
-    </Box>
+      </Box>
+    </Container>
   );
 };
 
-export default SignInForm;
+export default Contact;

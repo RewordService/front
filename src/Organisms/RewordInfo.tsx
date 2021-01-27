@@ -1,9 +1,4 @@
-/* eslint-disable @typescript-eslint/await-thenable */
-/* eslint-disable @typescript-eslint/no-misused-promises */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-floating-promises */
-/* eslint-disable no-console */
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -11,28 +6,13 @@ import Paper from '@material-ui/core/Paper';
 import { GameIndex } from '../Axios/GamePost';
 import BoldTypography from '../components/BoldTypography';
 
-export default function RewordInfo() {
-  const [scoreTotal, setScoreTotal] = useState(0);
-  const [scoreRate, setScoreRate] = useState(0);
-  const refScoreTotal = useRef(scoreTotal);
-  const refScoreRate = useRef(scoreRate);
+const RewordInfo: React.FC = () => {
+  const [score, setScore] = useState({ score_total: 0, score_rate: 0 });
 
   useEffect(() => {
-    GameIndex().then((res) => {
-      console.log(res);
-      const timer = setInterval(async () => {
-        await setScoreTotal((score) => score + 1);
-        if (res.score_total < refScoreTotal.current) clearInterval(timer);
-      }, 10);
-
-      const timer1 = setInterval(() => {
-        setScoreRate((score) => score + 1);
-        if (res.score_rate < refScoreRate.current) {
-          clearInterval(timer1);
-          setScoreRate(res.score_rate);
-        }
-      }, 10);
-    });
+    GameIndex()
+      .then((res) => setScore(res))
+      .catch((err) => console.log(err));
   }, []);
   return (
     <Paper>
@@ -67,17 +47,19 @@ export default function RewordInfo() {
               py={5}
             >
               <Typography variant="body1">総合Reword数</Typography>
-              <BoldTypography variant="h4">{scoreTotal}</BoldTypography>
+              <BoldTypography variant="h4">{score.score_total}</BoldTypography>
             </Box>
           </Grid>
           <Grid item xs={6}>
             <Box textAlign="center" py={5}>
               <Typography variant="body1">総合正答率</Typography>
-              <BoldTypography variant="h4">{scoreRate}%</BoldTypography>
+              <BoldTypography variant="h4">{score.score_rate}%</BoldTypography>
             </Box>
           </Grid>
         </Grid>
       </Box>
     </Paper>
   );
-}
+};
+
+export default RewordInfo;

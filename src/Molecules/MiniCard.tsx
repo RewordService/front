@@ -5,10 +5,11 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
+import LinearProgress from '@material-ui/core/LinearProgress';
 import { IUser } from '../interfaces';
 import routes from '../constants/routes.json';
 
-const MiniCard = ({ id, name, image }: IUser) => {
+const MiniCard = ({ user: { id, name, image } }: { user: IUser }) => {
   const history = useHistory();
   const handleClick = () => {
     history.push({
@@ -21,7 +22,7 @@ const MiniCard = ({ id, name, image }: IUser) => {
         <CardActionArea onClick={handleClick}>
           <Box width={100} height={80} my={3}>
             <Box display="flex" justifyContent="center">
-              <Avatar alt={name} src={image && image.url} />
+              <Avatar alt={name} src={image?.url} />
             </Box>
             <Box m={2}>
               <Typography align="center" noWrap>
@@ -34,10 +35,21 @@ const MiniCard = ({ id, name, image }: IUser) => {
     </Box>
   );
 };
-const MiniCards = ({ users }: {users: IUser[]}) => {
-  const cardItems = users.map(({ id, name, image }) => (
-    <MiniCard key={id} id={id} name={name} image={image} />
-  ));
+const MiniCards: React.FC<{ users: IUser[]; loading: boolean }> = ({
+  users,
+  loading,
+}: {
+  users: IUser[];
+  loading: boolean;
+}) => {
+  const cardItems = users.map((user) => <MiniCard key={user.id} user={user} />);
+  if (loading) {
+    return (
+      <Box py={5}>
+        <LinearProgress />
+      </Box>
+    );
+  }
   return (
     <Box display="flex" overflow="auto">
       {cardItems}

@@ -7,7 +7,6 @@ import React, { useEffect, useState } from 'react';
 import { UserPatch, UserInfo, CurrentUser } from '../Axios/UsersController';
 // partials
 import FlashCard from '../Atom/Flash';
-import LeftBar from '../Organisms/LeftBar';
 import { Btn } from '../Atom/Button';
 import Content from '../Atom/Content';
 import FlexJustify from '../Atom/FlexJustify';
@@ -49,7 +48,6 @@ const ProfileEdit: React.FC = () => {
   return (
     <FlexJustify>
       <FlashCard />
-      <LeftBar />
       <div>
         <Content>
           <Section>

@@ -7,11 +7,10 @@ import img from '../Assets/Img/home.jpg';
 import NewUsers from '../Organisms/NewUsers';
 import TotalUsers from '../Organisms/ScoreUsers';
 import SlideBar from '../Organisms/SlideBar';
-import LeftBar from '../Organisms/LeftBar';
 import News from '../Organisms/News';
 import RewordInfo from '../Organisms/RewordInfo';
 
-const Home = () => (
+const Home: React.FC = () => (
   <>
     <Img>
       <p>Rewordを継続して能力開発を行う。</p>
@@ -26,9 +25,6 @@ const Home = () => (
       </Box>
       <Box mt={5}>
         <News />
-      </Box>
-      <Box mt={5}>
-        <LeftBar />
       </Box>
       <Box mt={5}>
         <NewUsers />
@@ -50,7 +46,7 @@ const Img = styled.div`
   background-size: cover;
   background-position: center;
   &::before {
-    content: "ワーキングメモリを鍛えよう!";
+    content: 'ワーキングメモリを鍛えよう!';
     position: relative;
     z-index: 1;
     padding: 10px;
@@ -62,7 +58,7 @@ const Img = styled.div`
     font-size: 30px;
   }
   &::after {
-    content: "";
+    content: '';
     position: absolute;
     top: 0;
     bottom: 0;

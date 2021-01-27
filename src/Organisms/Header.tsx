@@ -22,9 +22,9 @@ import SearchIcon from '@material-ui/icons/Search';
 import MenuIcon from '@material-ui/icons/Menu';
 import HomeIcon from '@material-ui/icons/Home';
 import SportsEsportsIcon from '@material-ui/icons/SportsEsports';
-// scripts
-import { IsSignedIn } from '../Axios/UsersController';
-// partials
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import { IsSignedIn, CurrentUser } from '../Axios/UsersController';
+import { SignOut } from '../Axios/AuthController';
 import routes from '../constants/routes.json';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -36,23 +36,25 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   })
 );
+
 const Header: React.FC = () => {
   const [search, setSearch] = useState('');
   const [open, setOpen] = useState(false);
   const history = useHistory();
   const classes = useStyles();
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) =>
+    setSearch(e.target.value);
   const handleKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       history.push({
-        pathname: 'SearchResult',
+        pathname: routes.SEARCH,
         state: { name_cont: search },
       });
     }
   };
   const handleCloseDrawer = () => setOpen(false);
   const handleOpenDrawer = () => setOpen(true);
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) =>
-    setSearch(e.target.value);
+  const handleSignOut = (): void => SignOut();
 
   const list = () => (
     <Box
@@ -74,6 +76,14 @@ const Header: React.FC = () => {
           <ListItemText primary="Game" />
         </ListItem>
       </List>
+      <Divider />
+      {IsSignedIn() && (
+        <List>
+          <ListItem button component={RouterLink} to={routes.MYPAGE}>
+            <ListItemText primary="MyPage" />
+          </ListItem>
+        </List>
+      )}
       <Divider />
       <List>
         {IsSignedIn() ? (
@@ -111,7 +121,7 @@ const Header: React.FC = () => {
             color="inherit"
             underline="none"
             component={RouterLink}
-            to={IsSignedIn() ? routes.HOME : routes.LANDING}
+            to={routes.LANDING}
           >
             REWORD
           </Link>
@@ -131,6 +141,7 @@ const Header: React.FC = () => {
                 component={RouterLink}
                 to={routes.SIGNOUT}
                 disableElevation
+                onClick={handleSignOut}
               >
                 SignOut
               </Button>
@@ -173,6 +184,14 @@ const Header: React.FC = () => {
               </Grid>
             </Grid>
           </Box>
+          {IsSignedIn() && (
+            <IconButton
+              component={RouterLink}
+              to={`${routes.USERS}/${CurrentUser()}`}
+            >
+              <AccountCircleIcon fontSize="large" />
+            </IconButton>
+          )}
         </Hidden>
       </Toolbar>
     </AppBar>

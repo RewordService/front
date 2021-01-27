@@ -16,18 +16,13 @@ interface IUser {
 }
 const ScoreUsers: React.FC = () => {
   const [users, setUsers] = useState<IUser[]>([]);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
-    setUsers(
-      [...Array(10)].map(() => ({
-        id: 1,
-        name: 'test',
-        image: { url: '' },
-        created_date: 'created_date',
-        intro: 'aaaaaaaaa',
-        rewords: [{ total: 0 }],
-      }))
-    );
-    totalUsers().then((res) => setUsers(res.data));
+    totalUsers().then((res) => {
+      setUsers(res);
+      setLoading(false);
+    });
   }, []);
 
   return (
@@ -54,7 +49,7 @@ const ScoreUsers: React.FC = () => {
             <BoldTypography variant="h5">スコアランキング</BoldTypography>
           </Box>
         </Box>
-        <MiniCards users={users} />
+        <MiniCards users={users} loading={loading} />
       </Box>
     </Paper>
   );

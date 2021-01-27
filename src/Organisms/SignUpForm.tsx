@@ -10,13 +10,8 @@ import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import errorMessages from '../constants/errorMessages.json';
+import { SignUpFormValues } from '../interfaces';
 
-interface FormValues {
-  email: string;
-  name: string;
-  password: string;
-  passwordConfirmation: string;
-}
 const SignUpForm: React.FC = () => {
   const onSubmit = () => {
     // if (!this.state.agree) {
@@ -32,7 +27,7 @@ const SignUpForm: React.FC = () => {
     // AuthPost(data, url).then(res => this.setState({errors: res}))
     // }
   };
-  const { control, errors, watch, handleSubmit } = useForm<FormValues>();
+  const { control, errors, watch, handleSubmit } = useForm<SignUpFormValues>();
   return (
     <Box my={5}>
       <Container maxWidth="xs">
@@ -54,7 +49,7 @@ const SignUpForm: React.FC = () => {
                         errorMessages.email.text + errorMessages.required,
                     },
                     maxLength: {
-                      value: 254,
+                      value: errorMessages.email.maxLength,
                       message:
                         errorMessages.email.text +
                         errorMessages.is +
@@ -93,7 +88,7 @@ const SignUpForm: React.FC = () => {
                       message: errorMessages.name.text + errorMessages.required,
                     },
                     maxLength: {
-                      value: 254,
+                      value: errorMessages.name.maxLength,
                       message:
                         errorMessages.name.text +
                         errorMessages.is +
@@ -133,7 +128,7 @@ const SignUpForm: React.FC = () => {
                         errorMessages.password.text + errorMessages.required,
                     },
                     maxLength: {
-                      value: 254,
+                      value: errorMessages.password.maxLength,
                       message:
                         errorMessages.password.text +
                         errorMessages.is +

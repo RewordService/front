@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable func-names */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
@@ -9,7 +11,6 @@ import CardDelete from '../Axios/CardDelete';
 import { UserInfo, CurrentUser } from '../Axios/UsersController';
 import TokenHeaders from '../Axios/TokenHeaders';
 // partials
-import LeftBar from '../Organisms/LeftBar';
 import { Btn } from '../Atom/Button';
 import Content from '../Atom/Content';
 import Section from '../Atom/Section';
@@ -30,7 +31,6 @@ const AccountStatus: React.FC = () => {
   };
   return (
     <FlexJustify>
-      <LeftBar />
       <div>
         <Content id="body">
           <Section>

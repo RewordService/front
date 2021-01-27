@@ -10,6 +10,8 @@
   "LANDING": "/landing",
   "USER": "/users/:id",
   "USERS": "/users",
+  "MYPAGE": "/mypage",
+  "SEARCH": "/search",
   "TWITTER": "https://twitter.com/re_reword",
   "FACEBOOK": "https://www.facebook.com/word.re.16"
 }

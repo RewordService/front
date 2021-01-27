@@ -1,16 +1,10 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-floating-promises */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/restrict-plus-operands */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import axios from 'axios';
 import TokenHeaders from './TokenHeaders';
 import { CurrentUser } from './UsersController';
-import { AuthDelete } from './AuthAction';
+import { SignOut } from './AuthController';
 
-export function GamePost(num, string, redirect) {
+export const GamePost = (num: number, string: string): void => {
   const ordinal = [
     '',
     '',
@@ -29,15 +23,11 @@ export function GamePost(num, string, redirect) {
     user_id: CurrentUser(),
   };
 
-  axios.post('/rewords', data, TokenHeaders()).catch((error) => {
-    AuthDelete();
+  axios.post('/rewords', data, TokenHeaders()).catch((err) => {
+    console.log(err);
+    SignOut();
   });
-}
+};
 
-let data;
-export async function GameIndex() {
-  await axios.get('/rewords').then((res) => {
-    data = res.data;
-  });
-  return data;
-}
+export const GameIndex = (): Promise =>
+  axios.get('/rewords').then((res) => res.data);
