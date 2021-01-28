@@ -21,11 +21,11 @@ const useStyles = makeStyles((theme) => ({
     '&:hover': { background: theme.palette.facebook.dark },
   },
 }));
-const ShareButtons = () => {
+const ShareButtons: React.FC = () => {
   const classes = useStyles();
   return (
     <Grid container spacing={1}>
-      <Grid item xs={4}>
+      <Grid item xs={12} md={4}>
         <Button
           variant="contained"
           color="primary"
@@ -38,7 +38,7 @@ const ShareButtons = () => {
           <BoldTypography variant="subtitle1">PlayGame</BoldTypography>
         </Button>
       </Grid>
-      <Grid item xs={4}>
+      <Grid item xs={12} md={4}>
         <Button
           className={classes.twitter}
           variant="contained"
@@ -50,7 +50,7 @@ const ShareButtons = () => {
           <BoldTypography variant="subtitle1">Twitter</BoldTypography>
         </Button>
       </Grid>
-      <Grid item xs={4}>
+      <Grid item xs={12} md={4}>
         <Button
           className={classes.facebook}
           variant="contained"

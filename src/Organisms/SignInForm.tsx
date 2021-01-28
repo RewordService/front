@@ -14,12 +14,12 @@ import Typography from '@material-ui/core/Typography';
 import { Sign } from '../Axios/AuthController';
 import errorMessages from '../constants/errorMessages.json';
 import routes from '../constants/routes.json';
-import { SignInFormValues } from '../interfaces';
+import { ISignInFormValues } from '../interfaces';
 
 const SignInForm: React.FC = () => {
   const history = useHistory();
-  const { control, errors, handleSubmit } = useForm<SignInFormValues>();
-  const onSubmit = (data: SubmitHandler<SignInFormValues>) => {
+  const { control, errors, handleSubmit } = useForm<ISignInFormValues>();
+  const onSubmit = (data: SubmitHandler<ISignInFormValues>) => {
     const url = '/api/auth/sign_in';
     Sign(data, url)
       .then(() => history.push(routes.HOME))

@@ -5,6 +5,7 @@ export interface ISign {
 }
 export interface IRewords {
   [key: string]: number;
+  total: number;
 }
 export interface ITokenHeaders {
   ['content-type']: string;
@@ -14,13 +15,12 @@ export interface ITokenHeaders {
 }
 
 export interface IUser {
-  ['allow_password_change']: false;
+  ['allow_password_change']?: false;
   ['birth_year']?: string;
-  email: string;
-  id: number;
-  image?: { url: string };
+  email?: string;
+  mage?: { url: string };
   intro?: string;
-  memberstatus: boolean;
+  memberstatus?: boolean;
   name: string;
   nickname?: string;
   sex?: boolean;

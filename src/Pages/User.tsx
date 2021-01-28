@@ -10,14 +10,20 @@ import {
   CartesianGrid,
   Tooltip,
 } from 'recharts';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
-// scripts
-import { UserInfo } from '../Axios/UsersController';
-// partials
-import Section from '../Atom/Section';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import Grid from '@material-ui/core/Grid';
+import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
+import PersonIcon from '@material-ui/icons/Person';
+import DoubleArrowIcon from '@material-ui/icons/DoubleArrow';
+import BoldTypography from '../components/BoldTypography';
+import routes from '../constants/routes.json';
+import { UserInfo, CurrentUser } from '../Axios/UsersController';
 import UserProfile from '../Molecules/UserProfile';
 
 const calcPercent = (success: number, total: number) => {
@@ -53,7 +59,7 @@ const User: React.FC = () => {
     }))
   );
   useEffect(() => {
-    UserInfo(params.id)
+    UserInfo(Number(params.id))
       .then((res) => {
         if (!res.rewords) return;
         setRewords(
@@ -79,12 +85,69 @@ const User: React.FC = () => {
       <Box mt={5}>
         <UserProfile />
       </Box>
+      {Number(params.id) === CurrentUser() && (
+        <Box mt={5}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={4}>
+              <Card>
+                <CardActionArea component={Link} to={routes.PROFILEEDIT}>
+                  <CardContent>
+                    <AssignmentIndIcon fontSize="large" />
+                    <BoldTypography>プロフィール編集</BoldTypography>
+                  </CardContent>
+                </CardActionArea>
+              </Card>
+            </Grid>
+            <Grid item xs={12} sm={4}>
+              <Card>
+                <CardActionArea component={Link} to={routes.ACCOUNTEDIT}>
+                  <CardContent>
+                    <PersonIcon fontSize="large" />
+                    <BoldTypography>アカウント編集</BoldTypography>
+                  </CardContent>
+                </CardActionArea>
+              </Card>
+            </Grid>
+            <Grid item xs={12} sm={4}>
+              <Card>
+                <CardActionArea component={Link} to={routes.ACCOUNTSTATUS}>
+                  <CardContent>
+                    <DoubleArrowIcon fontSize="large" />
+                    <BoldTypography>会員グレード</BoldTypography>
+                  </CardContent>
+                </CardActionArea>
+              </Card>
+            </Grid>
+          </Grid>
+        </Box>
+      )}
       <Box my={5}>
         <Paper>
           <Box p={2}>
-            <Section>
-              <h2>成績</h2>
-              <h3>正答数</h3>
+            <Box p={2}>
+              <Box
+                border={5}
+                borderTop={0}
+                borderRight={0}
+                borderBottom={0}
+                borderColor="primary.main"
+              >
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  border={1}
+                  borderTop={0}
+                  borderLeft={0}
+                  borderRight={0}
+                  borderColor="text.disabled"
+                  pl={4}
+                >
+                  <BoldTypography variant="h5">成績</BoldTypography>
+                </Box>
+              </Box>
+              <BoldTypography variant="h6" align="center">
+                正答数
+              </BoldTypography>
               <ResponsiveContainer width="99%" aspect={2}>
                 <BarChart
                   data={rewords}
@@ -126,9 +189,9 @@ const User: React.FC = () => {
                   />
                 </BarChart>
               </ResponsiveContainer>
-            </Section>
-            <Section>
-              <h3>正答率</h3>
+              <BoldTypography variant="h6" align="center">
+                正答率
+              </BoldTypography>
               <ResponsiveContainer width="99%" aspect={2}>
                 <BarChart
                   data={rewords}
@@ -164,7 +227,7 @@ const User: React.FC = () => {
                   />
                 </BarChart>
               </ResponsiveContainer>
-            </Section>
+            </Box>
           </Box>
         </Paper>
       </Box>

@@ -96,15 +96,13 @@ const Game: React.FC = () => (
     </Container>
   </>
 );
-
 const randomJPString = (wordCount: number) => {
-  const ary = [];
-  const str =
+  const JP =
     'あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよわをん';
-  for (let i = 0; i < wordCount; i + 1) {
-    ary.push(str.charAt(Math.floor(Math.random() * str.length)));
-  }
-  return ary;
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  return [...Array(wordCount)].map(
+    () => JP[Math.floor(Math.random() * JP.length)]
+  );
 };
 
 const wait = (sec: number) =>
@@ -141,14 +139,14 @@ const Screen = () => {
   };
   const handleQuestion = async () => {
     setScreenState('question');
-    const string = randomJPString(wordCount);
-    for (let i = 0; i < string.length; i + 1) {
-      setScreenString(string[i]);
+    const JPString = randomJPString(wordCount);
+    for (let i = 0; i < JPString.length; i += 1) {
+      setScreenString(JPString[i]);
       // eslint-disable-next-line no-await-in-loop
       await wait(0.8);
     }
-    setAnswerString(string.reverse().join(''));
     setScreenString('');
+    setAnswerString(JPString.reverse().join(''));
     setScreenState('answer');
   };
 

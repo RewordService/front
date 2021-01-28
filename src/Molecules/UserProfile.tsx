@@ -4,15 +4,14 @@ import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import Card from '@material-ui/core/Card';
+import LinearProgress from '@material-ui/core/LinearProgress';
 import BoldTypography from '../components/BoldTypography';
-// scripts
 import { UserInfo } from '../Axios/UsersController';
 
 const UserProfile: React.FC = () => {
   const params = useParams<{ id: string }>();
+  const [loading, setLoading] = useState(true);
   const [user, setUser] = useState({
-    id: 0,
     name: '',
     image: { url: '' },
     created_date: '',
@@ -21,8 +20,11 @@ const UserProfile: React.FC = () => {
   });
 
   useEffect(() => {
-    UserInfo(params.id)
-      .then((res) => setUser(res))
+    UserInfo(Number(params.id))
+      .then((res) => {
+        setUser(res);
+        setLoading(false);
+      })
       .catch((err) => console.log(err));
   }, [params.id]);
 
@@ -49,55 +51,48 @@ const UserProfile: React.FC = () => {
             <BoldTypography variant="subtitle1">プロフィール</BoldTypography>
           </Box>
         </Box>
-        <Box textAlign="center">
-          <Grid container>
-            <Grid item xs={4}>
-              <Box
-                border={1}
-                borderTop={0}
-                borderBottom={0}
-                borderLeft={0}
-                borderColor="text.disabled"
-              >
-                <Typography variant="body1">ユーザー名</Typography>
-                <BoldTypography>{user.name}</BoldTypography>
-              </Box>
-            </Grid>
+        {loading ? (
+          <LinearProgress />
+        ) : (
+          <Box textAlign="center">
+            <Grid container>
+              <Grid item xs={4}>
+                <Box
+                  border={1}
+                  borderTop={0}
+                  borderBottom={0}
+                  borderLeft={0}
+                  borderColor="text.disabled"
+                >
+                  <Typography variant="body1">ユーザー名</Typography>
+                  <BoldTypography>{user.name}</BoldTypography>
+                </Box>
+              </Grid>
 
-            <Grid item xs={4}>
-              <Box
-                border={1}
-                borderTop={0}
-                borderBottom={0}
-                borderLeft={0}
-                borderColor="text.disabled"
-              >
-                <Typography variant="body1">Reword開始日</Typography>
-                <BoldTypography>{user.created_date}</BoldTypography>
+              <Grid item xs={4}>
+                <Box
+                  border={1}
+                  borderTop={0}
+                  borderBottom={0}
+                  borderLeft={0}
+                  borderColor="text.disabled"
+                >
+                  <Typography variant="body1">Reword開始日</Typography>
+                  <BoldTypography>{user.created_date}</BoldTypography>
+                </Box>
+              </Grid>
+              <Grid item xs={4}>
+                <Typography variant="body1">トータルスコア</Typography>
+                <BoldTypography>
+                  {user.rewords && user.rewords[0].total}
+                </BoldTypography>
+              </Grid>
+              <Box mb={5}>
+                <Typography variant="body1">{user.intro}</Typography>
               </Box>
             </Grid>
-            <Grid item xs={4}>
-              <Typography variant="body1">トータルスコア</Typography>
-              <BoldTypography>
-                {user.rewords && user.rewords[0].total}
-              </BoldTypography>
-            </Grid>
-            <Box mb={5}>
-              <Typography variant="body1">{user.intro}</Typography>
-            </Box>
-          </Grid>
-        </Box>
-        <Box>
-          <Card>
-            <p>aaa</p>
-          </Card>
-          <Card>
-            <p>aaa</p>
-          </Card>
-          <Card>
-            <p>aaa</p>
-          </Card>
-        </Box>
+          </Box>
+        )}
       </Box>
     </Paper>
   );

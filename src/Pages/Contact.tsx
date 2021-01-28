@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import { Controller, useForm } from 'react-hook-form';
+import { Controller, useForm, SubmitHandler } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
 import Paper from '@material-ui/core/Paper';
 import Container from '@material-ui/core/Container';
@@ -12,18 +12,24 @@ import { Email } from '@material-ui/icons';
 import BoldTypography from '../components/BoldTypography';
 import errorMessages from '../constants/errorMessages.json';
 
+interface IContact {
+  email: string;
+  message: string;
+}
+
 const Contact: React.FC = () => {
   const { control, errors, handleSubmit } = useForm();
 
-  async function onSubmit() {
-    // await axios
-    // .post('/contacts', data)
-    // .then((res) => {
-    // console.log(res);
-    // })
-    // .catch((err) => {
-    // });
-  }
+  const onSubmit = (data: SubmitHandler<IContact>) => {
+    axios
+      .post('/contacts', data)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <Container>
@@ -98,28 +104,28 @@ const Contact: React.FC = () => {
               </Box>
               <Box my={2}>
                 <Controller
-                  name="contact"
+                  name="message"
                   control={control}
                   defaultValue=""
                   rules={{
                     required: {
                       value: true,
                       message:
-                        errorMessages.contact.text + errorMessages.required,
+                        errorMessages.message.text + errorMessages.required,
                     },
                     maxLength: {
-                      value: errorMessages.contact.maxLength,
+                      value: errorMessages.message.maxLength,
                       message:
-                        errorMessages.contact.text +
+                        errorMessages.message.text +
                         errorMessages.is +
-                        String(errorMessages.contact.maxLength) +
+                        String(errorMessages.message.maxLength) +
                         errorMessages.maxLength,
                     },
                   }}
                   render={({ ref, value, onChange }, { invalid }) => (
                     <TextField
                       variant="outlined"
-                      label="Contact"
+                      label="Message"
                       error={invalid}
                       multiline
                       rows={10}
@@ -132,7 +138,7 @@ const Contact: React.FC = () => {
                 />
                 <ErrorMessage
                   errors={errors}
-                  name="contact"
+                  name="message"
                   render={({ message }) => (
                     <Alert severity="error">{message}</Alert>
                   )}

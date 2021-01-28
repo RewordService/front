@@ -4,7 +4,7 @@
 import React, { useState, useEffect } from 'react';
 import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';
-import EqualizerIcon from '@material-ui/icons/Equalizer';
+import EmojiEventsIcon from '@material-ui/icons/EmojiEvents';
 import BoldTypography from '../components/BoldTypography';
 import { totalUsers } from '../Axios/UsersController';
 import MiniCards from '../Molecules/MiniCard';
@@ -45,7 +45,7 @@ const ScoreUsers: React.FC = () => {
             borderColor="text.disabled"
             pl={4}
           >
-            <EqualizerIcon />
+            <EmojiEventsIcon />
             <BoldTypography variant="h5">スコアランキング</BoldTypography>
           </Box>
         </Box>

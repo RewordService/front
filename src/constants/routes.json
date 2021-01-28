@@ -12,6 +12,9 @@
   "USERS": "/users",
   "MYPAGE": "/mypage",
   "SEARCH": "/search",
+  "PROFILEEDIT": "/profile/edit",
+  "ACCOUNTEDIT": "/account/edit",
+  "ACCOUNTSTATUS": "/account/status",
   "TWITTER": "https://twitter.com/re_reword",
   "FACEBOOK": "https://www.facebook.com/word.re.16"
 }

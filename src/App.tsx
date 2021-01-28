@@ -36,9 +36,13 @@ const App: React.FC = () => (
         <Route path={routes.USER} exact component={User} />
         {IsSignedIn() ? (
           <>
-            <Route path="/ProfileEdit" exact component={ProfileEdit} />
-            <Route path="/AccountEdit" exact component={AccountEdit} />
-            <Route path="/AccountStatus" exact component={AccountStatus} />
+            <Route path={routes.PROFILEEDIT} exact component={ProfileEdit} />
+            <Route path={routes.ACCOUNTEDIT} exact component={AccountEdit} />
+            <Route
+              path={routes.ACCOUNTSTATUS}
+              exact
+              component={AccountStatus}
+            />
           </>
         ) : (
           <>
