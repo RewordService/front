@@ -3,7 +3,6 @@ import axios from 'axios';
 import TokenHeaders from './TokenHeaders';
 import { CurrentUser } from './UsersController';
 import { SignOut } from './AuthController';
-import { IUser } from '../interfaces';
 
 export const GamePost = (num: number, string: string): void => {
   const ordinal = [
@@ -30,5 +29,15 @@ export const GamePost = (num: number, string: string): void => {
   });
 };
 
-export const GameIndex = (): Promise<IUser> =>
-  axios.get('/rewords').then((res) => res.data);
+export const GameIndex = (): Promise<{
+  // eslint-disable-next-line camelcase
+  score_total: number;
+  // eslint-disable-next-line camelcase
+  score_rate: number;
+}> =>
+  axios
+    .get('/rewords')
+    .then((res) => res.data)
+    .catch((err) => {
+      console.log(err);
+    });

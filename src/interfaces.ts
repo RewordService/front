@@ -17,6 +17,7 @@ export interface ITokenHeaders {
 export interface IUser {
   ['allow_password_change']?: false;
   ['birth_year']?: string;
+  id?: number;
   email?: string;
   mage?: { url: string };
   intro?: string;

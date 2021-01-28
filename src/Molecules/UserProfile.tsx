@@ -52,7 +52,9 @@ const UserProfile: React.FC = () => {
           </Box>
         </Box>
         {loading ? (
-          <LinearProgress />
+          <Box my={5}>
+            <LinearProgress />
+          </Box>
         ) : (
           <Box textAlign="center">
             <Grid container>

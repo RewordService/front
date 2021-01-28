@@ -1,8 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable jsx-a11y/label-has-associated-control */
-/* eslint-disable @typescript-eslint/no-floating-promises */
+/* eslint-disable @typescript-eslint/unbound-method */
 import React, { useEffect } from 'react';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import Container from '@material-ui/core/Container';
@@ -16,30 +12,34 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { UserDelete, UserInfo, CurrentUser } from '../Axios/UsersController';
 import BoldTypography from '../components/BoldTypography';
-// partials
-import { FormSection } from '../Atom/Form';
 
 interface IFormValue {
-  sex: boolean | null;
+  gender: boolean | null;
   year: number;
   password: string;
   passwordConfirmation: string;
 }
 const AccountEdit: React.FC = () => {
-  const { control, handleSubmit } = useForm<IFormValue>();
+  const { control, handleSubmit, setValue } = useForm();
   const year = new Date().getFullYear();
 
   useEffect(() => {
-    UserInfo(CurrentUser()).then((res) => {
-      console.log(res);
-    });
-  }, []);
+    UserInfo(CurrentUser())
+      .then((res) => {
+        setValue('gender', res.sex);
+        setValue('birth', res.birth_year);
+        setValue('email', res.email);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [setValue]);
 
   const onSubmit = (data: SubmitHandler<IFormValue>) => console.log(data);
 
   return (
     <Container>
-      <Box my={5}>
+      <Box mt={5}>
         <Paper>
           <Box p={2}>
             <Box
@@ -67,37 +67,41 @@ const AccountEdit: React.FC = () => {
                 <Box
                   display="flex"
                   alignItems="center"
+                  mb={3}
                   border={1}
                   borderTop={0}
                   borderLeft={0}
                   borderRight={0}
                   borderColor="text.disabled"
-                  pl={4}
                 >
-                  <Typography variant="h6">性別</Typography>
+                  <BoldTypography variant="h6">性別</BoldTypography>
                 </Box>
                 <Controller
-                  name="sex"
+                  name="gender"
                   control={control}
-                  defaultValue={null}
-                  render={({ ref, value, onChange }) => (
+                  defaultValue={0}
+                  render={({ name, ref, value, onChange }) => (
                     <RadioGroup
+                      row
                       ref={ref}
-                      value={value}
-                      onChange={(e) => onChange(e.target.value)}
+                      name={name}
+                      value={value as number}
+                      onChange={(e) =>
+                        onChange(Number.parseInt(e.target.value, 10))
+                      }
                     >
                       <FormControlLabel
-                        value={false}
+                        value={1}
                         control={<Radio />}
                         label="男性"
                       />
                       <FormControlLabel
-                        value
+                        value={2}
                         control={<Radio />}
                         label="女性"
                       />
                       <FormControlLabel
-                        value={null}
+                        value={9}
                         control={<Radio />}
                         label="その他"
                       />
@@ -105,7 +109,141 @@ const AccountEdit: React.FC = () => {
                   )}
                 />
               </Box>
+              <Box mt={5}>
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  mb={3}
+                  border={1}
+                  borderTop={0}
+                  borderLeft={0}
+                  borderRight={0}
+                  borderColor="text.disabled"
+                >
+                  <BoldTypography variant="h6">誕生年</BoldTypography>
+                </Box>
 
+                <Controller
+                  name="birth"
+                  control={control}
+                  defaultValue=""
+                  render={({ name, value, onChange }) => (
+                    <TextField
+                      type="text"
+                      variant="outlined"
+                      value={value as string}
+                      label={name}
+                      placeholder={`例)${year}`}
+                      onChange={(e) => onChange(e.target.value)}
+                      fullWidth
+                    />
+                  )}
+                />
+              </Box>
+              <Box mt={5}>
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  mb={3}
+                  border={1}
+                  borderTop={0}
+                  borderLeft={0}
+                  borderRight={0}
+                  borderColor="text.disabled"
+                >
+                  <BoldTypography variant="h6">
+                    メールアドレス変更
+                  </BoldTypography>
+                </Box>
+                <Controller
+                  name="email"
+                  control={control}
+                  defaultValue=""
+                  render={({ name, value, onChange }) => (
+                    <TextField
+                      value={value as string}
+                      type="text"
+                      label={name}
+                      variant="outlined"
+                      onChange={(e) => onChange(e.target.value)}
+                      fullWidth
+                    />
+                  )}
+                />
+              </Box>
+              <Box mt={5}>
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  mb={3}
+                  border={1}
+                  borderTop={0}
+                  borderLeft={0}
+                  borderRight={0}
+                  borderColor="text.disabled"
+                >
+                  <BoldTypography variant="h6">パスワード変更</BoldTypography>
+                </Box>
+                <Controller
+                  control={control}
+                  name="password"
+                  defaultValue=""
+                  render={({ name, ref, value, onChange }) => (
+                    <TextField
+                      type="password"
+                      label={name}
+                      inputRef={ref}
+                      value={value as string}
+                      onChange={(e) => onChange(e.target.value)}
+                      variant="outlined"
+                      fullWidth
+                    />
+                  )}
+                />
+                <Box mb={2} />
+                <Controller
+                  control={control}
+                  name="passwordConfirmation"
+                  defaultValue=""
+                  render={({ ref, value, onChange }) => (
+                    <TextField
+                      type="password"
+                      inputRef={ref}
+                      value={value as string}
+                      label="password_confirmation"
+                      variant="outlined"
+                      onChange={(e) => onChange(e.target.value)}
+                      fullWidth
+                    />
+                  )}
+                />
+              </Box>
+              <Box mt={5}>
+                <Button
+                  type="submit"
+                  color="primary"
+                  variant="contained"
+                  fullWidth
+                  disableElevation
+                >
+                  Edit Profile
+                </Button>
+              </Box>
+            </form>
+          </Box>
+        </Paper>
+      </Box>
+      <Box my={5}>
+        <Paper>
+          <Box p={2}>
+            <Box
+              mb={3}
+              border={5}
+              borderTop={0}
+              borderRight={0}
+              borderBottom={0}
+              borderColor="primary.main"
+            >
               <Box
                 display="flex"
                 alignItems="center"
@@ -116,67 +254,17 @@ const AccountEdit: React.FC = () => {
                 borderColor="text.disabled"
                 pl={4}
               >
-                <Typography variant="h6">誕生年</Typography>
+                <BoldTypography variant="h5">アカウント退会</BoldTypography>
               </Box>
-
-              <Controller
-                name="year"
-                control={control}
-                defaultValue=""
-                render={({ value, onChange }) => (
-                  <TextField
-                    type="text"
-                    value={value}
-                    placeholder={`例)${year}`}
-                    onChange={(e) => onChange(e.target.value)}
-                  />
-                )}
-              />
-              <h2>メールアドレス変更</h2>
-              <Controller
-                name="email"
-                defaultValue=""
-                render={({ value, onChange }) => (
-                  <TextField
-                    value={value}
-                    type="text"
-                    onChange={(e) => onChange(e.target.value)}
-                  />
-                )}
-              />
-              <h2>パスワード変更</h2>
-              <Typography>新しいパスワード</Typography>
-              <Controller
-                control={control}
-                name="password"
-                defaultValue=""
-                render={({ ref, value, onChange }) => (
-                  <TextField
-                    type="password"
-                    inputRef={ref}
-                    value={value}
-                    onChange={(e) => onChange(e.target.value)}
-                  />
-                )}
-              />
-
-              <Typography>新しいパスワード(確認)</Typography>
-              <Controller
-                control={control}
-                name="passwordConfirmation"
-                defaultValue=""
-                render={({ ref, value, onChange }) => (
-                  <TextField
-                    type="password"
-                    inputRef={ref}
-                    value={value}
-                    onChange={(e) => onChange(e.target.value)}
-                  />
-                )}
-              />
-              <Typography>アカウント削除</Typography>
-              <Button onClick={UserDelete}>Delete</Button>
-            </form>
+            </Box>
+            <Button
+              color="secondary"
+              variant="contained"
+              disableElevation
+              onClick={UserDelete}
+            >
+              Delete Account
+            </Button>
           </Box>
         </Paper>
       </Box>

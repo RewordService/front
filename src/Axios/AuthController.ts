@@ -3,7 +3,7 @@ import { SubmitHandler } from 'react-hook-form';
 import { ISignInFormValues, ISignUpFormValues, IUser } from '../interfaces';
 
 export const Sign = (
-  data: SubmitHandler<ISignInFormValues | ISignUpFormValues>,
+  data: SubmitHandler<ISignInFormValues> | SubmitHandler<ISignUpFormValues>,
   url: '/api/auth/sign_in' | '/api/auth'
 ): Promise<any> =>
   axios

@@ -1,6 +1,5 @@
-/* eslint-disable @typescript-eslint/unbound-method */
 import React from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import { Controller, useForm, SubmitHandler } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
 import Alert from '@material-ui/lab/Alert';
 import TextField from '@material-ui/core/TextField';
@@ -10,24 +9,17 @@ import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import errorMessages from '../constants/errorMessages.json';
-import { SignUpFormValues } from '../interfaces';
+import { ISignUpFormValues } from '../interfaces';
+import { Sign } from '../Axios/AuthController';
 
 const SignUpForm: React.FC = () => {
-  const onSubmit = () => {
-    // if (!this.state.agree) {
-    // return this.setState({errors: ["利用規約に同意をしてください"]})
-    // } else {
-    // const data = {
-    // email: this.state.email,
-    // name: this.state.name,
-    // password: this.state.password,
-    // password_confirmation: this.state.password_confirmation,
-    // }
-    // const url = "/api/auth"
-    // AuthPost(data, url).then(res => this.setState({errors: res}))
-    // }
-  };
-  const { control, errors, watch, handleSubmit } = useForm<SignUpFormValues>();
+  const onSubmit = (data: SubmitHandler<ISignUpFormValues>) =>
+    Sign(data, '/api/auth')
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+
+  // eslint-disable-next-line @typescript-eslint/unbound-method
+  const { control, errors, watch, handleSubmit } = useForm();
   return (
     <Box my={5}>
       <Container maxWidth="xs">

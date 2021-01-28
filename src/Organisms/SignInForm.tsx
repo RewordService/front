@@ -19,12 +19,11 @@ import { ISignInFormValues } from '../interfaces';
 const SignInForm: React.FC = () => {
   const history = useHistory();
   const { control, errors, handleSubmit } = useForm<ISignInFormValues>();
-  const onSubmit = (data: SubmitHandler<ISignInFormValues>) => {
-    const url = '/api/auth/sign_in';
-    Sign(data, url)
+
+  const onSubmit = (data: SubmitHandler<ISignInFormValues>) =>
+    Sign(data, '/api/auth/sign_in')
       .then(() => history.push(routes.HOME))
       .catch((err) => console.log(err));
-  };
 
   return (
     <Box my={5}>
