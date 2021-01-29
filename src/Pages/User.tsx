@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React, { useEffect, useState, useMemo } from 'react';
+import axios from 'axios';
+import { useSelector } from 'react-redux';
 import {
   ResponsiveContainer,
   BarChart,
@@ -23,8 +25,9 @@ import PersonIcon from '@material-ui/icons/Person';
 import DoubleArrowIcon from '@material-ui/icons/DoubleArrow';
 import BoldTypography from '../components/BoldTypography';
 import routes from '../constants/routes.json';
-import { UserInfo, CurrentUser } from '../Axios/UsersController';
+import { selectCurrentUser } from '../slices/currentUser';
 import UserProfile from '../Molecules/UserProfile';
+import { IUser } from '../interfaces';
 
 const calcPercent = (success: number, total: number) => {
   const result = Math.round((success / total) * 100);
@@ -48,6 +51,7 @@ const User: React.FC = () => {
     ],
     []
   );
+  const currentUser = useSelector(selectCurrentUser);
   const params = useParams<{ id: string }>();
   const [rewords, setRewords] = useState(
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
@@ -59,15 +63,15 @@ const User: React.FC = () => {
     }))
   );
   useEffect(() => {
-    UserInfo(Number(params.id))
+    axios
+      .get<IUser>(`/users/${params.id}`)
       .then((res) => {
-        if (!res.rewords) return;
         setRewords(
           ORDINAL.map((ordinal, i) => {
             const totalStr = `${ordinal}_total`;
             const successStr = `${ordinal}_success`;
-            const total = res.rewords[0][totalStr];
-            const success = res.rewords[0][successStr];
+            const total = res.data.rewords[0][totalStr];
+            const success = res.data.rewords[0][successStr];
             return {
               name: i + 2,
               total,
@@ -77,7 +81,9 @@ const User: React.FC = () => {
           })
         );
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+      });
   }, [ORDINAL, params.id]);
 
   return (
@@ -85,7 +91,7 @@ const User: React.FC = () => {
       <Box mt={5}>
         <UserProfile />
       </Box>
-      {Number(params.id) === CurrentUser() && (
+      {Number(params.id) === currentUser?.id && (
         <Box mt={5}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={4}>

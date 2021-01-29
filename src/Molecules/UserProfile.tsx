@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
@@ -6,7 +7,6 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import BoldTypography from '../components/BoldTypography';
-import { UserInfo } from '../Axios/UsersController';
 
 const UserProfile: React.FC = () => {
   const params = useParams<{ id: string }>();
@@ -20,12 +20,15 @@ const UserProfile: React.FC = () => {
   });
 
   useEffect(() => {
-    UserInfo(Number(params.id))
+    axios
+      .get(`/users/${params.id}`)
       .then((res) => {
-        setUser(res);
+        setUser(res.data);
         setLoading(false);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+      });
   }, [params.id]);
 
   return (
@@ -86,7 +89,7 @@ const UserProfile: React.FC = () => {
               <Grid item xs={4}>
                 <Typography variant="body1">トータルスコア</Typography>
                 <BoldTypography>
-                  {user.rewords && user.rewords[0].total}
+                  {user.rewords[0]?.total || 'データがありません'}
                 </BoldTypography>
               </Grid>
               <Box mb={5}>

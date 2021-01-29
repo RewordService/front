@@ -1,6 +1,6 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import React from 'react';
+import React, { useState } from 'react';
+import axios, { AxiosError } from 'axios';
+import { useDispatch } from 'react-redux';
 import { Controller, useForm, SubmitHandler } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import { ErrorMessage } from '@hookform/error-message';
@@ -11,19 +11,39 @@ import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import { Sign } from '../Axios/AuthController';
+import Fade from '@material-ui/core/Fade';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import errorMessages from '../constants/errorMessages.json';
 import routes from '../constants/routes.json';
-import { ISignInFormValues } from '../interfaces';
+import {
+  ISignInFormValues,
+  IErrorSignInResponse,
+  ISignResponse,
+} from '../interfaces';
+import { setHeaders, setCurrentUser } from '../slices/currentUser';
 
 const SignInForm: React.FC = () => {
+  const [loading, setLoading] = useState(false);
+  const [serverErrors, setServerErrors] = useState<string[]>([]);
+  const dispatch = useDispatch();
   const history = useHistory();
   const { control, errors, handleSubmit } = useForm<ISignInFormValues>();
 
-  const onSubmit = (data: SubmitHandler<ISignInFormValues>) =>
-    Sign(data, '/api/auth/sign_in')
-      .then(() => history.push(routes.HOME))
-      .catch((err) => console.log(err));
+  const onSubmit = (data: SubmitHandler<ISignInFormValues>) => {
+    setLoading(true);
+    axios
+      .post<ISignResponse>('/api/auth/sign_in', data)
+      .then((res) => {
+        dispatch(setCurrentUser(res.data.data));
+        dispatch(setHeaders(res.headers));
+        history.push(routes.HOME);
+      })
+      .catch((err: AxiosError<IErrorSignInResponse>) => {
+        if (!err.response) return;
+        setServerErrors(err.response.data.errors);
+        setLoading(false);
+      });
+  };
 
   return (
     <Box my={5}>
@@ -35,6 +55,11 @@ const SignInForm: React.FC = () => {
             </Typography>
             <form onSubmit={handleSubmit(onSubmit)}>
               <Box mb={2}>
+                {serverErrors.length ? (
+                  <Box mb={2}>
+                    <Alert severity="error">{serverErrors.join('\n')}</Alert>
+                  </Box>
+                ) : null}
                 <Controller
                   name="email"
                   control={control}
@@ -59,6 +84,7 @@ const SignInForm: React.FC = () => {
                       variant="outlined"
                       label="Email"
                       error={invalid}
+                      disabled={loading}
                       fullWidth
                       inputRef={ref}
                       value={value as string}
@@ -100,6 +126,7 @@ const SignInForm: React.FC = () => {
                       variant="outlined"
                       label="password"
                       error={invalid}
+                      disabled={loading}
                       fullWidth
                       inputRef={ref}
                       value={value as string}
@@ -119,6 +146,12 @@ const SignInForm: React.FC = () => {
                 type="submit"
                 variant="contained"
                 color="primary"
+                startIcon={
+                  <Fade in={loading}>
+                    <CircularProgress size={20} />
+                  </Fade>
+                }
+                disabled={loading}
                 disableElevation
                 fullWidth
               >

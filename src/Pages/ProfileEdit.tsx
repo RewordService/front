@@ -1,36 +1,58 @@
-/* eslint-disable @typescript-eslint/no-floating-promises */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import React, { useEffect } from 'react';
+import React, { useState, ChangeEvent } from 'react';
+import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import { useForm, Controller, SubmitHandler } from 'react-hook-form';
+import Alert from '@material-ui/lab/Alert';
+import Snackbar from '@material-ui/core/Snackbar';
 import BoldTypography from '../components/BoldTypography';
-import { UserPatch, UserInfo, CurrentUser } from '../Axios/UsersController';
+import {
+  selectCurrentUser,
+  selectHeaders,
+  setCurrentUser,
+} from '../slices/currentUser';
 
 const ProfileEdit: React.FC = () => {
+  const [serverError, setServerError] = useState('');
+  // eslint-disable-next-line @typescript-eslint/unbound-method
+  const dispatch = useDispatch();
+  const headers = useSelector(selectHeaders);
+  const currentUser = useSelector(selectCurrentUser);
   const { control, handleSubmit } = useForm();
-  function IconPatch(e) {
+  const IconPatch = (e: ChangeEvent<HTMLInputElement>) => {
     const formData = new FormData();
-    formData.append('image', e.target.files[0]);
-    UserPatch(formData).then(() => window.location.reload());
-  }
-
-  function IconDelete() {
-    const data = { image: null };
-    UserPatch(data);
-  }
-  const onSubmit = (data: SubmitHandler) => console.log(data);
-
-  useEffect(() => {
-    UserInfo(CurrentUser()).then((res) => {
-      console.log(res);
-    });
-  }, []);
+    formData.append('image', (e.target.files as FileList)[0]);
+    axios
+      .patch('api/auth', formData, headers)
+      .then((res) => console.log(res))
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const IconDelete = () => {
+    axios
+      .patch('api/auth', { image: null }, headers)
+      .then((res) => console.log(res))
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const onSubmit = (data: SubmitHandler<{ introduction: string }>) =>
+    axios
+      .patch('api/auth', data, headers)
+      .then((res) => {
+        dispatch(setCurrentUser(res.data.data));
+      })
+      .catch((err) => {
+        console.log(err.response);
+        setServerError(err.response.data.errors[0]);
+      });
+  const handleCloseSnackbar = () => setServerError('');
 
   return (
     <Container>
@@ -100,9 +122,9 @@ const ProfileEdit: React.FC = () => {
               </Box>
               <form onSubmit={handleSubmit(onSubmit)}>
                 <Controller
-                  name="introduce"
+                  name="introaa"
                   control={control}
-                  defaultValue=""
+                  defaultValue={currentUser?.intro}
                   render={({ ref, value, onChange }) => (
                     <TextField
                       variant="outlined"
@@ -111,7 +133,7 @@ const ProfileEdit: React.FC = () => {
                       rows={10}
                       fullWidth
                       inputRef={ref}
-                      value={value}
+                      value={value as string}
                       onChange={(e) => onChange(e.target.value)}
                     />
                   )}
@@ -132,6 +154,16 @@ const ProfileEdit: React.FC = () => {
           </Box>
         </Paper>
       </Box>
+      <Snackbar
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        open={!!serverError}
+        autoHideDuration={5000}
+        onClose={handleCloseSnackbar}
+      >
+        <Alert elevation={6} variant="filled" severity="error">
+          {serverError}
+        </Alert>
+      </Snackbar>
     </Container>
   );
 };

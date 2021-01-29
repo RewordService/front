@@ -9,7 +9,7 @@ export interface IRewords {
 }
 export interface ITokenHeaders {
   ['content-type']: string;
-  accesstoken: string;
+  accesstoken: string; // TODO: change accesstoken to access-token
   client: string;
   uid: string;
 }
@@ -17,14 +17,14 @@ export interface ITokenHeaders {
 export interface IUser {
   ['allow_password_change']?: false;
   ['birth_year']?: string;
-  id?: number;
   email?: string;
-  mage?: { url: string };
-  intro?: string;
+  id?: number;
+  image?: { url: string };
+  intro?: string; // TODO: change intro to introduce
   memberstatus?: boolean;
   name: string;
   nickname?: string;
-  sex?: boolean;
+  sex?: boolean; // TODO: chenge sex to gender & change boolean to number
   ['created_date']?: string;
   rewords?: [IRewords];
 }
@@ -37,4 +37,20 @@ export interface ISignInFormValues {
 export interface ISignUpFormValues extends ISignInFormValues {
   name: string;
   passwordConfirmation: string;
+}
+
+export interface ISignResponse {
+  data: IUser;
+  headers: ITokenHeaders;
+}
+
+export interface IErrorSignInResponse {
+  errors: string[];
+}
+export interface IErrorSignOutResponse {
+  errors: string[];
+}
+
+export interface IErrorSignUpResponse {
+  errors: { ['full_messages']: string[] };
 }

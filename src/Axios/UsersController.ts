@@ -52,14 +52,12 @@ export const UserPatch = (data): Promise<IUser> =>
     .patch('api/auth', data, TokenHeaders())
     .then((res) => res.data)
     .catch((err) => {
-      SignOut();
       console.log(err);
     });
 
 /* password patch */
 export const PasswordPatch = (data): void => {
   axios.put('/api/auth/password', data, TokenHeaders()).catch((err) => {
-    SignOut();
     console.log(err);
   });
 };
@@ -68,5 +66,4 @@ export const PasswordPatch = (data): void => {
 export const UserDelete = (): void => {
   axios.delete('/cards', TokenHeaders()).catch((err) => console.log(err));
   axios.delete('/api/auth', TokenHeaders()).catch((err) => console.log(err));
-  SignOut();
 };

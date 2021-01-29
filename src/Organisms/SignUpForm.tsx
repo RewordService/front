@@ -1,4 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
+import axios, { AxiosError } from 'axios';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { Controller, useForm, SubmitHandler } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
 import Alert from '@material-ui/lab/Alert';
@@ -8,16 +11,38 @@ import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import Fade from '@material-ui/core/Fade';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import routes from '../constants/routes.json';
 import errorMessages from '../constants/errorMessages.json';
-import { ISignUpFormValues } from '../interfaces';
-import { Sign } from '../Axios/AuthController';
+import {
+  ISignUpFormValues,
+  IErrorSignUpResponse,
+  ISignResponse,
+} from '../interfaces';
+import { setHeaders, setCurrentUser } from '../slices/currentUser';
 
 const SignUpForm: React.FC = () => {
-  const onSubmit = (data: SubmitHandler<ISignUpFormValues>) =>
-    Sign(data, '/api/auth')
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+  const [loading, setLoading] = useState(false);
+  const [serverErrors, setServerErrors] = useState<string[]>([]);
+  const history = useHistory();
+  const dispatch = useDispatch();
 
+  const onSubmit = (data: SubmitHandler<ISignUpFormValues>) => {
+    setLoading(true);
+    axios
+      .post<ISignResponse>('/api/auth', data)
+      .then((res) => {
+        dispatch(setCurrentUser(res.data.data));
+        dispatch(setHeaders(res.headers));
+        history.push(routes.HOME);
+      })
+      .catch((err: AxiosError<IErrorSignUpResponse>) => {
+        if (!err.response) return;
+        setServerErrors(err.response.data.errors.full_messages);
+        setLoading(false);
+      });
+  };
   // eslint-disable-next-line @typescript-eslint/unbound-method
   const { control, errors, watch, handleSubmit } = useForm();
   return (
@@ -30,6 +55,13 @@ const SignUpForm: React.FC = () => {
             </Typography>
             <form onSubmit={handleSubmit(onSubmit)}>
               <Box mb={2}>
+                {serverErrors.length
+                  ? serverErrors.map((error) => (
+                      <Box mb={2}>
+                        <Alert severity="error">{error}</Alert>
+                      </Box>
+                    ))
+                  : null}
                 <Controller
                   name="email"
                   control={control}
@@ -192,6 +224,12 @@ const SignUpForm: React.FC = () => {
                 type="submit"
                 variant="contained"
                 color="primary"
+                startIcon={
+                  <Fade in={loading}>
+                    <CircularProgress size={20} />
+                  </Fade>
+                }
+                disabled={loading}
                 disableElevation
                 fullWidth
               >

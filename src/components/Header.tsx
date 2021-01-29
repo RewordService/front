@@ -1,4 +1,6 @@
 import React, { useState, KeyboardEvent, ChangeEvent } from 'react';
+import axios, { AxiosError } from 'axios';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link as RouterLink, useHistory } from 'react-router-dom';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -17,15 +19,21 @@ import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import Snackbar from '@material-ui/core/Snackbar';
+import Alert from '@material-ui/lab/Alert';
 import LabelImportantIcon from '@material-ui/icons/LabelImportant';
 import SearchIcon from '@material-ui/icons/Search';
 import MenuIcon from '@material-ui/icons/Menu';
 import HomeIcon from '@material-ui/icons/Home';
 import SportsEsportsIcon from '@material-ui/icons/SportsEsports';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import { IsSignedIn, CurrentUser } from '../Axios/UsersController';
-import { SignOut } from '../Axios/AuthController';
+import {
+  selectCurrentUser,
+  selectHeaders,
+  remove,
+} from '../slices/currentUser';
 import routes from '../constants/routes.json';
+import { IErrorSignOutResponse } from '../interfaces';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -38,8 +46,12 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const Header: React.FC = () => {
+  const [serverError, setServerError] = useState('');
   const [search, setSearch] = useState('');
   const [open, setOpen] = useState(false);
+  const dispatch = useDispatch();
+  const currentUser = useSelector(selectCurrentUser);
+  const headers = useSelector(selectHeaders);
   const history = useHistory();
   const classes = useStyles();
   const handleChange = (e: ChangeEvent<HTMLInputElement>) =>
@@ -54,7 +66,26 @@ const Header: React.FC = () => {
   };
   const handleCloseDrawer = () => setOpen(false);
   const handleOpenDrawer = () => setOpen(true);
-  const handleSignOut = (): void => SignOut();
+  const handleCloseSnackbar = () => setServerError('');
+  const handleSignOut = () => {
+    if (!headers) return;
+    axios
+      .delete('/api/auth/sign_out', headers)
+      .then(() => {
+        dispatch(remove());
+        history.push({
+          pathname: routes.HOME,
+        });
+      })
+      .catch((err: AxiosError<IErrorSignOutResponse>) => {
+        if (!err.response) return;
+        dispatch(remove());
+        setServerError(err.response.data.errors[0]);
+        history.push({
+          pathname: routes.HOME,
+        });
+      });
+  };
 
   const list = () => (
     <Box
@@ -77,7 +108,7 @@ const Header: React.FC = () => {
         </ListItem>
       </List>
       <Divider />
-      {IsSignedIn() && (
+      {currentUser && (
         <List>
           <ListItem button component={RouterLink} to={routes.MYPAGE}>
             <ListItemText primary="MyPage" />
@@ -86,7 +117,7 @@ const Header: React.FC = () => {
       )}
       <Divider />
       <List>
-        {IsSignedIn() ? (
+        {currentUser ? (
           <ListItem button component={RouterLink} to={routes.SIGNOUT}>
             <ListItemText primary="SignOut" />
           </ListItem>
@@ -134,12 +165,10 @@ const Header: React.FC = () => {
             <Button component={RouterLink} to={routes.GAME}>
               Game
             </Button>
-            {IsSignedIn() ? (
+            {currentUser ? (
               <Button
                 color="primary"
                 variant="contained"
-                component={RouterLink}
-                to={routes.SIGNOUT}
                 disableElevation
                 onClick={handleSignOut}
               >
@@ -184,16 +213,26 @@ const Header: React.FC = () => {
               </Grid>
             </Grid>
           </Box>
-          {IsSignedIn() && (
+          {currentUser && (
             <IconButton
               component={RouterLink}
-              to={`${routes.USERS}/${CurrentUser()}`}
+              to={`${routes.USERS}/${currentUser.id || ''}`}
             >
               <AccountCircleIcon fontSize="large" />
             </IconButton>
           )}
         </Hidden>
       </Toolbar>
+      <Snackbar
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        open={!!serverError}
+        autoHideDuration={5000}
+        onClose={handleCloseSnackbar}
+      >
+        <Alert elevation={6} variant="filled" severity="error">
+          {serverError}
+        </Alert>
+      </Snackbar>
     </AppBar>
   );
 };

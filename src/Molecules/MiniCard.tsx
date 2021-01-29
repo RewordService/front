@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import Card from '@material-ui/core/Card';
@@ -13,7 +15,7 @@ const MiniCard = ({ user: { id, name, image } }: { user: IUser }) => {
   const history = useHistory();
   const handleClick = () => {
     history.push({
-      pathname: `${routes.USERS}/${id}`,
+      pathname: `${routes.USERS}/${id || ''}`,
     });
   };
   return (
@@ -22,7 +24,7 @@ const MiniCard = ({ user: { id, name, image } }: { user: IUser }) => {
         <CardActionArea onClick={handleClick}>
           <Box width={100} height={80} my={3}>
             <Box display="flex" justifyContent="center">
-              <Avatar alt={name} src={image?.url} />
+              <Avatar alt={name} src={image.url} />
             </Box>
             <Box m={2}>
               <Typography align="center" noWrap>

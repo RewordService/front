@@ -15,10 +15,12 @@ const NewUsers: React.FC = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    newUsers().then((res) => {
-      setUsers(res);
-      setLoading(false);
-    });
+    newUsers()
+      .then((res) => {
+        setUsers(res);
+        setLoading(false);
+      })
+      .catch((err) => console.log(err));
   }, []);
 
   return (

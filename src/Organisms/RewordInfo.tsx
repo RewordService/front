@@ -1,18 +1,21 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
-import { GameIndex } from '../Axios/GamePost';
 import BoldTypography from '../components/BoldTypography';
 
 const RewordInfo: React.FC = () => {
   const [score, setScore] = useState({ score_total: 0, score_rate: 0 });
 
   useEffect(() => {
-    GameIndex()
-      .then((res) => setScore(res))
-      .catch((err) => console.log(err));
+    axios
+      .get('/rewords')
+      .then((res) => setScore(res.data))
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
   return (
     <Paper>
