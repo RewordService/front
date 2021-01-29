@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import Card from '@material-ui/core/Card';
@@ -8,8 +6,8 @@ import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import { IUser } from '../interfaces';
-import routes from '../constants/routes.json';
+import { IUser } from '../../interfaces';
+import routes from '../../constants/routes.json';
 
 const MiniCard = ({ user: { id, name, image } }: { user: IUser }) => {
   const history = useHistory();

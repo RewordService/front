@@ -1,24 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';
-import PersonAddIcon from '@material-ui/icons/PersonAdd';
-import BoldTypography from '../components/BoldTypography';
-import MiniCards from '../Molecules/MiniCard';
-import { IUser } from '../interfaces';
+import EmojiEventsIcon from '@material-ui/icons/EmojiEvents';
+import BoldTypography from '../../components/BoldTypography';
+import MiniUserCards from './MiniUserCard';
+import { IUser } from '../../interfaces';
 
-const NewUsers: React.FC = () => {
+const ScoreUsers: React.FC = () => {
   const [users, setUsers] = useState<IUser[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     axios
-      .get('/users/new_users')
+      .get<IUser[]>('/users/total_users')
       .then((res) => {
         setUsers(res.data);
         setLoading(false);
       })
-      .catch((err) => console.log(err));
+      .catch((err: AxiosError) => err);
   }, []);
 
   return (
@@ -41,14 +41,13 @@ const NewUsers: React.FC = () => {
             borderColor="text.disabled"
             pl={4}
           >
-            <PersonAddIcon />
-            <BoldTypography variant="h5">新規ユーザー</BoldTypography>
+            <EmojiEventsIcon />
+            <BoldTypography variant="h5">スコアランキング</BoldTypography>
           </Box>
         </Box>
-        <MiniCards loading={loading} users={users} />
+        <MiniUserCards users={users} loading={loading} />
       </Box>
     </Paper>
   );
 };
-
-export default NewUsers;
+export default ScoreUsers;

@@ -7,8 +7,8 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
 import Link from '@material-ui/core/Link';
-import news from '../Assets/news';
-import BoldTypography from '../components/BoldTypography';
+import news from '../../Assets/news';
+import BoldTypography from '../../components/BoldTypography';
 
 const News: React.FC = () => (
   <Paper>

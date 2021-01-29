@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React, { useEffect, useState, useMemo } from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
@@ -55,6 +53,7 @@ const User: React.FC = () => {
   const currentUser = useSelector(selectCurrentUser);
   const params = useParams<{ id: string }>();
   const [rewords, setRewords] = useState(
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     [...Array(8)].map((_, i) => ({
       name: i + 1,
       total: 0,

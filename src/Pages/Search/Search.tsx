@@ -1,12 +1,10 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React, { useEffect, useState } from 'react';
 import axios, { AxiosError } from 'axios';
 import { useLocation } from 'react-router-dom';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Box from '@material-ui/core/Box';
-import UserCard from '../Molecules/UserCard';
-import { IUser, IUsersResponse } from '../interfaces';
+import UserCard from './UserCard';
+import { IUser, IUsersResponse } from '../../interfaces';
 
 const SearchResult: React.FC = () => {
   const [users, setUsers] = useState<IUser[]>([]);

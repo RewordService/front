@@ -2,13 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
-import ShareButtons from '../components/ShareButtons';
-import img from '../Assets/Img/home.jpg';
-import NewUsers from '../Organisms/NewUsers';
-import TotalUsers from '../Organisms/ScoreUsers';
-import SlideBar from '../Organisms/SlideBar';
-import News from '../Organisms/News';
-import RewordInfo from '../Organisms/RewordInfo';
+import ShareButtons from '../../components/ShareButtons';
+import img from '../../Assets/Img/home.jpg';
+import NewUsers from './NewUsers';
+import TotalUsers from './ScoreUsers';
+import SlideBar from '../../Organisms/SlideBar';
+import News from './News';
+import RewordInfo from './RewordInfo';
 
 const Home: React.FC = () => (
   <>

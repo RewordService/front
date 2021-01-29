@@ -8,8 +8,8 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
-import { IUser } from '../interfaces';
-import routes from '../constants/routes.json';
+import { IUser } from '../../interfaces';
+import routes from '../../constants/routes.json';
 
 const UserCard: React.FC<{ user: IUser }> = ({
   user: { name, id, image },

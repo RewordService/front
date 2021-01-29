@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import Home from './Pages/Home';
+import Home from './Pages/Home/Home';
 import SignIn from './Pages/SignIn';
 import SignUp from './Pages/SignUp';
 import User from './Pages/User';
@@ -13,7 +13,7 @@ import LP from './Pages/LP';
 import Terms from './Pages/Terms';
 import PrivacyPolicy from './Pages/PrivacyPolicy';
 import Contact from './Pages/Contact';
-import Search from './Pages/Search';
+import Search from './Pages/Search/Search';
 import routes from './constants/routes.json';
 import { selectCurrentUser } from './slices/currentUser';
 
