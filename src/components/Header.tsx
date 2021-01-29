@@ -33,7 +33,7 @@ import {
   remove,
 } from '../slices/currentUser';
 import routes from '../constants/routes.json';
-import { IErrorSignOutResponse } from '../interfaces';
+import { IErrorResponse } from '../interfaces';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -77,7 +77,7 @@ const Header: React.FC = () => {
           pathname: routes.HOME,
         });
       })
-      .catch((err: AxiosError<IErrorSignOutResponse>) => {
+      .catch((err: AxiosError<IErrorResponse>) => {
         if (!err.response) return;
         dispatch(remove());
         setServerError(err.response.data.errors[0]);

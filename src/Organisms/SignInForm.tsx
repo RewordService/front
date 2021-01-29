@@ -17,8 +17,8 @@ import errorMessages from '../constants/errorMessages.json';
 import routes from '../constants/routes.json';
 import {
   ISignInFormValues,
-  IErrorSignInResponse,
-  ISignResponse,
+  IErrorResponse,
+  ICurrentUserResponse,
 } from '../interfaces';
 import { setHeaders, setCurrentUser } from '../slices/currentUser';
 
@@ -32,13 +32,13 @@ const SignInForm: React.FC = () => {
   const onSubmit = (data: SubmitHandler<ISignInFormValues>) => {
     setLoading(true);
     axios
-      .post<ISignResponse>('/api/auth/sign_in', data)
+      .post<ICurrentUserResponse>('/api/auth/sign_in', data)
       .then((res) => {
         dispatch(setCurrentUser(res.data.data));
         dispatch(setHeaders(res.headers));
         history.push(routes.HOME);
       })
-      .catch((err: AxiosError<IErrorSignInResponse>) => {
+      .catch((err: AxiosError<IErrorResponse>) => {
         if (!err.response) return;
         setServerErrors(err.response.data.errors);
         setLoading(false);

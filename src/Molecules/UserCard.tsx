@@ -32,7 +32,9 @@ const UserCard: React.FC<{ user: IUser }> = ({
                 <Grid item xs={6}>
                   <Avatar
                     alt={name}
-                    src={`https://rewordbackend.herokuapp.com/${image.url}`}
+                    src={`https://rewordbackend.herokuapp.com/${
+                      image?.url || ''
+                    }`}
                   />
                 </Grid>
                 <Grid item xs={6}>

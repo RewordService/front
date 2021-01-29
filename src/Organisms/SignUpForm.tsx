@@ -18,7 +18,7 @@ import errorMessages from '../constants/errorMessages.json';
 import {
   ISignUpFormValues,
   IErrorSignUpResponse,
-  ISignResponse,
+  ICurrentUserResponse,
 } from '../interfaces';
 import { setHeaders, setCurrentUser } from '../slices/currentUser';
 
@@ -31,7 +31,7 @@ const SignUpForm: React.FC = () => {
   const onSubmit = (data: SubmitHandler<ISignUpFormValues>) => {
     setLoading(true);
     axios
-      .post<ISignResponse>('/api/auth', data)
+      .post<ICurrentUserResponse>('/api/auth', data)
       .then((res) => {
         dispatch(setCurrentUser(res.data.data));
         dispatch(setHeaders(res.headers));
@@ -43,6 +43,7 @@ const SignUpForm: React.FC = () => {
         setLoading(false);
       });
   };
+  // TODO:
   // eslint-disable-next-line @typescript-eslint/unbound-method
   const { control, errors, watch, handleSubmit } = useForm();
   return (

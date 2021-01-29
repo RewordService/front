@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 export interface ISign {
   data: { data: IUser };
   headers: ITokenHeaders;
@@ -39,15 +38,20 @@ export interface ISignUpFormValues extends ISignInFormValues {
   passwordConfirmation: string;
 }
 
-export interface ISignResponse {
+export interface ICurrentUserResponse {
   data: IUser;
   headers: ITokenHeaders;
 }
 
-export interface IErrorSignInResponse {
-  errors: string[];
+export interface IUserResponse {
+  data: IUser;
 }
-export interface IErrorSignOutResponse {
+
+export interface IUsersResponse {
+  data: IUser[];
+}
+
+export interface IErrorResponse {
   errors: string[];
 }
 

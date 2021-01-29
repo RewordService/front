@@ -1,12 +1,9 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-floating-promises */
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import BoldTypography from '../components/BoldTypography';
-import { newUsers } from '../Axios/UsersController';
 import MiniCards from '../Molecules/MiniCard';
 import { IUser } from '../interfaces';
 
@@ -15,9 +12,10 @@ const NewUsers: React.FC = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    newUsers()
+    axios
+      .get('/users/new_users')
       .then((res) => {
-        setUsers(res);
+        setUsers(res.data);
         setLoading(false);
       })
       .catch((err) => console.log(err));

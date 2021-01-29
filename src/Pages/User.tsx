@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React, { useEffect, useState, useMemo } from 'react';
 import axios from 'axios';
@@ -54,7 +55,6 @@ const User: React.FC = () => {
   const currentUser = useSelector(selectCurrentUser);
   const params = useParams<{ id: string }>();
   const [rewords, setRewords] = useState(
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     [...Array(8)].map((_, i) => ({
       name: i + 1,
       total: 0,
@@ -66,20 +66,21 @@ const User: React.FC = () => {
     axios
       .get<IUser>(`/users/${params.id}`)
       .then((res) => {
-        setRewords(
-          ORDINAL.map((ordinal, i) => {
-            const totalStr = `${ordinal}_total`;
-            const successStr = `${ordinal}_success`;
-            const total = res.data.rewords[0][totalStr];
-            const success = res.data.rewords[0][successStr];
-            return {
-              name: i + 2,
-              total,
-              correct: success,
-              percent: calcPercent(total, success),
-            };
-          })
-        );
+        const ary = [];
+        if (!res.data.rewords?.length) return;
+        for (let i = 0; i < ORDINAL.length; i += 1) {
+          const totalStr = `${ORDINAL[i]}_total`;
+          const successStr = `${ORDINAL[i]}_success`;
+          const total = res.data.rewords[0][totalStr];
+          const correct = res.data.rewords[0][successStr];
+          ary.push({
+            name: i + 2,
+            total,
+            correct,
+            percent: calcPercent(total, correct),
+          });
+        }
+        setRewords(ary);
       })
       .catch((err) => {
         console.log(err);

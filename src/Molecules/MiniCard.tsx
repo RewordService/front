@@ -24,7 +24,7 @@ const MiniCard = ({ user: { id, name, image } }: { user: IUser }) => {
         <CardActionArea onClick={handleClick}>
           <Box width={100} height={80} my={3}>
             <Box display="flex" justifyContent="center">
-              <Avatar alt={name} src={image.url} />
+              <Avatar alt={name} src={image?.url} />
             </Box>
             <Box m={2}>
               <Typography align="center" noWrap>

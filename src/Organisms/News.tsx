@@ -37,8 +37,8 @@ const News: React.FC = () => (
       <Box maxHeight={300} overflow="auto">
         <List>
           {news.news.map(({ title, date, url }) => (
-            <Box key={title}>
-              <ListItem component={Link} href={url} button>
+            <Box key={title} color="text.primary">
+              <ListItem component={Link} color="inherit" href={url} button>
                 <ListItemText primary={title} secondary={`(${date})`} />
               </ListItem>
               <Divider />

@@ -17,6 +17,7 @@ const RewordInfo: React.FC = () => {
         console.log(err);
       });
   }, []);
+
   return (
     <Paper>
       <Box p={2}>

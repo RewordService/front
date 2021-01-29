@@ -1,28 +1,24 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-floating-promises */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React, { useState, useEffect } from 'react';
+import axios, { AxiosError } from 'axios';
 import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';
 import EmojiEventsIcon from '@material-ui/icons/EmojiEvents';
 import BoldTypography from '../components/BoldTypography';
-import { totalUsers } from '../Axios/UsersController';
 import MiniCards from '../Molecules/MiniCard';
+import { IUser } from '../interfaces';
 
-interface IUser {
-  id: number;
-  name: string;
-  image: { url: string };
-}
 const ScoreUsers: React.FC = () => {
   const [users, setUsers] = useState<IUser[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    totalUsers().then((res) => {
-      setUsers(res);
-      setLoading(false);
-    });
+    axios
+      .get<IUser[]>('/users/total_users')
+      .then((res) => {
+        setUsers(res.data);
+        setLoading(false);
+      })
+      .catch((err: AxiosError) => err);
   }, []);
 
   return (

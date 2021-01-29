@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 import Fade from 'react-reveal/Fade';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';

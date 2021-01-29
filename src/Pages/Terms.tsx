@@ -1,14 +1,36 @@
 import React from 'react';
-// partials
-import Content from '../Atom/Content';
-import Section from '../Atom/Section';
+import Paper from '@material-ui/core/Paper';
+import Container from '@material-ui/core/Container';
+import Box from '@material-ui/core/Box';
+import BoldTypography from '../components/BoldTypography';
 
 const Terms: React.FC = () => (
-  <Content>
-    <Section>
-      <h2>利用規約</h2>
-      <pre>
-        {`
+  <Container>
+    <Box my={5}>
+      <Paper>
+        <Box p={2}>
+          <Box
+            border={5}
+            borderTop={0}
+            borderRight={0}
+            borderBottom={0}
+            borderColor="primary.main"
+          >
+            <Box
+              display="flex"
+              alignItems="center"
+              border={1}
+              borderTop={0}
+              borderLeft={0}
+              borderRight={0}
+              borderColor="text.disabled"
+              pl={4}
+            >
+              <BoldTypography variant="h5">利用規約</BoldTypography>
+            </Box>
+          </Box>
+          <pre>
+            {`
 この利用規約（以下，「本規約」といいます。）は，Reword（以下，「当サービス」といいます。）
 がこのウェブサイト上で提供するサービス（以下，「本サービス」といいます。）の利用条件を定めるものです。
 登録ユーザーの皆さま（以下，「ユーザー」といいます。）には，本規約に従って，本サービスをご利用いただきます。
@@ -102,9 +124,11 @@ const Terms: React.FC = () => (
 本サービスに関して紛争が生じた場合には，当サービスの本店所在地を管轄する裁判所を専属的合意管轄とします。
 以上
 					`}
-      </pre>
-    </Section>
-  </Content>
+          </pre>
+        </Box>
+      </Paper>
+    </Box>
+  </Container>
 );
 
 export default Terms;

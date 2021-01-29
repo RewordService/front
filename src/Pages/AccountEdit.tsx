@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React, { useEffect } from 'react';
+import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
@@ -9,8 +11,8 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import { UserDelete, UserInfo, CurrentUser } from '../Axios/UsersController';
 import BoldTypography from '../components/BoldTypography';
+import { selectCurrentUser, selectHeaders } from '../slices/currentUser';
 
 interface IFormValue {
   gender: boolean | null;
@@ -19,22 +21,25 @@ interface IFormValue {
   passwordConfirmation: string;
 }
 const AccountEdit: React.FC = () => {
-  const { control, handleSubmit, setValue } = useForm();
   const year = new Date().getFullYear();
+  const currentUser = useSelector(selectCurrentUser);
+  const headers = useSelector(selectHeaders);
+  const { control, handleSubmit, setValue } = useForm();
+  const handleClick = () => {
+    if (!headers) return;
+    axios.delete('/api/auth', headers).catch((err) => console.log(err));
+  };
+  const onSubmit = (data: SubmitHandler<IFormValue>) => console.log(data);
 
   useEffect(() => {
-    UserInfo(CurrentUser())
-      .then((res) => {
-        setValue('gender', res.sex);
-        setValue('birth', res.birth_year);
-        setValue('email', res.email);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [setValue]);
-
-  const onSubmit = (data: SubmitHandler<IFormValue>) => console.log(data);
+    if (!currentUser) return;
+    // TODO:
+    // eslint-disable-next-line camelcase
+    const { sex, birth_year, email } = currentUser;
+    setValue('gender', sex);
+    setValue('birth', birth_year);
+    setValue('email', email);
+  }, [currentUser, headers, setValue]);
 
   return (
     <Container>
@@ -260,7 +265,7 @@ const AccountEdit: React.FC = () => {
               color="secondary"
               variant="contained"
               disableElevation
-              onClick={UserDelete}
+              onClick={handleClick}
             >
               Delete Account
             </Button>

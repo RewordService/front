@@ -1,6 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import React, { useState, ChangeEvent } from 'react';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import Container from '@material-ui/core/Container';
@@ -16,15 +15,16 @@ import {
   selectHeaders,
   setCurrentUser,
 } from '../slices/currentUser';
+import { IErrorResponse, ICurrentUserResponse } from '../interfaces';
 
 const ProfileEdit: React.FC = () => {
   const [serverError, setServerError] = useState('');
-  // eslint-disable-next-line @typescript-eslint/unbound-method
   const dispatch = useDispatch();
   const headers = useSelector(selectHeaders);
   const currentUser = useSelector(selectCurrentUser);
   const { control, handleSubmit } = useForm();
   const IconPatch = (e: ChangeEvent<HTMLInputElement>) => {
+    if (!headers) return;
     const formData = new FormData();
     formData.append('image', (e.target.files as FileList)[0]);
     axios
@@ -35,6 +35,7 @@ const ProfileEdit: React.FC = () => {
       });
   };
   const IconDelete = () => {
+    if (!headers) return;
     axios
       .patch('api/auth', { image: null }, headers)
       .then((res) => console.log(res))
@@ -42,16 +43,19 @@ const ProfileEdit: React.FC = () => {
         console.log(err);
       });
   };
-  const onSubmit = (data: SubmitHandler<{ introduction: string }>) =>
+  const onSubmit = (data: SubmitHandler<{ introduction: string }>) => {
+    if (!headers) return;
     axios
-      .patch('api/auth', data, headers)
+      .patch<ICurrentUserResponse>('/api/auth', data, headers)
       .then((res) => {
+        // TODO:
         dispatch(setCurrentUser(res.data.data));
       })
-      .catch((err) => {
-        console.log(err.response);
+      .catch((err: AxiosError<IErrorResponse>) => {
+        if (!err.response) return;
         setServerError(err.response.data.errors[0]);
       });
+  };
   const handleCloseSnackbar = () => setServerError('');
 
   return (
@@ -122,7 +126,7 @@ const ProfileEdit: React.FC = () => {
               </Box>
               <form onSubmit={handleSubmit(onSubmit)}>
                 <Controller
-                  name="introaa"
+                  name="intro"
                   control={control}
                   defaultValue={currentUser?.intro}
                   render={({ ref, value, onChange }) => (

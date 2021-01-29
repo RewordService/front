@@ -1,4 +1,6 @@
 import React, { useState, KeyboardEvent, ChangeEvent } from 'react';
+import axios, { AxiosError } from 'axios';
+import { useSelector } from 'react-redux';
 import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
@@ -9,9 +11,8 @@ import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
 import TextField from '@material-ui/core/TextField';
 import BoldTypography from '../components/BoldTypography';
-import { GamePost } from '../Axios/GamePost';
-import { IsSignedIn } from '../Axios/UsersController';
 import SlideBar from '../Organisms/SlideBar';
+import { selectCurrentUser, selectHeaders } from '../slices/currentUser';
 
 const Game: React.FC = () => (
   <>
@@ -120,6 +121,8 @@ const Screen = () => {
   const [screenString, setScreenString] = useState('PushStart');
   const [answerString, setAnswerString] = useState('');
   const [submitString, setSubmitString] = useState('');
+  const currentUser = useSelector(selectCurrentUser);
+  const headers = useSelector(selectHeaders);
   const handleIncrement = () => setWordCount(wordCount + 1);
   const handleDecrement = () => setWordCount(wordCount - 1);
   const handleChange = (e: ChangeEvent<HTMLInputElement>) =>
@@ -133,7 +136,29 @@ const Screen = () => {
       } else {
         setScreenString(FAIL);
       }
-      if (IsSignedIn()) GamePost(wordCount, status);
+      if (currentUser && headers) {
+        const ordinal = [
+          'second',
+          'third',
+          'fourth',
+          'fifth',
+          'sixth',
+          'seventh',
+          'eighth',
+          'ninth',
+          'tenth',
+        ];
+        axios
+          .post(
+            '/rewords',
+            { [ordinal[wordCount - 2] + status]: 1, user_id: currentUser.id },
+            headers
+          )
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((err: AxiosError) => console.log(err));
+      }
       setScreenState('end');
     }
   };
