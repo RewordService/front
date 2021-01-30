@@ -7,6 +7,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import BoldTypography from '../components/BoldTypography';
+import Section from '../components/Section';
 
 const UserProfile: React.FC = () => {
   const params = useParams<{ id: string }>();
@@ -32,74 +33,54 @@ const UserProfile: React.FC = () => {
   }, [params.id]);
 
   return (
-    <Paper>
-      <Box p={2}>
-        <Box
-          border={5}
-          borderTop={0}
-          borderRight={0}
-          borderBottom={0}
-          borderColor="primary.main"
-        >
-          <Box
-            display="flex"
-            alignItems="center"
-            border={1}
-            borderTop={0}
-            borderLeft={0}
-            borderRight={0}
-            borderColor="text.disabled"
-            pl={4}
-          >
-            <BoldTypography variant="subtitle1">プロフィール</BoldTypography>
-          </Box>
+    <Section
+      title={<BoldTypography variant="subtitle1">プロフィール</BoldTypography>}
+    >
+      {loading ? (
+        <Box my={5}>
+          <LinearProgress />
         </Box>
-        {loading ? (
-          <Box my={5}>
-            <LinearProgress />
-          </Box>
-        ) : (
-          <Box textAlign="center">
-            <Grid container>
-              <Grid item xs={4}>
-                <Box
-                  border={1}
-                  borderTop={0}
-                  borderBottom={0}
-                  borderLeft={0}
-                  borderColor="text.disabled"
-                >
-                  <Typography variant="body1">ユーザー名</Typography>
-                  <BoldTypography>{user.name}</BoldTypography>
-                </Box>
-              </Grid>
-
-              <Grid item xs={4}>
-                <Box
-                  border={1}
-                  borderTop={0}
-                  borderBottom={0}
-                  borderLeft={0}
-                  borderColor="text.disabled"
-                >
-                  <Typography variant="body1">Reword開始日</Typography>
-                  <BoldTypography>{user.created_date}</BoldTypography>
-                </Box>
-              </Grid>
-              <Grid item xs={4}>
-                <Typography variant="body1">トータルスコア</Typography>
-                <BoldTypography>
-                  {user.rewords[0]?.total || 'データがありません'}
-                </BoldTypography>
-              </Grid>
-              <Box mb={5}>
-                <Typography variant="body1">{user.intro}</Typography>
+      ) : (
+        <Box textAlign="center">
+          <Grid container>
+            <Grid item xs={4}>
+              <Box
+                border={1}
+                borderTop={0}
+                borderBottom={0}
+                borderLeft={0}
+                borderColor="text.disabled"
+              >
+                <Typography variant="body1">ユーザー名</Typography>
+                <BoldTypography>{user.name}</BoldTypography>
               </Box>
             </Grid>
-          </Box>
-        )}
-      </Box>
-    </Paper>
+
+            <Grid item xs={4}>
+              <Box
+                border={1}
+                borderTop={0}
+                borderBottom={0}
+                borderLeft={0}
+                borderColor="text.disabled"
+              >
+                <Typography variant="body1">Reword開始日</Typography>
+                <BoldTypography>{user.created_date}</BoldTypography>
+              </Box>
+            </Grid>
+            <Grid item xs={4}>
+              <Typography variant="body1">トータルスコア</Typography>
+              <BoldTypography>
+                {user.rewords[0]?.total || 'データがありません'}
+              </BoldTypography>
+            </Grid>
+            <Box mb={5}>
+              <Typography variant="body1">{user.intro}</Typography>
+            </Box>
+          </Grid>
+        </Box>
+      )}
+    </Section>
   );
 };
 

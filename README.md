@@ -2,15 +2,18 @@
 
 ## Packages
 
-- [react-lottie](https://github.com/chenqingspring/react-lottie)
 - [react-router-dom](https://github.com/ReactTraining/react-router)
-- [react-transition-group](https://github.com/reactjs/react-transition-group)
+- [axios](https://github.com/axios/axios)
 - [react-hook-form](https://react-hook-form.com/api#useForm)
+- [error-message](https://github.com/react-hook-form/error-message)
 - [styled-components](https://styled-components.com/)
 - [recharts](https://github.com/recharts/recharts)
-- [axios](https://github.com/axios/axios)
 - [react-reveal](https://github.com/rnosov/react-reveal)
 - [redux-toolkit](https://redux-toolkit.js.org/usage/usage-with-typescript#createslice)
+- [redux-persist](https://github.com/rt2zz/redux-persist)
+- [redux-logger](https://github.com/LogRocket/redux-logger)
+- ~~[react-transition-group](https://github.com/reactjs/react-transition-group)~~
+- ~~[react-lottie](https://github.com/chenqingspring/react-lottie)~~
 - ~~[use-timeout](https://github.com/siddharthkp/use-timeout)~~
 - ~~[react-intersection-observer](https://github.com/researchgate/react-intersection-observer)~~
 - ~~[react-payjp-checkout](https://github.com/LancersDevTeam/react-payjp-checkout)~~

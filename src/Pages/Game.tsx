@@ -11,6 +11,7 @@ import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
 import TextField from '@material-ui/core/TextField';
 import BoldTypography from '../components/BoldTypography';
+import Section from '../components/Section';
 import SlideBar from '../Organisms/SlideBar';
 import { selectCurrentUser, selectHeaders } from '../slices/currentUser';
 
@@ -18,81 +19,34 @@ const Game: React.FC = () => (
   <>
     <SlideBar />
     <Container maxWidth="xs">
-      <Box mt={5}>
-        <Paper>
-          <Box height={500} p={2}>
-            <Box
-              border={5}
-              borderTop={0}
-              borderRight={0}
-              borderBottom={0}
-              borderColor="primary.main"
-            >
-              <Box
-                display="flex"
-                alignItems="center"
-                border={1}
-                borderTop={0}
-                borderLeft={0}
-                borderRight={0}
-                borderColor="text.disabled"
-                pl={4}
-              >
-                <BoldTypography variant="h6">Reword</BoldTypography>
-              </Box>
-            </Box>
-            <Screen />
-          </Box>
-        </Paper>
-      </Box>
+      <Section title={<BoldTypography variant="h6">Reword</BoldTypography>}>
+        <Screen />
+      </Section>
     </Container>
     <Container>
-      <Box my={5}>
-        <Paper>
-          <Box p={2}>
-            <Box
-              border={5}
-              borderTop={0}
-              borderRight={0}
-              borderBottom={0}
-              borderColor="primary.main"
-            >
-              <Box
-                display="flex"
-                alignItems="center"
-                border={1}
-                borderTop={0}
-                borderLeft={0}
-                borderRight={0}
-                borderColor="text.disabled"
-                pl={4}
-              >
-                <BoldTypography variant="h5">遊び方</BoldTypography>
-              </Box>
-            </Box>
-            <Typography>
-              1. ランダムな文字列が提示されます。その文字列を記憶しましょう。
-              <br />
-              <br />
-              例) リワード
-              <br />
-              <br />
-              2.
-              記憶した文字列を、反対から読み返しましょう。(メモなどはしないでください)
-              <br />
-              <br />
-              例) ドーワリ
-              <br />
-              <br />
-              3.
-              提示された文字列を逆から読み返したものをAnswerの中に回答しましょう。
-              <br />
-              <br />
-              例) 回答はドーワリ
-            </Typography>
-            <p />
-          </Box>
-        </Paper>
+      <Box mb={5}>
+        <Section title={<BoldTypography variant="h5">遊び方</BoldTypography>}>
+          <Typography>
+            1. ランダムな文字列が提示されます。その文字列を記憶しましょう。
+            <br />
+            <br />
+            例) リワード
+            <br />
+            <br />
+            2.
+            記憶した文字列を、反対から読み返しましょう。(メモなどはしないでください)
+            <br />
+            <br />
+            例) ドーワリ
+            <br />
+            <br />
+            3.
+            提示された文字列を逆から読み返したものをAnswerの中に回答しましょう。
+            <br />
+            <br />
+            例) 回答はドーワリ
+          </Typography>
+        </Section>
       </Box>
     </Container>
   </>

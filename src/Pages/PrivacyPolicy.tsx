@@ -1,35 +1,18 @@
 import React from 'react';
-import Paper from '@material-ui/core/Paper';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import BoldTypography from '../components/BoldTypography';
+import Section from '../components/Section';
 
 const PrivacyPolicy: React.FC = () => (
   <Container>
-    <Box m={5}>
-      <Paper>
-        <Box p={2}>
-          <Box
-            border={5}
-            borderTop={0}
-            borderRight={0}
-            borderBottom={0}
-            borderColor="primary.main"
-          >
-            <Box
-              display="flex"
-              alignItems="center"
-              border={1}
-              borderTop={0}
-              borderLeft={0}
-              borderRight={0}
-              borderColor="text.disabled"
-              pl={4}
-            >
-              <BoldTypography variant="h5">プライバシーポリシー</BoldTypography>
-            </Box>
-          </Box>
-          {`
+    <Box mb={5}>
+      <Section
+        title={
+          <BoldTypography variant="h5">プライバシーポリシー</BoldTypography>
+        }
+      >
+        {`
 Reword（以下，「当サービス」といいます。）は，本ウェブサイト上で提供するサービス（以下,「本サービス」といいます。）における，ユーザーの個人情報の取扱いについて，以下のとおりプライバシーポリシー（以下，「本ポリシー」といいます。）を定めます。
 
 第1条（個人情報）
@@ -88,8 +71,7 @@ Reword（以下，「当サービス」といいます。）は，本ウェブ�
 第10条（お問い合わせ窓口）
 本ポリシーに関するお問い合わせは，下記の窓口までお願いいたします。
 				`}
-        </Box>
-      </Paper>
+      </Section>
     </Box>
   </Container>
 );

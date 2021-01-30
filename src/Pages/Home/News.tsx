@@ -9,45 +9,30 @@ import Divider from '@material-ui/core/Divider';
 import Link from '@material-ui/core/Link';
 import news from '../../Assets/news';
 import BoldTypography from '../../components/BoldTypography';
+import Section from '../../components/Section';
 
 const News: React.FC = () => (
-  <Paper>
-    <Box p={2}>
-      <Box
-        border={5}
-        borderTop={0}
-        borderRight={0}
-        borderBottom={0}
-        borderColor="primary.main"
-      >
-        <Box
-          display="flex"
-          alignItems="center"
-          border={1}
-          borderTop={0}
-          borderLeft={0}
-          borderRight={0}
-          borderColor="text.disabled"
-          pl={4}
-        >
-          <InfoIcon />
-          <BoldTypography variant="h5">お知らせ</BoldTypography>
-        </Box>
-      </Box>
-      <Box maxHeight={300} overflow="auto">
-        <List>
-          {news.news.map(({ title, date, url }) => (
-            <Box key={title} color="text.primary">
-              <ListItem component={Link} color="inherit" href={url} button>
-                <ListItemText primary={title} secondary={`(${date})`} />
-              </ListItem>
-              <Divider />
-            </Box>
-          ))}
-        </List>
-      </Box>
+  <Section
+    title={
+      <>
+        <InfoIcon />
+        <BoldTypography variant="h5">お知らせ</BoldTypography>
+      </>
+    }
+  >
+    <Box maxHeight={300} overflow="auto">
+      <List>
+        {news.news.map(({ title, date, url }) => (
+          <Box key={title} color="text.primary">
+            <ListItem component={Link} color="inherit" href={url} button>
+              <ListItemText primary={title} secondary={`(${date})`} />
+            </ListItem>
+            <Divider />
+          </Box>
+        ))}
+      </List>
     </Box>
-  </Paper>
+  </Section>
 );
 
 export default News;

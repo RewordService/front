@@ -17,19 +17,11 @@ const Home: React.FC = () => (
     </Img>
     <SlideBar />
     <Container maxWidth="md">
-      <Box mt={5}>
-        <RewordInfo />
-      </Box>
-      <Box mt={5}>
-        <ShareButtons />
-      </Box>
-      <Box mt={5}>
-        <News />
-      </Box>
-      <Box mt={5}>
-        <NewUsers />
-      </Box>
-      <Box my={5}>
+      <RewordInfo />
+      <ShareButtons />
+      <News />
+      <NewUsers />
+      <Box mb={5}>
         <TotalUsers />
       </Box>
     </Container>
