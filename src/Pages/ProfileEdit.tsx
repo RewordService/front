@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
-import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Alert from '@material-ui/lab/Alert';
@@ -47,9 +46,8 @@ const ProfileEdit: React.FC = () => {
   const onSubmit = (data: SubmitHandler<{ introduction: string }>) => {
     if (!headers) return;
     axios
-      .patch<ICurrentUserResponse>('/api/auth', data, headers)
+      .patch<ICurrentUserResponse>('api/auth', data, headers)
       .then((res) => {
-        // TODO:
         dispatch(setCurrentUser(res.data.data));
       })
       .catch((err: AxiosError<IErrorResponse>) => {
@@ -110,7 +108,7 @@ const ProfileEdit: React.FC = () => {
               <Controller
                 name="intro"
                 control={control}
-                defaultValue={currentUser?.intro}
+                defaultValue={currentUser?.profile?.introduction}
                 render={({ ref, value, onChange }) => (
                   <TextField
                     variant="outlined"

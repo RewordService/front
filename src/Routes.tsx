@@ -13,7 +13,7 @@ import LP from './Pages/LP';
 import Terms from './Pages/Terms';
 import PrivacyPolicy from './Pages/PrivacyPolicy';
 import Contact from './Pages/Contact';
-import Search from './Pages/Search/Search';
+import Users from './Pages/Users/Users';
 import routes from './constants/routes.json';
 import { selectCurrentUser } from './slices/currentUser';
 
@@ -26,7 +26,7 @@ const Routes: React.FC = () => {
       <Route path={routes.GAME} exact component={Game} />
       <Route path={routes.CONTACT} exact component={Contact} />
       <Route path={routes.POLICY} exact component={PrivacyPolicy} />
-      <Route path={routes.SEARCH} exact component={Search} />
+      <Route path={routes.SEARCH} exact component={Users} />
       <Route path={routes.LANDING} exact component={LP} />
       <Route path={routes.USER} exact component={User} />
       {currentUser ? (

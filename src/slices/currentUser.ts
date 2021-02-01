@@ -19,12 +19,17 @@ const currentUserSlice = createSlice({
     setHeaders: (state, action: PayloadAction<ITokenHeaders>) => {
       const {
         'content-type': contentType,
-        accesstoken,
+        'access-token': accessToken,
         client,
         uid,
       } = action.payload;
       state.headers = {
-        headers: { 'content-type': contentType, accesstoken, client, uid },
+        headers: {
+          'content-type': contentType,
+          'access-token': accessToken,
+          client,
+          uid,
+        },
       };
     },
     remove: (state) => {

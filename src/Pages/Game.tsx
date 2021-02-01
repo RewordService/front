@@ -3,7 +3,6 @@ import axios, { AxiosError } from 'axios';
 import { useSelector } from 'react-redux';
 import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
-import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
@@ -83,31 +82,17 @@ const Screen = () => {
     setSubmitString(e.target.value);
   const handleAnswer = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      let status = '';
+      let result;
       if (submitString === answerString) {
+        result = 'success';
         setScreenString(SUCESS);
-        status = '_success';
       } else {
+        result = 'fail';
         setScreenString(FAIL);
       }
       if (currentUser && headers) {
-        const ordinal = [
-          'second',
-          'third',
-          'fourth',
-          'fifth',
-          'sixth',
-          'seventh',
-          'eighth',
-          'ninth',
-          'tenth',
-        ];
         axios
-          .post(
-            '/rewords',
-            { [ordinal[wordCount - 2] + status]: 1, user_id: currentUser.id },
-            headers
-          )
+          .put('/user/reword', { count: wordCount, result }, headers)
           .then((res) => {
             console.log(res);
           })

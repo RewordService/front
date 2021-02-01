@@ -32,7 +32,7 @@ const SignInForm: React.FC = () => {
   const onSubmit = (data: SubmitHandler<ISignInFormValues>) => {
     setLoading(true);
     axios
-      .post<ICurrentUserResponse>('/api/auth/sign_in', data)
+      .post<ICurrentUserResponse>('/auth/sign_in', data)
       .then((res) => {
         dispatch(setCurrentUser(res.data.data));
         dispatch(setHeaders(res.headers));

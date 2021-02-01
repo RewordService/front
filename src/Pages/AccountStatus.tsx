@@ -14,7 +14,7 @@ const AccountStatus: React.FC = () => {
         <Section
           title={<BoldTypography variant="h5">会員ステータス</BoldTypography>}
         >
-          {currentUser?.memberstatus ? (
+          {currentUser ? (
             <>
               <h3>有料会員</h3>
               <h2>IOS</h2>

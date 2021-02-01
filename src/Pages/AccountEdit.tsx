@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/unbound-method */
 import React, { useEffect } from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
@@ -24,6 +23,7 @@ const AccountEdit: React.FC = () => {
   const year = new Date().getFullYear();
   const currentUser = useSelector(selectCurrentUser);
   const headers = useSelector(selectHeaders);
+  // eslint-disable-next-line @typescript-eslint/unbound-method
   const { control, handleSubmit, setValue } = useForm();
   const handleClick = () => {
     if (!headers) return;
@@ -33,11 +33,11 @@ const AccountEdit: React.FC = () => {
 
   useEffect(() => {
     if (!currentUser) return;
-    // TODO:
-    // eslint-disable-next-line camelcase
-    const { sex, birth_year, email } = currentUser;
-    setValue('gender', sex);
-    setValue('birth', birth_year);
+    if (!currentUser.profile) return;
+    const { email } = currentUser;
+    const { gender, birthday } = currentUser.profile;
+    setValue('gender', gender);
+    setValue('birth', birthday);
     setValue('email', email);
   }, [currentUser, headers, setValue]);
 

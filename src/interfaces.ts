@@ -2,30 +2,43 @@ export interface ISign {
   data: { data: IUser };
   headers: ITokenHeaders;
 }
-export interface IRewords {
-  [key: string]: number;
-  total: number;
-}
 export interface ITokenHeaders {
   ['content-type']: string;
-  accesstoken: string; // TODO: change accesstoken to access-token
+  ['access-token']: string;
   client: string;
   uid: string;
 }
 
 export interface IUser {
   ['allow_password_change']?: false;
-  ['birth_year']?: string;
-  email?: string;
-  id?: number;
-  image?: { url: string };
-  intro?: string; // TODO: change intro to introduce
-  memberstatus?: boolean;
+  email: string;
+  id: number;
+  image: { url: string | null };
   name: string;
-  nickname?: string;
-  sex?: boolean; // TODO: chenge sex to gender & change boolean to number
-  ['created_date']?: string;
-  rewords?: [IRewords];
+  nickname: string;
+  ['created_at']: string;
+  reword?: IReword;
+  profile?: IProfile;
+}
+
+export interface IProfile {
+  birthday: string | null;
+  gender: string | null;
+  introduction: string | null;
+}
+
+export interface IReword {
+  ['2']: { total: number; success: number };
+  ['3']: { total: number; success: number };
+  ['4']: { total: number; success: number };
+  ['5']: { total: number; success: number };
+  ['6']: { total: number; success: number };
+  ['7']: { total: number; success: number };
+  ['8']: { total: number; success: number };
+  ['9']: { total: number; success: number };
+  ['10']: { total: number; success: number };
+  score: number;
+  total: number;
 }
 
 export interface ISignInFormValues {

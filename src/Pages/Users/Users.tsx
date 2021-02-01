@@ -13,7 +13,7 @@ const SearchResult: React.FC = () => {
   useEffect(() => {
     axios
       .get<IUsersResponse>('/users', {
-        params: { name_cont: location.state.nameCont },
+        params: { q: { name_cont: location.state.nameCont } },
       })
       .then((res) => {
         setUsers(res.data.data);

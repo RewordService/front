@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import {
@@ -21,9 +21,10 @@ import Grid from '@material-ui/core/Grid';
 import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
 import PersonIcon from '@material-ui/icons/Person';
 import DoubleArrowIcon from '@material-ui/icons/DoubleArrow';
+import Typography from '@material-ui/core/Typography';
+import LinearProgress from '@material-ui/core/LinearProgress';
 import BoldTypography from '../components/BoldTypography';
 import Section from '../components/Section';
-import UserProfile from '../Molecules/UserProfile';
 import routes from '../constants/routes.json';
 import { selectCurrentUser } from '../slices/currentUser';
 import { IUser } from '../interfaces';
@@ -34,99 +35,64 @@ const calcPercent = (success: number, total: number) => {
   if (result > 100) return 100;
   return result;
 };
-
+interface IRechartData {
+  name: number;
+  total: number;
+  success: number;
+  percent: number;
+}
 const User: React.FC = () => {
-  const ORDINAL = useMemo(
-    () => [
-      'second',
-      'third',
-      'fourth',
-      'fifth',
-      'sixth',
-      'seventh',
-      'eighth',
-      'ninth',
-      'tenth',
-    ],
-    []
-  );
-  const currentUser = useSelector(selectCurrentUser);
   const params = useParams<{ id: string }>();
-  const [rewords, setRewords] = useState(
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    [...Array(8)].map((_, i) => ({
-      name: i + 1,
-      total: 0,
-      correct: 0,
-      percent: 0,
-    }))
-  );
+  const [loading, setLoading] = useState(true);
+  const [rewords, setRewords] = useState<IRechartData[]>([]);
+  const [user, setUser] = useState<IUser>({
+    email: '',
+    id: 0,
+    image: { url: '' },
+    name: '',
+    nickname: '',
+    created_at: '',
+  });
   useEffect(() => {
     axios
       .get<IUser>(`/users/${params.id}`)
       .then((res) => {
+        if (!res.data.reword) return;
+        const resRewords = Object.entries(res.data.reword);
         const ary = [];
-        if (!res.data.rewords?.length) return;
-        for (let i = 0; i < ORDINAL.length; i += 1) {
-          const totalStr = `${ORDINAL[i]}_total`;
-          const successStr = `${ORDINAL[i]}_success`;
-          const total = res.data.rewords[0][totalStr];
-          const correct = res.data.rewords[0][successStr];
+        for (let i = 0; i < resRewords.length; i += 1) {
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+          const [count, { total, success }]: [
+            string,
+            { total: number; success: number }
+          ] = resRewords[i];
+          if (!Number(count)) break;
           ary.push({
             name: i + 2,
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             total,
-            correct,
-            percent: calcPercent(total, correct),
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+            success,
+            percent: calcPercent(total, success),
           });
         }
+        setUser(res.data);
         setRewords(ary);
+        setLoading(false);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, [ORDINAL, params.id]);
+  }, [params.id]);
 
   return (
     <Container>
       <Box mt={5}>
-        <UserProfile />
+        <UserProfile user={user} loading={loading} />
       </Box>
-      {Number(params.id) === currentUser?.id && (
-        <Box mt={5}>
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={4}>
-              <Card>
-                <CardActionArea component={Link} to={routes.PROFILEEDIT}>
-                  <CardContent>
-                    <AssignmentIndIcon fontSize="large" />
-                    <BoldTypography>プロフィール編集</BoldTypography>
-                  </CardContent>
-                </CardActionArea>
-              </Card>
-            </Grid>
-            <Grid item xs={12} sm={4}>
-              <Card>
-                <CardActionArea component={Link} to={routes.ACCOUNTEDIT}>
-                  <CardContent>
-                    <PersonIcon fontSize="large" />
-                    <BoldTypography>アカウント編集</BoldTypography>
-                  </CardContent>
-                </CardActionArea>
-              </Card>
-            </Grid>
-            <Grid item xs={12} sm={4}>
-              <Card>
-                <CardActionArea component={Link} to={routes.ACCOUNTSTATUS}>
-                  <CardContent>
-                    <DoubleArrowIcon fontSize="large" />
-                    <BoldTypography>会員グレード</BoldTypography>
-                  </CardContent>
-                </CardActionArea>
-              </Card>
-            </Grid>
-          </Grid>
-        </Box>
-      )}
+      <Box mt={5}>
+        <AccountNav paramsId={Number(params.id)} />
+      </Box>
       <Box mb={5}>
         <Section title={<BoldTypography variant="h5">成績</BoldTypography>}>
           <BoldTypography variant="h6" align="center">
@@ -167,7 +133,7 @@ const User: React.FC = () => {
               />
               <Bar
                 type="monotone"
-                dataKey="correct"
+                dataKey="success"
                 barSize={10}
                 fill="#ff7878"
               />
@@ -217,4 +183,107 @@ const User: React.FC = () => {
   );
 };
 
+const AccountNav: React.FC<{ paramsId: number }> = ({
+  paramsId,
+}: {
+  paramsId: number;
+}) => {
+  const currentUser = useSelector(selectCurrentUser);
+  if (!currentUser) return null;
+  if (!(paramsId === currentUser.id)) return null;
+  return (
+    <Box mt={5}>
+      <Grid container spacing={2}>
+        <Grid item xs={12} sm={4}>
+          <Card>
+            <CardActionArea component={Link} to={routes.PROFILEEDIT}>
+              <CardContent>
+                <AssignmentIndIcon fontSize="large" />
+                <BoldTypography>プロフィール編集</BoldTypography>
+              </CardContent>
+            </CardActionArea>
+          </Card>
+        </Grid>
+        <Grid item xs={12} sm={4}>
+          <Card>
+            <CardActionArea component={Link} to={routes.ACCOUNTEDIT}>
+              <CardContent>
+                <PersonIcon fontSize="large" />
+                <BoldTypography>アカウント編集</BoldTypography>
+              </CardContent>
+            </CardActionArea>
+          </Card>
+        </Grid>
+        <Grid item xs={12} sm={4}>
+          <Card>
+            <CardActionArea component={Link} to={routes.ACCOUNTSTATUS}>
+              <CardContent>
+                <DoubleArrowIcon fontSize="large" />
+                <BoldTypography>会員グレード</BoldTypography>
+              </CardContent>
+            </CardActionArea>
+          </Card>
+        </Grid>
+      </Grid>
+    </Box>
+  );
+};
+
+interface IUserProfile {
+  loading: boolean;
+  user: IUser;
+}
+const UserProfile: React.FC<IUserProfile> = ({
+  loading,
+  user,
+}: IUserProfile) => (
+  <Section
+    title={<BoldTypography variant="subtitle1">プロフィール</BoldTypography>}
+  >
+    {loading ? (
+      <Box my={5}>
+        <LinearProgress />
+      </Box>
+    ) : (
+      <Box textAlign="center">
+        <Grid container>
+          <Grid item xs={4}>
+            <Box
+              border={1}
+              borderTop={0}
+              borderBottom={0}
+              borderLeft={0}
+              borderColor="text.disabled"
+            >
+              <Typography variant="body1">ユーザー名</Typography>
+              <BoldTypography>{user.name}</BoldTypography>
+            </Box>
+          </Grid>
+
+          <Grid item xs={4}>
+            <Box
+              border={1}
+              borderTop={0}
+              borderBottom={0}
+              borderLeft={0}
+              borderColor="text.disabled"
+            >
+              <Typography variant="body1">Reword開始日</Typography>
+              <BoldTypography>{user.created_at}</BoldTypography>
+            </Box>
+          </Grid>
+          <Grid item xs={4}>
+            <Typography variant="body1">トータルスコア</Typography>
+            <BoldTypography>{user.reword?.total}</BoldTypography>
+          </Grid>
+          <Box mb={5}>
+            <Typography variant="body1">
+              {user.profile?.introduction}
+            </Typography>
+          </Box>
+        </Grid>
+      </Box>
+    )}
+  </Section>
+);
 export default User;

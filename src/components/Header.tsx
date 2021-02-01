@@ -70,7 +70,7 @@ const Header: React.FC = () => {
   const handleSignOut = () => {
     if (!headers) return;
     axios
-      .delete('/api/auth/sign_out', headers)
+      .delete('/auth/sign_out', headers)
       .then(() => {
         dispatch(remove());
         history.push({

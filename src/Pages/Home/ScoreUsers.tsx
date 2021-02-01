@@ -12,7 +12,7 @@ const ScoreUsers: React.FC = () => {
 
   useEffect(() => {
     axios
-      .get<IUser[]>('/users/total_users')
+      .get<IUser[]>('/users/ranked')
       .then((res) => {
         setUsers(res.data);
         setLoading(false);

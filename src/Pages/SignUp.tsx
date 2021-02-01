@@ -29,9 +29,10 @@ const SignUpForm: React.FC = () => {
   const dispatch = useDispatch();
 
   const onSubmit = (data: SubmitHandler<ISignUpFormValues>) => {
+    console.log(data);
     setLoading(true);
     axios
-      .post<ICurrentUserResponse>('/api/auth', data)
+      .post<ICurrentUserResponse>('/auth', data)
       .then((res) => {
         dispatch(setCurrentUser(res.data.data));
         dispatch(setHeaders(res.headers));
@@ -43,7 +44,6 @@ const SignUpForm: React.FC = () => {
         setLoading(false);
       });
   };
-  // TODO:
   // eslint-disable-next-line @typescript-eslint/unbound-method
   const { control, errors, watch, handleSubmit } = useForm();
   return (
