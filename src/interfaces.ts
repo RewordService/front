@@ -48,7 +48,6 @@ export interface IErrorResponse {
 export interface IErrorsResponse {
   errors: { ['full_messages']: string[] };
 }
-
 export interface IServerMessages {
   severity: 'success' | 'error';
   alerts: string[];

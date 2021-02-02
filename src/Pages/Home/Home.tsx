@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
-import ShareButtons from '../../components/ShareButtons';
+import ShareButtons from '../../components/Button/ShareButtons';
 import img from '../../Assets/Img/home.jpg';
 import NewUsers from './NewUsers';
 import TotalUsers from './ScoreUsers';

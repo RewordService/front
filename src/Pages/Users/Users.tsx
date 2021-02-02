@@ -9,18 +9,20 @@ import { IUser } from '../../interfaces';
 const SearchResult: React.FC = () => {
   const [users, setUsers] = useState<IUser[]>([]);
   const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(1);
   const location = useLocation<{ nameCont: string }>();
   useEffect(() => {
+    const data = {
+      params: { q: { name_cont: location.state.nameCont }, page },
+    };
     axios
-      .get<IUser[]>('/users', {
-        params: { q: { name_cont: location.state.nameCont } },
-      })
+      .get<IUser[]>('/users', data)
       .then((res) => {
         setUsers(res.data);
         setLoading(false);
       })
       .catch((err: AxiosError) => err);
-  }, [location.state.nameCont]);
+  }, [location.state.nameCont, page]);
   if (loading)
     return (
       <Box

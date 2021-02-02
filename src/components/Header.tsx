@@ -60,7 +60,7 @@ const Header: React.FC = () => {
     if (e.key === 'Enter') {
       history.push({
         pathname: routes.SEARCH,
-        state: { name_cont: search },
+        state: { nameCont: search },
       });
     }
   };
@@ -78,9 +78,8 @@ const Header: React.FC = () => {
         });
       })
       .catch((err: AxiosError<IErrorResponse>) => {
-        if (!err.response) return;
         dispatch(remove());
-        setServerError(err.response.data.errors[0]);
+        setServerError(err.response?.data.errors[0] || '');
         history.push({
           pathname: routes.HOME,
         });

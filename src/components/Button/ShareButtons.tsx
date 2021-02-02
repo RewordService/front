@@ -7,8 +7,8 @@ import TwitterIcon from '@material-ui/icons/Twitter';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import SportsEsportsIcon from '@material-ui/icons/SportsEsports';
 import Box from '@material-ui/core/Box';
-import routes from '../constants/routes.json';
-import BoldTypography from './BoldTypography';
+import routes from '../../constants/routes.json';
+import BoldTypography from '../BoldTypography';
 
 const useStyles = makeStyles((theme) => ({
   twitter: {
