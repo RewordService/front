@@ -52,6 +52,9 @@ const User: React.FC = () => {
     name: '',
     nickname: '',
     created_at: '',
+    birthday: '',
+    gender: 0,
+    introduction: '',
   });
   useEffect(() => {
     axios
@@ -194,17 +197,7 @@ const AccountNav: React.FC<{ paramsId: number }> = ({
   return (
     <Box mt={5}>
       <Grid container spacing={2}>
-        <Grid item xs={12} sm={4}>
-          <Card>
-            <CardActionArea component={Link} to={routes.PROFILEEDIT}>
-              <CardContent>
-                <AssignmentIndIcon fontSize="large" />
-                <BoldTypography>プロフィール編集</BoldTypography>
-              </CardContent>
-            </CardActionArea>
-          </Card>
-        </Grid>
-        <Grid item xs={12} sm={4}>
+        <Grid item xs={12} sm={6}>
           <Card>
             <CardActionArea component={Link} to={routes.ACCOUNTEDIT}>
               <CardContent>
@@ -214,7 +207,7 @@ const AccountNav: React.FC<{ paramsId: number }> = ({
             </CardActionArea>
           </Card>
         </Grid>
-        <Grid item xs={12} sm={4}>
+        <Grid item xs={12} sm={6}>
           <Card>
             <CardActionArea component={Link} to={routes.ACCOUNTSTATUS}>
               <CardContent>
@@ -277,9 +270,7 @@ const UserProfile: React.FC<IUserProfile> = ({
             <BoldTypography>{user.reword?.total}</BoldTypography>
           </Grid>
           <Box mb={5}>
-            <Typography variant="body1">
-              {user.profile?.introduction}
-            </Typography>
+            <Typography variant="body1">{user.introduction}</Typography>
           </Box>
         </Grid>
       </Box>

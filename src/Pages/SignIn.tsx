@@ -15,11 +15,7 @@ import Fade from '@material-ui/core/Fade';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import errorMessages from '../constants/errorMessages.json';
 import routes from '../constants/routes.json';
-import {
-  ISignInFormValues,
-  IErrorResponse,
-  ICurrentUserResponse,
-} from '../interfaces';
+import { ISignInFormValues, IErrorResponse, IUser } from '../interfaces';
 import { setHeaders, setCurrentUser } from '../slices/currentUser';
 
 const SignInForm: React.FC = () => {
@@ -32,7 +28,7 @@ const SignInForm: React.FC = () => {
   const onSubmit = (data: SubmitHandler<ISignInFormValues>) => {
     setLoading(true);
     axios
-      .post<ICurrentUserResponse>('/auth/sign_in', data)
+      .post<{ data: IUser }>('/auth/sign_in', data)
       .then((res) => {
         dispatch(setCurrentUser(res.data.data));
         dispatch(setHeaders(res.headers));

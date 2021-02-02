@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Box from '@material-ui/core/Box';
 import UserCard from './UserCard';
-import { IUser, IUsersResponse } from '../../interfaces';
+import { IUser } from '../../interfaces';
 
 const SearchResult: React.FC = () => {
   const [users, setUsers] = useState<IUser[]>([]);
@@ -12,11 +12,11 @@ const SearchResult: React.FC = () => {
   const location = useLocation<{ nameCont: string }>();
   useEffect(() => {
     axios
-      .get<IUsersResponse>('/users', {
+      .get<IUser[]>('/users', {
         params: { q: { name_cont: location.state.nameCont } },
       })
       .then((res) => {
-        setUsers(res.data.data);
+        setUsers(res.data);
         setLoading(false);
       })
       .catch((err: AxiosError) => err);

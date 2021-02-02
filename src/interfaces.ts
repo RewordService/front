@@ -18,12 +18,8 @@ export interface IUser {
   nickname: string;
   ['created_at']: string;
   reword?: IReword;
-  profile?: IProfile;
-}
-
-export interface IProfile {
   birthday: string | null;
-  gender: string | null;
+  gender: number | null;
   introduction: string | null;
 }
 
@@ -49,19 +45,6 @@ export interface ISignInFormValues {
 export interface ISignUpFormValues extends ISignInFormValues {
   name: string;
   passwordConfirmation: string;
-}
-
-export interface ICurrentUserResponse {
-  data: IUser;
-  headers: ITokenHeaders;
-}
-
-export interface IUserResponse {
-  data: IUser;
-}
-
-export interface IUsersResponse {
-  data: IUser[];
 }
 
 export interface IErrorResponse {

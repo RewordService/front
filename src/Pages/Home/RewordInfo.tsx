@@ -7,11 +7,11 @@ import BoldTypography from '../../components/BoldTypography';
 import Section from '../../components/Section';
 
 const RewordInfo: React.FC = () => {
-  const [score, setScore] = useState({ score_total: 0, score_rate: 0 });
+  const [score, setScore] = useState({ total_score: 0, success_rate: 0 });
 
   useEffect(() => {
     axios
-      .get('/rewords')
+      .get('/reword/info')
       .then((res) => setScore(res.data))
       .catch((err) => {
         console.log(err);
@@ -32,13 +32,13 @@ const RewordInfo: React.FC = () => {
             py={5}
           >
             <Typography variant="body1">総合Reword数</Typography>
-            <BoldTypography variant="h4">{score.score_total}</BoldTypography>
+            <BoldTypography variant="h4">{score.total_score}</BoldTypography>
           </Box>
         </Grid>
         <Grid item xs={6}>
           <Box textAlign="center" py={5}>
             <Typography variant="body1">総合正答率</Typography>
-            <BoldTypography variant="h4">{score.score_rate}%</BoldTypography>
+            <BoldTypography variant="h4">{score.success_rate}%</BoldTypography>
           </Box>
         </Grid>
       </Grid>

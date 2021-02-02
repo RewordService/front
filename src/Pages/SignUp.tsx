@@ -15,11 +15,7 @@ import Fade from '@material-ui/core/Fade';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import routes from '../constants/routes.json';
 import errorMessages from '../constants/errorMessages.json';
-import {
-  ISignUpFormValues,
-  IErrorSignUpResponse,
-  ICurrentUserResponse,
-} from '../interfaces';
+import { IUser, ISignUpFormValues, IErrorSignUpResponse } from '../interfaces';
 import { setHeaders, setCurrentUser } from '../slices/currentUser';
 
 const SignUpForm: React.FC = () => {
@@ -29,10 +25,9 @@ const SignUpForm: React.FC = () => {
   const dispatch = useDispatch();
 
   const onSubmit = (data: SubmitHandler<ISignUpFormValues>) => {
-    console.log(data);
     setLoading(true);
     axios
-      .post<ICurrentUserResponse>('/auth', data)
+      .post<{ data: IUser }>('/auth', data)
       .then((res) => {
         dispatch(setCurrentUser(res.data.data));
         dispatch(setHeaders(res.headers));

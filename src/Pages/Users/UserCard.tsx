@@ -30,12 +30,7 @@ const UserCard: React.FC<{ user: IUser }> = ({
             <Box p={1}>
               <Grid container>
                 <Grid item xs={6}>
-                  <Avatar
-                    alt={name}
-                    src={`https://rewordbackend.herokuapp.com/${
-                      image?.url || ''
-                    }`}
-                  />
+                  <Avatar alt={name} src={image?.url || ''} />
                 </Grid>
                 <Grid item xs={6}>
                   <Typography variant="h6">{name}</Typography>

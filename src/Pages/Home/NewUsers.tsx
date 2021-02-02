@@ -14,7 +14,6 @@ const NewUsers: React.FC = () => {
     axios
       .get('/users/latest')
       .then((res) => {
-        console.log(res);
         setUsers(res.data);
         setLoading(false);
       })

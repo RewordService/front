@@ -1,5 +1,4 @@
 import React from 'react';
-import Paper from '@material-ui/core/Paper';
 import InfoIcon from '@material-ui/icons/Info';
 import Box from '@material-ui/core/Box';
 import List from '@material-ui/core/List';

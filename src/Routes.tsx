@@ -5,7 +5,6 @@ import Home from './Pages/Home/Home';
 import SignIn from './Pages/SignIn';
 import SignUp from './Pages/SignUp';
 import User from './Pages/User';
-import ProfileEdit from './Pages/ProfileEdit';
 import AccountEdit from './Pages/AccountEdit';
 import AccountStatus from './Pages/AccountStatus';
 import Game from './Pages/Game';
@@ -31,7 +30,6 @@ const Routes: React.FC = () => {
       <Route path={routes.USER} exact component={User} />
       {currentUser ? (
         <>
-          <Route path={routes.PROFILEEDIT} exact component={ProfileEdit} />
           <Route path={routes.ACCOUNTEDIT} exact component={AccountEdit} />
           <Route path={routes.ACCOUNTSTATUS} exact component={AccountStatus} />
         </>
