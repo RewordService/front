@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { format } from 'date-fns';
 import { useSelector } from 'react-redux';
 import {
   ResponsiveContainer,
@@ -18,11 +19,11 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import Grid from '@material-ui/core/Grid';
-import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
-import PersonIcon from '@material-ui/icons/Person';
 import DoubleArrowIcon from '@material-ui/icons/DoubleArrow';
 import Typography from '@material-ui/core/Typography';
 import LinearProgress from '@material-ui/core/LinearProgress';
+import Avatar from '@material-ui/core/Avatar';
+import PersonIcon from '@material-ui/icons/Person';
 import BoldTypography from '../components/BoldTypography';
 import Section from '../components/Section';
 import routes from '../constants/routes.json';
@@ -72,9 +73,7 @@ const User: React.FC = () => {
           if (!Number(count)) break;
           ary.push({
             name: i + 2,
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             total,
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             success,
             percent: calcPercent(total, success),
           });
@@ -90,6 +89,13 @@ const User: React.FC = () => {
 
   return (
     <Container>
+      <Box my={5} display="flex" justifyContent="center">
+        <Avatar
+          alt={user.name}
+          src={user.image.url || ''}
+          style={{ height: '150px', width: '150px' }}
+        />
+      </Box>
       <Box mt={5}>
         <UserProfile user={user} loading={loading} />
       </Box>
@@ -262,14 +268,16 @@ const UserProfile: React.FC<IUserProfile> = ({
               borderColor="text.disabled"
             >
               <Typography variant="body1">Reword開始日</Typography>
-              <BoldTypography>{user.created_at}</BoldTypography>
+              <BoldTypography>
+                {format(Date.parse(user.created_at), 'yyyy / MM / dd')}
+              </BoldTypography>
             </Box>
           </Grid>
           <Grid item xs={4}>
             <Typography variant="body1">トータルスコア</Typography>
             <BoldTypography>{user.reword?.total}</BoldTypography>
           </Grid>
-          <Box mb={5}>
+          <Box mt={3}>
             <Typography variant="body1">{user.introduction}</Typography>
           </Box>
         </Grid>

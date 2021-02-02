@@ -9,18 +9,22 @@ import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import Fade from '@material-ui/core/Fade';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import LoadingButton from '../components/Button/LoadingButton';
 import errorMessages from '../constants/errorMessages.json';
 import routes from '../constants/routes.json';
-import { ISignInFormValues, IErrorResponse, IUser } from '../interfaces';
+import {
+  ISignInFormValues,
+  IErrorResponse,
+  IUserSuccessResponse,
+  IServerMessages,
+} from '../interfaces';
 import { setHeaders, setCurrentUser } from '../slices/currentUser';
+import ServerAlert from '../components/ServerAlert';
 
 const SignInForm: React.FC = () => {
   const [loading, setLoading] = useState(false);
-  const [serverErrors, setServerErrors] = useState<string[]>([]);
+  const [serverMessages, setServerMessages] = useState<IServerMessages>();
   const dispatch = useDispatch();
   const history = useHistory();
   const { control, errors, handleSubmit } = useForm<ISignInFormValues>();
@@ -28,16 +32,18 @@ const SignInForm: React.FC = () => {
   const onSubmit = (data: SubmitHandler<ISignInFormValues>) => {
     setLoading(true);
     axios
-      .post<{ data: IUser }>('/auth/sign_in', data)
+      .post<IUserSuccessResponse>('/auth/sign_in', data)
       .then((res) => {
         dispatch(setCurrentUser(res.data.data));
         dispatch(setHeaders(res.headers));
         history.push(routes.HOME);
       })
       .catch((err: AxiosError<IErrorResponse>) => {
-        if (!err.response) return;
-        setServerErrors(err.response.data.errors);
         setLoading(false);
+        setServerMessages({
+          severity: 'error',
+          alerts: err.response?.data.errors || [],
+        });
       });
   };
 
@@ -49,13 +55,9 @@ const SignInForm: React.FC = () => {
             <Typography variant="h4" align="center" gutterBottom>
               SignIn
             </Typography>
+            <ServerAlert serverMessages={serverMessages} />
             <form onSubmit={handleSubmit(onSubmit)}>
               <Box mb={2}>
-                {serverErrors.length ? (
-                  <Box mb={2}>
-                    <Alert severity="error">{serverErrors.join('\n')}</Alert>
-                  </Box>
-                ) : null}
                 <Controller
                   name="email"
                   control={control}
@@ -138,21 +140,7 @@ const SignInForm: React.FC = () => {
                   )}
                 />
               </Box>
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                startIcon={
-                  <Fade in={loading}>
-                    <CircularProgress size={20} />
-                  </Fade>
-                }
-                disabled={loading}
-                disableElevation
-                fullWidth
-              >
-                SignIn
-              </Button>
+              <LoadingButton loading={loading} primary="SignIn" />
             </form>
           </Box>
         </Paper>

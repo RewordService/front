@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Redirect, Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Home from './Pages/Home/Home';
 import SignIn from './Pages/SignIn';
@@ -28,7 +28,7 @@ const Routes: React.FC = () => {
       <Route path={routes.SEARCH} exact component={Users} />
       <Route path={routes.LANDING} exact component={LP} />
       <Route path={routes.USER} exact component={User} />
-      {currentUser ? (
+      {currentUser?.id ? (
         <>
           <Route path={routes.ACCOUNTEDIT} exact component={AccountEdit} />
           <Route path={routes.ACCOUNTSTATUS} exact component={AccountStatus} />
@@ -40,6 +40,7 @@ const Routes: React.FC = () => {
           <Route path={routes.SIGNUP} exact component={SignUp} />
         </>
       )}
+      <Redirect to={routes.ROOT} />
     </Switch>
   );
 };

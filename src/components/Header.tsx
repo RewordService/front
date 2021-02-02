@@ -165,7 +165,7 @@ const Header: React.FC = () => {
             <Button component={RouterLink} to={routes.GAME}>
               Game
             </Button>
-            {currentUser ? (
+            {currentUser?.id ? (
               <Button
                 color="primary"
                 variant="contained"
@@ -213,7 +213,7 @@ const Header: React.FC = () => {
               </Grid>
             </Grid>
           </Box>
-          {currentUser && (
+          {currentUser?.id && (
             <IconButton
               component={RouterLink}
               to={`${routes.USERS}/${currentUser.id || ''}`}

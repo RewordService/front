@@ -1,14 +1,9 @@
-export interface ISign {
-  data: { data: IUser };
-  headers: ITokenHeaders;
-}
 export interface ITokenHeaders {
   ['content-type']: string;
   ['access-token']: string;
   client: string;
   uid: string;
 }
-
 export interface IUser {
   ['allow_password_change']?: false;
   email: string;
@@ -22,7 +17,6 @@ export interface IUser {
   gender: number | null;
   introduction: string | null;
 }
-
 export interface IReword {
   ['2']: { total: number; success: number };
   ['3']: { total: number; success: number };
@@ -36,21 +30,26 @@ export interface IReword {
   score: number;
   total: number;
 }
-
 export interface ISignInFormValues {
   email: string;
   password: string;
 }
-
 export interface ISignUpFormValues extends ISignInFormValues {
   name: string;
   passwordConfirmation: string;
 }
-
+export interface IUserSuccessResponse {
+  data: IUser;
+  message: string;
+}
 export interface IErrorResponse {
   errors: string[];
 }
-
-export interface IErrorSignUpResponse {
+export interface IErrorsResponse {
   errors: { ['full_messages']: string[] };
+}
+
+export interface IServerMessages {
+  severity: 'success' | 'error';
+  alerts: string[];
 }

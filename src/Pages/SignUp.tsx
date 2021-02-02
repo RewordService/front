@@ -9,33 +9,39 @@ import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import Fade from '@material-ui/core/Fade';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import LoadingButton from '../components/Button/LoadingButton';
 import routes from '../constants/routes.json';
 import errorMessages from '../constants/errorMessages.json';
-import { IUser, ISignUpFormValues, IErrorSignUpResponse } from '../interfaces';
+import {
+  ISignUpFormValues,
+  IErrorsResponse,
+  IUserSuccessResponse,
+  IServerMessages,
+} from '../interfaces';
 import { setHeaders, setCurrentUser } from '../slices/currentUser';
+import ServerAlert from '../components/ServerAlert';
 
 const SignUpForm: React.FC = () => {
   const [loading, setLoading] = useState(false);
-  const [serverErrors, setServerErrors] = useState<string[]>([]);
+  const [serverMessages, setServerMessages] = useState<IServerMessages>();
   const history = useHistory();
   const dispatch = useDispatch();
 
   const onSubmit = (data: SubmitHandler<ISignUpFormValues>) => {
     setLoading(true);
     axios
-      .post<{ data: IUser }>('/auth', data)
+      .post<IUserSuccessResponse>('/auth', data)
       .then((res) => {
         dispatch(setCurrentUser(res.data.data));
         dispatch(setHeaders(res.headers));
         history.push(routes.HOME);
       })
-      .catch((err: AxiosError<IErrorSignUpResponse>) => {
-        if (!err.response) return;
-        setServerErrors(err.response.data.errors.full_messages);
+      .catch((err: AxiosError<IErrorsResponse>) => {
+        setServerMessages({
+          severity: 'error',
+          alerts: err.response?.data.errors.full_messages || [],
+        });
         setLoading(false);
       });
   };
@@ -49,15 +55,9 @@ const SignUpForm: React.FC = () => {
             <Typography variant="h4" align="center" gutterBottom>
               SignUp
             </Typography>
+            <ServerAlert serverMessages={serverMessages} />
             <form onSubmit={handleSubmit(onSubmit)}>
               <Box mb={2}>
-                {serverErrors.length
-                  ? serverErrors.map((error) => (
-                      <Box mb={2}>
-                        <Alert severity="error">{error}</Alert>
-                      </Box>
-                    ))
-                  : null}
                 <Controller
                   name="email"
                   control={control}
@@ -216,21 +216,7 @@ const SignUpForm: React.FC = () => {
                   )}
                 />
               </Box>
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                startIcon={
-                  <Fade in={loading}>
-                    <CircularProgress size={20} />
-                  </Fade>
-                }
-                disabled={loading}
-                disableElevation
-                fullWidth
-              >
-                SignUp
-              </Button>
+              <LoadingButton loading={loading} primary="SignUp" />
             </form>
           </Box>
         </Paper>

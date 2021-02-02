@@ -5,7 +5,16 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-axios.defaults.baseURL = 'http://localhost:3000';
+switch (process.env.NODE_ENV) {
+  case 'development':
+    axios.defaults.baseURL = 'http://localhost:3000';
+    break;
+  case 'production':
+    axios.defaults.baseURL = 'http://localhost:3000';
+    break;
+  default:
+    axios.defaults.baseURL = 'http://localhost:3000';
+}
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
