@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -13,9 +13,7 @@ const RewordInfo: React.FC = () => {
     axios
       .get('/reword/info')
       .then((res) => setScore(res.data))
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err: AxiosError) => err);
   }, []);
 
   return (

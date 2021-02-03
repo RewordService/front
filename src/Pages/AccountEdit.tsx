@@ -35,7 +35,6 @@ import {
   IErrorResponse,
   IErrorsResponse,
   IServerMessages,
-  IUser,
   IUserSuccessResponse,
 } from '../interfaces';
 import routes from '../constants/routes.json';
@@ -58,7 +57,7 @@ const IconChange = () => {
     const formData = new FormData();
     formData.append('image', e.target.files[0]);
     axios
-      .patch<{ data: IUser }>('/auth', formData, headers)
+      .patch<IUserSuccessResponse>('/auth', formData, headers)
       .then((res) => {
         setServerMessages({
           severity: 'success',

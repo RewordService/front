@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { format } from 'date-fns';
 import { useSelector } from 'react-redux';
 import {
@@ -82,9 +82,7 @@ const User: React.FC = () => {
         setRewords(ary);
         setLoading(false);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err: AxiosError) => err);
   }, [params.id]);
 
   return (

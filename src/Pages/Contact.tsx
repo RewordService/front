@@ -31,9 +31,8 @@ const Contact: React.FC = () => {
         setSend(true);
         setLoading(false);
       })
-      .catch((err) => {
+      .catch(() => {
         setLoading(false);
-        console.log(err);
       });
   };
 

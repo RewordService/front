@@ -93,10 +93,7 @@ const Screen = () => {
       if (currentUser && headers) {
         axios
           .put('/user/reword', { count: wordCount, result }, headers)
-          .then((res) => {
-            console.log(res);
-          })
-          .catch((err: AxiosError) => console.log(err));
+          .catch((err: AxiosError) => err);
       }
       setScreenState('end');
     }

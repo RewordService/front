@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import BoldTypography from '../../components/BoldTypography';
 import Section from '../../components/Section';
@@ -17,7 +17,7 @@ const NewUsers: React.FC = () => {
         setUsers(res.data);
         setLoading(false);
       })
-      .catch((err) => console.log(err));
+      .catch((err: AxiosError) => err);
   }, []);
 
   return (
