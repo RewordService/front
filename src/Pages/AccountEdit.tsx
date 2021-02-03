@@ -48,7 +48,52 @@ const ProfileEdit: React.FC = () => (
     <AccountDelete />
   </Container>
 );
-
+const IconChange = () => {
+  const dispatch = useDispatch();
+  const headers = useSelector(selectHeaders);
+  const [serverMessages, setServerMessages] = useState<IServerMessages>();
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (!headers) return;
+    if (!e.target.files) return;
+    const formData = new FormData();
+    formData.append('image', e.target.files[0]);
+    axios
+      .patch<{ data: IUser }>('/auth', formData, headers)
+      .then((res) => {
+        setServerMessages({
+          severity: 'success',
+          alerts: ['アイコンを変更しました'],
+        });
+        dispatch(setCurrentUser(res.data.data));
+      })
+      .catch((err: AxiosError<IErrorResponse>) => {
+        setServerMessages({
+          severity: 'error',
+          alerts: err.response?.data.errors || [],
+        });
+      });
+  };
+  return (
+    <Box mt={5}>
+      <Box my={5}>
+        <ServerAlert serverMessages={serverMessages} />
+      </Box>
+      <Box
+        display="flex"
+        alignItems="center"
+        mb={3}
+        border={1}
+        borderTop={0}
+        borderLeft={0}
+        borderRight={0}
+        borderColor="text.disabled"
+      >
+        <BoldTypography variant="h6">アイコン</BoldTypography>
+      </Box>
+      <input onChange={handleChange} type="file" accept="image/*" />
+    </Box>
+  );
+};
 interface IFormValueProfile {
   introduction: string;
   name: string;
@@ -82,52 +127,14 @@ const ProfileChange = () => {
         });
       });
   };
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (!headers) return;
-    if (!e.target.files) return;
-    const formData = new FormData();
-    formData.append('image', e.target.files[0]);
-    axios
-      .patch<{ data: IUser }>('/auth', formData, headers)
-      .then((res) => {
-        setServerMessages({
-          severity: 'success',
-          alerts: ['アイコンを変更しました'],
-        });
-        dispatch(setCurrentUser(res.data.data));
-      })
-      .catch((err: AxiosError<IErrorResponse>) => {
-        setServerMessages({
-          severity: 'error',
-          alerts: err.response?.data.errors || [],
-        });
-      });
-  };
   return (
     <Box mt={5}>
       <Section
         title={<BoldTypography variant="h5">ユーザー編集</BoldTypography>}
       >
         <Box mt={5}>
-          <Box my={5}>
-            <ServerAlert serverMessages={serverMessages} />
-          </Box>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <Box mt={5}>
-              <Box
-                display="flex"
-                alignItems="center"
-                mb={3}
-                border={1}
-                borderTop={0}
-                borderLeft={0}
-                borderRight={0}
-                borderColor="text.disabled"
-              >
-                <BoldTypography variant="h6">アイコン</BoldTypography>
-              </Box>
-              <input onChange={handleChange} type="file" accept="image/*" />
-            </Box>
+            <IconChange />
             <Box mt={5}>
               <Box my={5}>
                 <ServerAlert serverMessages={serverMessages} />
