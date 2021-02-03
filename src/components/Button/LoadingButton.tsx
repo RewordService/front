@@ -6,15 +6,21 @@ import Fade from '@material-ui/core/Fade';
 interface ILoadingButton {
   loading: boolean;
   primary: string;
+  color?: 'primary' | 'secondary';
+  fullWidth?: boolean;
+  onClick?: () => void;
 }
 const LoadingButton: React.FC<ILoadingButton> = ({
   loading,
   primary,
+  color,
+  fullWidth,
+  onClick,
 }: ILoadingButton) => (
   <Button
     type="submit"
     variant="contained"
-    color="primary"
+    color={color}
     startIcon={
       <Fade in={loading}>
         <CircularProgress size={20} />
@@ -22,10 +28,16 @@ const LoadingButton: React.FC<ILoadingButton> = ({
     }
     disabled={loading}
     disableElevation
-    fullWidth
+    fullWidth={fullWidth}
+    onClick={onClick}
   >
     {primary}
   </Button>
 );
+LoadingButton.defaultProps = {
+  color: 'primary',
+  fullWidth: true,
+  onClick: undefined,
+};
 
 export default LoadingButton;

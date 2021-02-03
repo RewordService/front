@@ -1,8 +1,10 @@
+/* eslint-disable react/jsx-no-undef */
 import React, { ChangeEvent, useState } from 'react';
 import snakeCaseKeys from 'snakecase-keys';
 import axios, { AxiosError } from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm, Controller } from 'react-hook-form';
+import { useHistory } from 'react-router-dom';
 import { ErrorMessage } from '@hookform/error-message';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
@@ -12,12 +14,18 @@ import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Alert from '@material-ui/lab/Alert';
+import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContentText from '@material-ui/core/DialogContentText';
 import errorMessages from '../constants/errorMessages.json';
 import BoldTypography from '../components/BoldTypography';
 import Section from '../components/Section';
 import LoadingButton from '../components/Button/LoadingButton';
 import ServerAlert from '../components/ServerAlert';
 import {
+  remove,
   selectCurrentUser,
   selectHeaders,
   setCurrentUser,
@@ -30,6 +38,7 @@ import {
   IUser,
   IUserSuccessResponse,
 } from '../interfaces';
+import routes from '../constants/routes.json';
 
 const ProfileEdit: React.FC = () => (
   <Container>
@@ -414,7 +423,6 @@ const PasswordChange = () => {
     axios
       .put<IUserSuccessResponse>('/auth/password', snakeCaseKeys(data), headers)
       .then((res) => {
-        console.log(res.data);
         setLoading(false);
         setServerMessages({
           severity: 'success',
@@ -542,11 +550,33 @@ const PasswordChange = () => {
 };
 
 const AccountDelete = () => {
+  const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [serverMessages, setServerMessages] = useState<IServerMessages>();
   const headers = useSelector(selectHeaders);
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const handleClickOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   const handleClick = () => {
     if (!headers) return;
-    axios.delete('/auth', headers).catch((err) => console.log(err));
+    setLoading(true);
+    axios
+      .delete('/auth', headers)
+      .then(() => {
+        history.push({ pathname: routes.HOME });
+        dispatch(remove());
+        setLoading(false);
+      })
+      .catch((err: AxiosError<IErrorsResponse>) => {
+        setServerMessages({
+          severity: 'error',
+          alerts: err.response?.data.errors.full_messages || [],
+        });
+        setLoading(false);
+      });
   };
+
   return (
     <Box my={5}>
       <Section
@@ -557,12 +587,40 @@ const AccountDelete = () => {
             color="secondary"
             variant="contained"
             disableElevation
-            onClick={handleClick}
+            onClick={handleClickOpen}
           >
             Delete Account
           </Button>
         </Box>
       </Section>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">本当に削除しますか?</DialogTitle>
+        <DialogContent>
+          <Box my={3}>
+            <ServerAlert serverMessages={serverMessages} />
+          </Box>
+          <DialogContentText id="alert-dialog-description">
+            削除を行うと、アカウントやゲームの情報などがすべて消えます
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            キャンセル
+          </Button>
+          <LoadingButton
+            fullWidth={false}
+            loading={loading}
+            primary="削除する"
+            color="secondary"
+            onClick={handleClick}
+          />
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 };

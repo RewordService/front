@@ -14,27 +14,7 @@ const AccountStatus: React.FC = () => {
         <Section
           title={<BoldTypography variant="h5">会員ステータス</BoldTypography>}
         >
-          {currentUser ? (
-            <>
-              <h3>有料会員</h3>
-              <h2>IOS</h2>
-              <p>開発中</p>
-              <h2>Android</h2>
-            </>
-          ) : (
-            <>
-              <h3>無料会員</h3>
-              <p style={{ color: 'red' }}>
-                ただいま、決済サービスへの申請を行っています。
-              </p>
-              <div>
-                有料会員になることで、アプリケーションをインストールすることができます。
-              </div>
-              <p style={{ color: 'red' }}>
-                IOSアプリは未対応です。申し訳ございません
-              </p>
-            </>
-          )}
+          <BoldTypography>準備中です</BoldTypography>
         </Section>
       </Box>
     </Container>
