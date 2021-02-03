@@ -10,7 +10,7 @@ switch (process.env.NODE_ENV) {
     axios.defaults.baseURL = 'http://localhost:3000';
     break;
   case 'production':
-    axios.defaults.baseURL = 'http://localhost:3000';
+    axios.defaults.baseURL = 'https://reword-back.herokuapp.com/';
     break;
   default:
     axios.defaults.baseURL = 'http://localhost:3000';
