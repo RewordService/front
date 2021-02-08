@@ -273,7 +273,7 @@ const UserProfile: React.FC<IUserProfile> = ({
           </Grid>
           <Grid item xs={4}>
             <Typography variant="body1">トータルスコア</Typography>
-            <BoldTypography>{user.reword?.total}</BoldTypography>
+            <BoldTypography>{user.reword?.score}</BoldTypography>
           </Grid>
           <Box mt={3}>
             <Typography variant="body1">{user.introduction}</Typography>
