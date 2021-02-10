@@ -34,6 +34,7 @@ const SearchResult: React.FC = () => {
       })
       .catch((err: AxiosError) => err);
   }, [location.state.nameCont, page]);
+
   if (loading)
     return (
       <Box
