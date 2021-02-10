@@ -4,6 +4,11 @@ export interface ITokenHeaders {
   client: string;
   uid: string;
 }
+export interface IPagination {
+  link: string;
+  ['per-page']: number;
+  total: number;
+}
 export interface IUser {
   ['allow_password_change']?: false;
   email: string;
