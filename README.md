@@ -22,4 +22,5 @@
 
 ### SEO
 
-- [react-ga](https://github.com/react-ga/react-ga)
+- gtag.js
+- Google Search Console

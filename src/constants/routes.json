@@ -14,6 +14,7 @@
   "SEARCH": "/search",
   "ACCOUNTEDIT": "/account/edit",
   "ACCOUNTSTATUS": "/account/status",
+  "SITEMAP": "/sitemap",
   "TWITTER": "https://twitter.com/re_reword",
   "FACEBOOK": "https://www.facebook.com/word.re.16"
 }

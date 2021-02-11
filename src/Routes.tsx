@@ -20,6 +20,15 @@ const Routes: React.FC = () => {
   const currentUser = useSelector(selectCurrentUser);
   return (
     <Switch>
+      <Route
+        path={routes.SITEMAP}
+        exact
+        component={() => {
+          window.location.href =
+            'https://reword.s3-ap-northeast-1.amazonaws.com/sitemaps/sitemap.xml.gz';
+          return null;
+        }}
+      />
       <Route path={routes.ROOT} exact component={Home} />
       <Route path={routes.HOME} exact component={Home} />
       <Route path={routes.GAME} exact component={Game} />
