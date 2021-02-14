@@ -1,5 +1,8 @@
 # REWORD FRONT
 
+- [BACK](https://github.com/izszzz/reword_back)
+- [MOBILE](https://github.com/izszzz/reword_mobile)
+
 ## Packages
 
 - [react-router-dom](https://github.com/ReactTraining/react-router)
