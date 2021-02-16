@@ -17,6 +17,7 @@
 - [redux-logger](https://github.com/LogRocket/redux-logger)
 - [date-fns](https://github.com/date-fns/date-fns)
 - [snakecase-keys](https://github.com/bendrucker/snakecase-keys)
+- [yup](https://github.com/jquense/yup)
 - ~~[react-transition-group](https://github.com/reactjs/react-transition-group)~~
 - ~~[react-lottie](https://github.com/chenqingspring/react-lottie)~~
 - ~~[use-timeout](https://github.com/siddharthkp/use-timeout)~~

@@ -3,6 +3,7 @@ import axios, { AxiosError } from 'axios';
 import { useDispatch } from 'react-redux';
 import { Controller, useForm, SubmitHandler } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { ErrorMessage } from '@hookform/error-message';
 import Alert from '@material-ui/lab/Alert';
 import TextField from '@material-ui/core/TextField';
@@ -11,7 +12,6 @@ import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import LoadingButton from '../components/Button/LoadingButton';
-import errorMessages from '../constants/errorMessages.json';
 import routes from '../constants/routes.json';
 import {
   ISignInFormValues,
@@ -21,13 +21,16 @@ import {
 } from '../interfaces';
 import { setHeaders, setCurrentUser } from '../slices/currentUser';
 import ServerAlert from '../components/ServerAlert';
+import { signInSchema } from '../schema';
 
 const SignInForm: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [serverMessages, setServerMessages] = useState<IServerMessages>();
   const dispatch = useDispatch();
   const history = useHistory();
-  const { control, errors, handleSubmit } = useForm<ISignInFormValues>();
+  const { control, errors, handleSubmit } = useForm<ISignInFormValues>({
+    resolver: yupResolver(signInSchema),
+  });
 
   const onSubmit = (data: SubmitHandler<ISignInFormValues>) => {
     setLoading(true);
@@ -62,21 +65,6 @@ const SignInForm: React.FC = () => {
                   name="email"
                   control={control}
                   defaultValue=""
-                  rules={{
-                    required: {
-                      value: true,
-                      message:
-                        errorMessages.email.text + errorMessages.required,
-                    },
-                    maxLength: {
-                      value: errorMessages.email.maxLength,
-                      message:
-                        errorMessages.email.text +
-                        errorMessages.is +
-                        String(errorMessages.email.maxLength) +
-                        errorMessages.maxLength,
-                    },
-                  }}
                   render={({ ref, value, onChange }, { invalid }) => (
                     <TextField
                       variant="outlined"
@@ -103,21 +91,6 @@ const SignInForm: React.FC = () => {
                   name="password"
                   control={control}
                   defaultValue=""
-                  rules={{
-                    required: {
-                      value: true,
-                      message:
-                        errorMessages.password.text + errorMessages.required,
-                    },
-                    maxLength: {
-                      value: errorMessages.password.maxLength,
-                      message:
-                        errorMessages.password.text +
-                        errorMessages.is +
-                        String(errorMessages.password.maxLength) +
-                        errorMessages.maxLength,
-                    },
-                  }}
                   render={({ ref, value, onChange }, { invalid }) => (
                     <TextField
                       type="password"

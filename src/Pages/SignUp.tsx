@@ -10,9 +10,9 @@ import Paper from '@material-ui/core/Paper';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
+import { yupResolver } from '@hookform/resolvers/yup';
 import LoadingButton from '../components/Button/LoadingButton';
 import routes from '../constants/routes.json';
-import errorMessages from '../constants/errorMessages.json';
 import {
   ISignUpFormValues,
   IErrorsResponse,
@@ -21,12 +21,17 @@ import {
 } from '../interfaces';
 import { setHeaders, setCurrentUser } from '../slices/currentUser';
 import ServerAlert from '../components/ServerAlert';
+import { signUpSchema } from '../schema';
 
 const SignUpForm: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [serverMessages, setServerMessages] = useState<IServerMessages>();
   const history = useHistory();
   const dispatch = useDispatch();
+  // eslint-disable-next-line @typescript-eslint/unbound-method
+  const { control, errors, handleSubmit } = useForm({
+    resolver: yupResolver(signUpSchema),
+  });
 
   const onSubmit = (data: SubmitHandler<ISignUpFormValues>) => {
     setLoading(true);
@@ -45,8 +50,6 @@ const SignUpForm: React.FC = () => {
         setLoading(false);
       });
   };
-  // eslint-disable-next-line @typescript-eslint/unbound-method
-  const { control, errors, watch, handleSubmit } = useForm();
   return (
     <Box my={5}>
       <Container maxWidth="xs">
@@ -62,21 +65,6 @@ const SignUpForm: React.FC = () => {
                   name="email"
                   control={control}
                   defaultValue=""
-                  rules={{
-                    required: {
-                      value: true,
-                      message:
-                        errorMessages.email.text + errorMessages.required,
-                    },
-                    maxLength: {
-                      value: errorMessages.email.maxLength,
-                      message:
-                        errorMessages.email.text +
-                        errorMessages.is +
-                        String(errorMessages.email.maxLength) +
-                        errorMessages.maxLength,
-                    },
-                  }}
                   render={({ ref, value, onChange }, { invalid }) => (
                     <TextField
                       variant="outlined"
@@ -102,20 +90,6 @@ const SignUpForm: React.FC = () => {
                   name="name"
                   control={control}
                   defaultValue=""
-                  rules={{
-                    required: {
-                      value: true,
-                      message: errorMessages.name.text + errorMessages.required,
-                    },
-                    maxLength: {
-                      value: errorMessages.name.maxLength,
-                      message:
-                        errorMessages.name.text +
-                        errorMessages.is +
-                        String(errorMessages.name.maxLength) +
-                        errorMessages.maxLength,
-                    },
-                  }}
                   render={({ ref, value, onChange }, { invalid }) => (
                     <TextField
                       variant="outlined"
@@ -141,21 +115,6 @@ const SignUpForm: React.FC = () => {
                   name="password"
                   control={control}
                   defaultValue=""
-                  rules={{
-                    required: {
-                      value: true,
-                      message:
-                        errorMessages.password.text + errorMessages.required,
-                    },
-                    maxLength: {
-                      value: errorMessages.password.maxLength,
-                      message:
-                        errorMessages.password.text +
-                        errorMessages.is +
-                        String(errorMessages.password.maxLength) +
-                        errorMessages.maxLength,
-                    },
-                  }}
                   render={({ ref, value, onChange }, { invalid }) => (
                     <TextField
                       type="password"
@@ -182,19 +141,6 @@ const SignUpForm: React.FC = () => {
                   name="passwordConfirmation"
                   control={control}
                   defaultValue=""
-                  rules={{
-                    required: {
-                      value: true,
-                      message:
-                        errorMessages.password_confirmation.text +
-                        errorMessages.required,
-                    },
-                    validate: {
-                      value: (value) =>
-                        value === watch('password') ||
-                        errorMessages.validate_password_confirmation,
-                    },
-                  }}
                   render={({ ref, value, onChange }, { invalid }) => (
                     <TextField
                       type="password"

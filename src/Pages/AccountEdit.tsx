@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-no-undef */
 import React, { ChangeEvent, useState } from 'react';
 import snakeCaseKeys from 'snakecase-keys';
 import axios, { AxiosError } from 'axios';
@@ -19,7 +18,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContentText from '@material-ui/core/DialogContentText';
-import errorMessages from '../constants/errorMessages.json';
+import { yupResolver } from '@hookform/resolvers/yup';
 import BoldTypography from '../components/BoldTypography';
 import Section from '../components/Section';
 import LoadingButton from '../components/Button/LoadingButton';
@@ -38,6 +37,7 @@ import {
   IUserSuccessResponse,
 } from '../interfaces';
 import routes from '../constants/routes.json';
+import { emailSchema, passwordSchema, profileSchema } from '../schema';
 
 const ProfileEdit: React.FC = () => (
   <Container>
@@ -101,7 +101,9 @@ const ProfileChange = () => {
   const [loading, setLoading] = useState(false);
   const [serverMessages, setServerMessages] = useState<IServerMessages>();
   // eslint-disable-next-line @typescript-eslint/unbound-method
-  const { control, handleSubmit, errors } = useForm<IFormValueProfile>();
+  const { control, handleSubmit, errors } = useForm<IFormValueProfile>({
+    resolver: yupResolver(profileSchema),
+  });
   const dispatch = useDispatch();
   const headers = useSelector(selectHeaders);
   const currentUser = useSelector(selectCurrentUser);
@@ -154,20 +156,6 @@ const ProfileChange = () => {
                 name="name"
                 control={control}
                 defaultValue={currentUser?.name || ''}
-                rules={{
-                  required: {
-                    value: true,
-                    message: errorMessages.name.text + errorMessages.required,
-                  },
-                  maxLength: {
-                    value: errorMessages.name.maxLength,
-                    message:
-                      errorMessages.name.text +
-                      errorMessages.is +
-                      String(errorMessages.name.maxLength) +
-                      errorMessages.maxLength,
-                  },
-                }}
                 render={({ ref, value, onChange }, { invalid }) => (
                   <TextField
                     variant="outlined"
@@ -326,7 +314,9 @@ const EmailChange = () => {
   const headers = useSelector(selectHeaders);
   const dispatch = useDispatch();
   // eslint-disable-next-line @typescript-eslint/unbound-method
-  const { control, handleSubmit, errors } = useForm<IFormValueEmail>();
+  const { control, handleSubmit, errors } = useForm<IFormValueEmail>({
+    resolver: yupResolver(emailSchema),
+  });
   const onSubmit = (data: IFormValueEmail) => {
     if (!headers) return;
     setLoading(true);
@@ -363,20 +353,6 @@ const EmailChange = () => {
               name="email"
               control={control}
               defaultValue={currentUser?.email || ''}
-              rules={{
-                required: {
-                  value: true,
-                  message: errorMessages.email.text + errorMessages.required,
-                },
-                maxLength: {
-                  value: errorMessages.email.maxLength,
-                  message:
-                    errorMessages.email.text +
-                    errorMessages.is +
-                    String(errorMessages.email.maxLength) +
-                    errorMessages.maxLength,
-                },
-              }}
               render={({ ref, value, onChange }, { invalid }) => (
                 <TextField
                   variant="outlined"
@@ -419,8 +395,7 @@ const PasswordChange = () => {
     handleSubmit,
     setValue,
     errors,
-    watch,
-  } = useForm<IFormValuePassword>();
+  } = useForm<IFormValuePassword>({ resolver: yupResolver(passwordSchema) });
   const headers = useSelector(selectHeaders);
   const onSubmit = (data: IFormValuePassword) => {
     setLoading(true);
@@ -460,29 +435,6 @@ const PasswordChange = () => {
                 name="password"
                 control={control}
                 defaultValue=""
-                rules={{
-                  required: {
-                    value: true,
-                    message:
-                      errorMessages.password.text + errorMessages.required,
-                  },
-                  minLength: {
-                    value: errorMessages.password.minLength,
-                    message:
-                      errorMessages.password.text +
-                      errorMessages.is +
-                      String(errorMessages.password.minLength) +
-                      errorMessages.minLength,
-                  },
-                  maxLength: {
-                    value: errorMessages.password.maxLength,
-                    message:
-                      errorMessages.password.text +
-                      errorMessages.is +
-                      String(errorMessages.password.maxLength) +
-                      errorMessages.maxLength,
-                  },
-                }}
                 render={({ ref, value, onChange }, { invalid }) => (
                   <TextField
                     type="password"
@@ -510,19 +462,6 @@ const PasswordChange = () => {
                 name="passwordConfirmation"
                 control={control}
                 defaultValue=""
-                rules={{
-                  required: {
-                    value: true,
-                    message:
-                      errorMessages.password_confirmation.text +
-                      errorMessages.required,
-                  },
-                  validate: {
-                    value: (value) =>
-                      value === watch('password') ||
-                      errorMessages.validate_password_confirmation,
-                  },
-                }}
                 render={({ ref, value, onChange }, { invalid }) => (
                   <TextField
                     type="password"
